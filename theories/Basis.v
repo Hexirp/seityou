@@ -15,6 +15,10 @@ Definition empty_elim_nodep (P : Type) (x : empty) : P
 Definition empty_elim (P : empty -> Type) (x : empty) : P x
   := match x with end .
 
+Arguments empty .
+Arguments empty_elim_nodep {_} _ .
+Arguments empty_elim {_} _ .
+
 Inductive unit : Type
   :=
   | tt : unit
@@ -27,6 +31,10 @@ Definition unit_elim_nodep
 Definition unit_elim
   (P : unit -> Type) (case_tt : P tt) (x : unit) : P x
   := match x with tt => case_tt end .
+
+Arguments unit .
+Arguments unit_elim_nodep {_} _ _ .
+Arguments unit_elim {_} _ _ .
 
 Inductive sum (A : Type) (B : Type) : Type
   :=
@@ -53,6 +61,12 @@ Definition sum_elim
     | right _ _ b => case_right b
   end .
 
+Arguments sum _ _ .
+Arguments left {_ _} _ .
+Arguments right {_ _} _ .
+Arguments sum_elim_nodep {_ _ _} _ _ _ .
+Arguments sum_elim {_ _ _} _ _ _ .
+
 Inductive prod (A : Type) (B : Type) : Type
   :=
   | pair : A -> B -> prod A B
@@ -70,6 +84,11 @@ Definition prod_elim
   (x : prod A B) : P x
   := match x with pair _ _ a b => case_pair a b end .
 
+Arguments prod _ _ .
+Arguments pair {_ _} _ _ .
+Arguments prod_elim_nodep {_ _ _} _ _ .
+Arguments prod_elim {_ _ _} _ _ .
+
 Definition exp (A B : Type) : Type
   := A -> B.
 
@@ -84,6 +103,10 @@ Definition exp_elim
   (case : forall f, P f)
   (x : exp A B) : P x
   := case x .
+
+Arguments exp _ _ .
+Arguments exp_elim_nodep {_ _ _} _ _.
+Arguments exp_elim {_ _ _} _ _.
 
 Inductive dsum (A : Type) (B : A -> Type) : Type
   :=
@@ -102,6 +125,11 @@ Definition dsum_elim
   (x : dsum A B) : P x
   := match x with evi _ _ xv xH => case_evi xv xH end .
 
+Arguments dsum {_} _ .
+Arguments evi {_ _} _ _ .
+Arguments dsum_elim_nodep {_ _ _} _ _ .
+Arguments dsum_elim {_ _ _} _ _ .
+
 Definition dprod (A : Type) (B : A -> Type) : Type
   := forall x : A, B x .
 
@@ -116,6 +144,10 @@ Definition dprod_elim
   (case : forall f, P f)
   (x : dprod A B) : P x
   := case x .
+
+Arguments dprod {_} _ .
+Arguments dprod_elim_nodep {_ _ _} _ _.
+Arguments dprod_elim {_ _ _} _ _.
 
 Inductive paths (A : Type) (a : A) : A -> Type
   :=
@@ -134,45 +166,13 @@ Definition paths_elim
   (a' : A) (x : paths A a a') : P a' x
   := match x with idpath _ _ => case_idpath end .
 
+Arguments paths {_} _ _ .
+Arguments idpath {_ _} , [_] _ .
+Arguments paths_elim_nodep {_ _ _} _ {_} _ .
+Arguments paths_elim {_ _ _} _ {_} _ .
+
 
 Module Functional.
-
-  Local Arguments empty .
-  Local Arguments empty_elim_nodep {_} _ .
-  Local Arguments empty_elim {_} _ .
-
-  Local Arguments unit .
-  Local Arguments unit_elim_nodep {_} _ _ .
-  Local Arguments unit_elim {_} _ _ .
-
-  Local Arguments sum _ _ .
-  Local Arguments left {_ _} _ .
-  Local Arguments right {_ _} _ .
-  Local Arguments sum_elim_nodep {_ _ _} _ _ _ .
-  Local Arguments sum_elim {_ _ _} _ _ _ .
-
-  Local Arguments prod _ _ .
-  Local Arguments pair {_ _} _ _ .
-  Local Arguments prod_elim_nodep {_ _ _} _ _ .
-  Local Arguments prod_elim {_ _ _} _ _ .
-
-  Local Arguments exp _ _ .
-  Local Arguments exp_elim_nodep {_ _ _} _ _.
-  Local Arguments exp_elim {_ _ _} _ _.
-
-  Local Arguments dsum {_} _ .
-  Local Arguments evi {_ _} _ _ .
-  Local Arguments dsum_elim_nodep {_ _ _} _ _ .
-  Local Arguments dsum_elim {_ _ _} _ _ .
-
-  Local Arguments dprod {_} _ .
-  Local Arguments dprod_elim_nodep {_ _ _} _ _.
-  Local Arguments dprod_elim {_ _ _} _ _.
-
-  Local Arguments paths {_} _ _ .
-  Local Arguments idpath {_ _} , [_] _ .
-  Local Arguments paths_elim_nodep {_ _ _} _ {_} _ .
-  Local Arguments paths_elim {_ _ _} _ {_} _ .
 
   Definition idmap {A} : A -> A
     := fun x => x .
@@ -254,20 +254,20 @@ Module Categorical.
   Definition coproduct {A B C : Type}
     : (A -> C) -> (B -> C) -> (sum A B -> C)
     := fun f g x =>
-      match x with left _ _ y => f y | right _ _ z => g z end .
+      match x with left y => f y | right z => g z end .
 
   Definition product {A B C : Type}
     : (A -> B) -> (A -> C) -> (A -> prod B C)
-    := fun f g x => pair _ _ (f x) (g x) .
+    := fun f g x => pair (f x) (g x) .
 
   Definition dependent_coproduct
     {X : Type} {A : X -> Type} {B : Type}
-    : (forall x, A x -> B) -> (dsum X A -> B)
-    := fun f x => match x with evi _ _ xv xH => f xv xH end .
+    : (forall x, A x -> B) -> (dsum A -> B)
+    := fun f x => match x with evi xv xH => f xv xH end .
 
   Definition dependent_product
     {X : Type} {A : Type} {B : X -> Type}
-    : (forall x, A -> B x) -> (A -> dprod X B)
+    : (forall x, A -> B x) -> (A -> dprod B)
     := fun f x => fun y => f y x .
 
 End Categorical.
@@ -278,11 +278,46 @@ Module Homotopical.
   Export Functional.
 
   Definition ap00
-    {A B : Type} (f : A -> B) (x : A) : B
+    {A B : Type}
+    (f : A -> B)
+    (x : A)
+    : B
     := f x .
 
   Definition ap01
-    {A B : Type} (f : A -> B)
+    {A B : Type}
+    (f : A -> B)
     {x y : A} (p : paths x y)
     : paths (f x) (f y)
-    := ap .
+    := ap f p .
+
+  Definition ap10
+    {A B : Type}
+    {f g : A -> B} (p : paths f g)
+    (x : A)
+    : paths (f x) (g x)
+    := paths_elim_nodep (P := fun f' => paths (f x) (f' x)) idpath p .
+
+  Definition ap11
+    {A B : Type}
+    {f g : A -> B} (p : paths f g)
+    {x y : A} (q : paths x y)
+    : paths (f x) (g y)
+    := paths_elim_nodep (P := fun f' => paths (f x) (f' y)) (ap f q) p .
+
+  Definition ap01_2
+    {A B C : Type}
+    (f : A -> B -> C)
+    (x y : A) (p : paths x y)
+    (z w : B) (q : paths z w)
+    : paths (f x z) (f y w)
+    := ap11 (ap f p) q .
+
+  Definition apD
+    {A : Type} {B : A -> Type}
+    (f : forall a, B a)
+    {x y : A} (p : paths x y)
+    : paths (transport p (f x)) (f y)
+    := match p with idpath => idpath end .
+
+End Homotopical.
