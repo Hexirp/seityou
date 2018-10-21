@@ -70,6 +70,21 @@ Definition prod_elim
   (x : prod A B) : P x
   := match x with pair _ _ a b => case_pair a b end .
 
+Definition exp (A B : Type) : Type
+  := A -> B.
+
+Definition exp_elim_nodep
+  (A : Type) (B : Type) (P : Type)
+  (case : (A -> B) -> P)
+  (x : exp A B) : P
+  := case x .
+
+Definition exp_elim
+  (A : Type) (B : Type) (P : (A -> B) -> Type)
+  (case : forall f, P f)
+  (x : exp A B) : P x
+  := case x .
+
 Inductive dsum (A : Type) (B : A -> Type) : Type
   :=
   | evi : forall x : A, B x -> dsum A B
