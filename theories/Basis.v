@@ -221,7 +221,7 @@ Module Functional.
   Definition inverse
     {A : Type} (x y : A)
     (p : paths x y) : paths y x
-    := paths_elim_nodep (P := fun x' => paths x' x) idpath p .
+    := paths_elim_nodep (P := fun y' => paths y' x) idpath p .
 
   Definition concat
     {A : Type} {x y z : A}
@@ -238,7 +238,7 @@ Module Functional.
     {A B : Type} (f : A -> B)
     {x y : A} (p : paths x y)
     : paths (f x) (f y)
-    := paths_elim_nodep (P := fun x' => paths (f x) (f x')) idpath p .
+    := paths_elim_nodep (P := fun y' => paths (f x) (f y')) idpath p .
 
 End Functional.
 
@@ -296,14 +296,14 @@ Module Homotopical.
     {f g : A -> B} (p : paths f g)
     (x : A)
     : paths (f x) (g x)
-    := paths_elim_nodep (P := fun f' => paths (f x) (f' x)) idpath p .
+    := paths_elim_nodep (P := fun g' => paths (f x) (g' x)) idpath p .
 
   Definition ap11
     {A B : Type}
     {f g : A -> B} (p : paths f g)
     {x y : A} (q : paths x y)
     : paths (f x) (g y)
-    := paths_elim_nodep (P := fun f' => paths (f x) (f' y)) (ap f q) p .
+    := paths_elim_nodep (P := fun g' => paths (f x) (g' y)) (ap f q) p .
 
   Definition ap01_2
     {A B C : Type}
@@ -318,6 +318,6 @@ Module Homotopical.
     (f : forall a, B a)
     {x y : A} (p : paths x y)
     : paths (transport p (f x)) (f y)
-    := match p with idpath => idpath end .
+    := paths_elim (P := fun y' p' => paths (transport p' (f x)) (f y')) idpath p.
 
 End Homotopical.
