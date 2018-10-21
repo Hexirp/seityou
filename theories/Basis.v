@@ -188,11 +188,6 @@ Module Functional.
     : forall a, C (g a)
     := fun x => f (g x) .
 
-  Definition compose01
-    {A B C} (f : forall a, B a -> C a) (g : forall a, B a)
-    : forall a, C a
-    := fun x : A => f x (g x) .
-
   Definition absurd {A} : empty -> A
     := empty_elim_nodep .
 
@@ -282,6 +277,16 @@ Module Homotopical.
 
   Export Functional.
 
+  Definition compose10
+    {A B C} (f : forall b, C b) (g : A -> B)
+    : forall a, C (g a)
+    := compose_dep f g .
+
+  Definition compose01
+    {A B C} (f : forall a, B a -> C a) (g : forall a, B a)
+    : forall a, C a
+    := fun x : A => f x (g x) .
+
   Definition ap00
     {A B : Type}
     (f : A -> B)
@@ -299,6 +304,13 @@ Module Homotopical.
   Definition ap10
     {A B : Type}
     {f g : A -> B} (p : paths f g)
+    (x : A)
+    : paths (f x) (g x)
+    := paths_elim_nodep (P := fun g' => paths (f x) (g' x)) idpath p .
+
+  Definition ap10_dep
+    {A : Type} {B : A -> Type}
+    {f g : forall a, B a} (p : paths f g)
     (x : A)
     : paths (f x) (g x)
     := paths_elim_nodep (P := fun g' => paths (f x) (g' x)) idpath p .
@@ -327,15 +339,22 @@ Module Homotopical.
       (P := fun y' p' => paths (transport p' (f x)) (f y'))
       .
 
+  Definition ap01_dep
+    {A : Type} {B : A -> Type}
+    (f : forall a, B a)
+    {x y : A} (p : paths x y)
+    : paths (transport p (f x)) (f y)
+    := ap_dep f p .
+
   Definition pwpaths
     {A : Type} {B : A -> Type} (f g : forall a, B a) : Type
     := forall a, paths (f a) (g a) .
 
   Definition pwpaths_paths
-    {A B : Type}
-    {f g : A -> B} (p : paths f g)
+    {A : Type} {B : A -> Type}
+    {f g : forall a, B a} (p : paths f g)
     : pwpaths f g
-    := ap10 p .
+    := ap10_dep p .
 
   Definition pwpaths_compose01
     {A B C : Type}
@@ -382,7 +401,75 @@ Module Homotopical.
     := dsum (fun equiv_inv => is_equiv_rel f equiv_inv) .
 
   Definition equiv
-    {A B : Type} : Type
+    (A B : Type) : Type
     := dsum (fun f : A -> B => is_equiv f) .
+
+  Inductive trunc_index : Type
+    :=
+    | minus_two : trunc_index
+    | trunc_succ : trunc_index -> trunc_index
+    .
+
+  Definition trunc_index_rec
+    {P : Type}
+    (case_minus_two : P) (case_trunc_succ : P -> P)
+    (x : trunc_index) : P
+    :=
+      let go :=
+        fix go x :=
+          match x with
+          | minus_two => case_minus_two
+          | trunc_succ xp => case_trunc_succ (go xp)
+          end
+      in go x
+    .
+
+  Definition trunc_index_rect
+    {P : trunc_index -> Type}
+    (case_minus_two : P minus_two)
+    (case_trunc_succ : forall xp, P xp -> P (trunc_succ xp))
+    (x : trunc_index) : P x
+    :=
+      let go :=
+        fix go x :=
+          match x with
+          | minus_two => case_minus_two
+          | trunc_succ xp => case_trunc_succ xp (go xp)
+          end
+      in go x
+    .
+
+  Definition is_contr_center (A : Type) (x : A) : Type
+    := forall y, paths x y .
+
+  Definition is_contr (A : Type) : Type
+    := dsum (is_contr_center A) .
+
+  Definition paths_is (P : Type -> Type) (A : Type) : Type
+    := forall (x y : A), P (paths x y) .
+
+  Definition is_trunc (n : trunc_index) (A : Type) : Type
+    := trunc_index_rec is_contr paths_is n A .
+
+  Definition trunc_paths
+    (n : trunc_index) (A : Type) (H : is_trunc (trunc_succ n) A)
+    (x y : A) : is_trunc n (paths x y)
+    := H x y .
+
+  Definition funext : Type
+    := forall (A : Type) (B : A -> Type) (f g : forall a, B a),
+      pwpaths f g -> paths f g .
+
+  Definition funext_equiv : Type
+    := forall (A : Type) (B : A -> Type) (f g : forall a, B a),
+      is_equiv (@pwpaths_paths A B f g) .
+
+  Definition funext__funext_equiv (H : funext_equiv) : funext
+    := fun A B f g => dsum_fst (H A B f g) .
+
+  Definition pType : Type := dsum (fun A => A) .
+
+  Definition hfiber {A B : Type} (f : A -> B) (y : B) : Type
+    := dsum (fun x => paths (f x) y) .
 
 End Homotopical.
