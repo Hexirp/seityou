@@ -318,6 +318,8 @@ Module Homotopical.
     (f : forall a, B a)
     {x y : A} (p : paths x y)
     : paths (transport p (f x)) (f y)
-    := paths_elim (P := fun y' p' => paths (transport p' (f x)) (f y')) idpath p.
+    := paths_elim idpath p
+      (P := fun y' p' => paths (transport p' (f x)) (f y'))
+      .
 
 End Homotopical.
