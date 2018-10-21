@@ -322,4 +322,21 @@ Module Homotopical.
       (P := fun y' p' => paths (transport p' (f x)) (f y'))
       .
 
+  Definition pwpaths
+    {A : Type} {B : A -> Type} (f g : forall a, B a) : Type
+    := forall a, paths (f a) (g a) .
+
+  Definition pwpaths_paths
+    {A B : Type}
+    {f g : A -> B} (p : paths f g)
+    : pwpaths f g
+    := ap10 p .
+
+  Definition pwpaths_compose10
+    {A B C : Type}
+    {f g : B -> C} (p : pwpaths f g)
+    (h : A -> B)
+    : pwpaths (compose f h) (compose g h)
+    := composeD p h .
+
 End Homotopical.
