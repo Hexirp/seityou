@@ -271,3 +271,18 @@ Module Categorical.
     := fun f x => fun y => f y x .
 
 End Categorical.
+
+
+Module Homotopical.
+
+  Export Functional.
+
+  Definition ap00
+    {A B : Type} (f : A -> B) (x : A) : B
+    := f x .
+
+  Definition ap01
+    {A B : Type} (f : A -> B)
+    {x y : A} (p : paths x y)
+    : paths (f x) (f y)
+    := ap .
