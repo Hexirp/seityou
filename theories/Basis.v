@@ -135,6 +135,63 @@ Definition paths_elim
   := match x with idpath _ _ => case_idpath end .
 
 
+Module Functional.
+
+  Arguments empty .
+  Arguments empty_elim_nodep {_} _ .
+  Arguments empty_elim {_} _ .
+
+  Arguments unit .
+  Arguments unit_elim_nodep {_} _ _ .
+  Arguments unit_elim {_} _ _ .
+
+  Arguments sum _ _ .
+  Arguments left {_ _} _ .
+  Arguments right {_ _} _ .
+  Arguments sum_elim_nodep {_ _ _} _ _ _ .
+  Arguments sum_elim {_ _ _} _ _ _ .
+
+  Arguments prod _ _ .
+  Arguments pair {_ _} _ _ .
+  Arguments prod_elim_nodep {_ _ _} _ _ .
+  Arguments prod_elim {_ _ _} _ _ .
+
+  Arguments exp _ _ .
+  Arguments exp_elim_nodep {_ _ _} _ _.
+  Arguments exp_elim {_ _ _} _ _.
+
+  Arguments dsum {_} _ .
+  Arguments evi {_ _} _ _ .
+  Arguments dsum_elim_nodep {_ _ _} _ _ .
+  Arguments dsum_elim {_ _ _} _ _ .
+
+  Arguments dprod {_} _ .
+  Arguments dprod_elim_nodep {_ _ _} _ _.
+  Arguments dprod_elim {_ _ _} _ _.
+
+  Arguments paths {_} _ _ .
+  Arguments idpath {_ _} , [_] _ .
+  Arguments paths_elim_nodep {_ _ _} _ {_} _ .
+  Arguments paths_elim {_ _ _} _ {_} _ .
+
+  Definition absurd {A} : empty -> A
+    := empty_elim_nodep .
+
+  Definition fst {A B} : prod A B -> A
+    := prod_elim_nodep (fun a _ => a) .
+
+  Definition snd {A B} : prod A B -> B
+    := prod_elim_nodep (fun _ b => b) .
+
+  Definition dsum_fst {A B} : @dsum A B -> A
+    := dsum_elim_nodep (fun xv _ => xv) .
+
+  Definition dsum_snd {A B} (x : @dsum A B) : B (dsum_fst x)
+    := dsum_elim (P := fun x => B (dsum_fst x)) (fun _ xH => xH) x .
+
+Module Functional.
+
+
 Module Categorical.
 
   Definition initial {A : Type} : empty -> A
