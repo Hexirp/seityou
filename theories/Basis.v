@@ -240,7 +240,7 @@ Module Functional.
     : paths (f x) (f y)
     := paths_elim_nodep (P := fun x' => paths (f x) (f x')) idpath p .
 
-Module Functional.
+End Functional.
 
 
 Module Categorical.
