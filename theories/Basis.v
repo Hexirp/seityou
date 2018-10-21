@@ -188,6 +188,11 @@ Module Functional.
     : forall a, C (g a)
     := fun x => f (g x) .
 
+  Definition compose01
+    {A B C} (f : forall a, B a -> C a) (g : forall a, B a)
+    : forall a, C a
+    := fun x : A => f x (g x) .
+
   Definition absurd {A} : empty -> A
     := empty_elim_nodep .
 
@@ -313,7 +318,7 @@ Module Homotopical.
     : paths (f x z) (f y w)
     := ap11 (ap f p) q .
 
-  Definition apD
+  Definition ap_dep
     {A : Type} {B : A -> Type}
     (f : forall a, B a)
     {x y : A} (p : paths x y)
@@ -332,11 +337,18 @@ Module Homotopical.
     : pwpaths f g
     := ap10 p .
 
+  Definition pwpaths_compose01
+    {A B C : Type}
+    (f : B -> C)
+    {g h : A -> B} (p : pwpaths g h)
+    : pwpaths (compose f g) (compose f h)
+    := compose01 (fun a => ap (x := g a) (y := h a) f) p .
+
   Definition pwpaths_compose10
     {A B C : Type}
     {f g : B -> C} (p : pwpaths f g)
     (h : A -> B)
     : pwpaths (compose f h) (compose g h)
-    := composeD p h .
+    := compose_dep p h .
 
 End Homotopical.
