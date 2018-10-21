@@ -117,6 +117,23 @@ Definition dprod_elim
   (x : dprod A B) : P x
   := case x .
 
+Inductive paths (A : Type) (a : A) : A -> Type
+  :=
+  | idpath : paths A a a
+  .
+
+Definition paths_elim_nodep
+  (A : Type) (a : A) (P : A -> Type)
+  (case_idpath : P a)
+  (a' : A) (x : paths A a a') : P a'
+  := match x with idpath _ _ => case_idpath end .
+
+Definition paths_elim
+  (A : Type) (a : A) (P : forall a', paths A a a' -> Type)
+  (case_idpath : P a (idpath A a))
+  (a' : A) (x : paths A a a') : P a' x
+  := match x with idpath _ _ => case_idpath end .
+
 
 Module Categorical.
 
