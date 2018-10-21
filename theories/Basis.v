@@ -351,4 +351,38 @@ Module Homotopical.
     : pwpaths (compose f h) (compose g h)
     := compose_dep p h .
 
+  Definition section
+    {A B : Type}
+    (s : A -> B) (r : B -> A)
+    : Type
+    := pwpaths (compose r s) idmap .
+
+  Definition retraction
+    {A B : Type}
+    (r : B -> A) (s : A -> B)
+    : Type
+    := pwpaths (compose r s) idmap .
+
+  Definition is_adjoint
+    {A B : Type}
+    (f : A -> B) (g : B -> A)
+    (retr : retraction f g) (sect : section f g)
+    : Type
+    := pwpaths (pwpaths_compose10 retr f) (pwpaths_compose01 f sect) .
+
+  Definition is_equiv_rel
+    {A B : Type}
+    (f : A -> B) (g : B -> A)
+    : Type
+    := dsum (fun retr => dsum (fun sect => is_adjoint f g retr sect)) .
+
+  Definition is_equiv
+    {A B : Type} (f : A -> B)
+    : Type
+    := dsum (fun equiv_inv => is_equiv_rel f equiv_inv) .
+
+  Definition equiv
+    {A B : Type} : Type
+    := dsum (fun f : A -> B => is_equiv f) .
+
 End Homotopical.
