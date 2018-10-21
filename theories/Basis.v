@@ -137,42 +137,42 @@ Definition paths_elim
 
 Module Functional.
 
-  Arguments empty .
-  Arguments empty_elim_nodep {_} _ .
-  Arguments empty_elim {_} _ .
+  Local Arguments empty .
+  Local Arguments empty_elim_nodep {_} _ .
+  Local Arguments empty_elim {_} _ .
 
-  Arguments unit .
-  Arguments unit_elim_nodep {_} _ _ .
-  Arguments unit_elim {_} _ _ .
+  Local Arguments unit .
+  Local Arguments unit_elim_nodep {_} _ _ .
+  Local Arguments unit_elim {_} _ _ .
 
-  Arguments sum _ _ .
-  Arguments left {_ _} _ .
-  Arguments right {_ _} _ .
-  Arguments sum_elim_nodep {_ _ _} _ _ _ .
-  Arguments sum_elim {_ _ _} _ _ _ .
+  Local Arguments sum _ _ .
+  Local Arguments left {_ _} _ .
+  Local Arguments right {_ _} _ .
+  Local Arguments sum_elim_nodep {_ _ _} _ _ _ .
+  Local Arguments sum_elim {_ _ _} _ _ _ .
 
-  Arguments prod _ _ .
-  Arguments pair {_ _} _ _ .
-  Arguments prod_elim_nodep {_ _ _} _ _ .
-  Arguments prod_elim {_ _ _} _ _ .
+  Local Arguments prod _ _ .
+  Local Arguments pair {_ _} _ _ .
+  Local Arguments prod_elim_nodep {_ _ _} _ _ .
+  Local Arguments prod_elim {_ _ _} _ _ .
 
-  Arguments exp _ _ .
-  Arguments exp_elim_nodep {_ _ _} _ _.
-  Arguments exp_elim {_ _ _} _ _.
+  Local Arguments exp _ _ .
+  Local Arguments exp_elim_nodep {_ _ _} _ _.
+  Local Arguments exp_elim {_ _ _} _ _.
 
-  Arguments dsum {_} _ .
-  Arguments evi {_ _} _ _ .
-  Arguments dsum_elim_nodep {_ _ _} _ _ .
-  Arguments dsum_elim {_ _ _} _ _ .
+  Local Arguments dsum {_} _ .
+  Local Arguments evi {_ _} _ _ .
+  Local Arguments dsum_elim_nodep {_ _ _} _ _ .
+  Local Arguments dsum_elim {_ _ _} _ _ .
 
-  Arguments dprod {_} _ .
-  Arguments dprod_elim_nodep {_ _ _} _ _.
-  Arguments dprod_elim {_ _ _} _ _.
+  Local Arguments dprod {_} _ .
+  Local Arguments dprod_elim_nodep {_ _ _} _ _.
+  Local Arguments dprod_elim {_ _ _} _ _.
 
-  Arguments paths {_} _ _ .
-  Arguments idpath {_ _} , [_] _ .
-  Arguments paths_elim_nodep {_ _ _} _ {_} _ .
-  Arguments paths_elim {_ _ _} _ {_} _ .
+  Local Arguments paths {_} _ _ .
+  Local Arguments idpath {_ _} , [_] _ .
+  Local Arguments paths_elim_nodep {_ _ _} _ {_} _ .
+  Local Arguments paths_elim {_ _ _} _ {_} _ .
 
   Definition idmap {A} : A -> A
     := fun x => x .
