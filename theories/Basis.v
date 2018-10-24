@@ -473,3 +473,5 @@ Module Homotopical.
     := dsum (fun x => paths (f x) y) .
 
 End Homotopical.
+
+Export Homotopical.
