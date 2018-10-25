@@ -28,5 +28,12 @@ Proof.
  refine (paths_elim (P := fun y' p' => forall q : paths x y', paths p' q) _ p) .
  refine (fun q => _) .
  refine (axiom_K A x (fun q' => paths idpath q') _ q) .
- exact idpath.
+ exact idpath .
+Defined.
+
+Definition K_UIP_refl (axiom_K : K) : UIP_refl .
+Proof.
+ refine (fun A x p => _) .
+ refine (axiom_K A x (fun p' => paths p' idpath) _ p) .
+ exact idpath .
 Defined.
