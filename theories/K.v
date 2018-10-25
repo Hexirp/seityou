@@ -16,5 +16,14 @@ Definition UIP_refl : Type
     paths p idpath .
 
 
-Definition K_UIP (axiom_K : K) : UIP
-  := fun A x y p => _ .
+Declare ML Module "ltac_plugin".
+
+Export Set Default Proof Mode "Classic".
+
+
+
+Definition K_UIP (axiom_K : K) : UIP .
+Proof.
+ refine (fun A x y p q => _) .
+ refine (_ q) .
+Admitted.
