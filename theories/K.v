@@ -24,6 +24,9 @@ Export Set Default Proof Mode "Classic".
 
 Definition K_UIP (axiom_K : K) : UIP .
 Proof.
- refine (fun A x y p q => _) .
- refine (_ q) .
-Admitted.
+ refine (fun A x y p => _) .
+ refine (paths_elim (P := fun y' p' => forall q : paths x y', paths p' q) _ p) .
+ refine (fun q => _) .
+ refine (axiom_K A x (fun q' => paths idpath q') _ q) .
+ exact idpath.
+Defined.
