@@ -14,3 +14,7 @@ Definition UIP : Type
 Definition UIP_refl : Type
   := forall (A : Type) (x : A) (p : paths x x),
     paths p idpath .
+
+
+Definition K_UIP (axiom_K : K) : UIP
+  := fun A x y p => _ .
