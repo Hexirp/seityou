@@ -66,8 +66,28 @@ Definition paths_JMeq
   (p : paths x y) : JMeq x y
   := paths_elim_nodep JMeq_refl p .
 
-Definition JMeqp : Type
+Definition JMeq_paths : Type
   := forall (A : Type) (x y : A), JMeq x y -> paths x y .
+
+Definition JMeq_elim_nodep_eqlike : Type
+  := forall (A : Type) (a : A) (P : A -> Type),
+    P a -> forall a', JMeq a a' -> P a' .
+
+Definition JMeq_elim_eqlike : Type
+  := forall (A : Type) (a : A) (P : forall a', JMeq a a' -> Type),
+    P a JMeq_refl -> forall a' x, P a' x .
+
+Definition JMeq_K : Type
+  := forall (A : Type) (x : A) (P : JMeq x x -> Type),
+    P JMeq_refl -> forall p, P p .
+
+Definition JMeq_UIP : Type
+  := forall (A B : Type) (a : A) (b : B) (p : JMeq a b) (q : JMeq a b),
+    paths p q .
+
+Definition JMeq_UIP_refl : Type
+  := forall (A : Type) (x : A) (p : JMeq x x),
+    paths p JMeq_refl .
 
 
 Inductive eq_dep
