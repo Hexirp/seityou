@@ -54,6 +54,12 @@ Definition JMeq_transport
   (u : P A a) : P B b
   := JMeq_elim_nodep u x .
 
+Definition JMeq_ap
+  {P : forall T, T -> Type} {A B : Type}
+  {a : A} {b : B} (f : forall T t, P T t)
+  (x : JMeq a b) : JMeq (f A a) (f B b)
+  := JMeq_elim_nodep (P := fun B' b' => JMeq (f A a) (f B' b')) JMeq_refl x .
+
 Definition ap_dep_JMeq
   {A : Type} {B : A -> Type}
   (f : forall a, B a)
