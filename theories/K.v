@@ -163,10 +163,28 @@ Defined.
 
 
 Inductive eq_dep
-  (A : Type) (P : A -> Type) (x : A) (h : P x) : forall y, P y -> Type
+  (A : Type) (B : A -> Type) (x : A) (h : B x) : forall y, B y -> Type
   :=
-  | eq_dep_refl : eq_dep A P x h x h
+  | eq_dep_refl : eq_dep A B x h x h
   .
+
+Definition eq_dep_elim_nodep
+  (A : Type) (B : A -> Type) (x : A) (h : B x) (P : forall y, B y -> Type)
+  (case_eq_dep_refl : P x h) (y : A) (h' : B y)
+  (x : eq_dep A B x h y h') : P y h'
+  := match x with eq_dep_refl _ _ _ _ => case_eq_dep_refl end .
+
+Definition eq_dep_elim
+  (A : Type) (B : A -> Type) (x : A) (h : B x)
+  (P : forall y h', eq_dep A B x h y h' -> Type)
+  (case_eq_dep_refl : P x h (eq_dep_refl A B x h))
+  (y : A) (h' : B y) (x : eq_dep A B x h y h') : P y h' x
+  := match x with eq_dep_refl _ _ _ _ => case_eq_dep_refl end .
+
+Arguments eq_dep {_ _ _} _ {_} _ .
+Arguments eq_dep_refl {_ _ _} _ .
+Arguments eq_dep_elim_nodep {_ _ _ _ _} _ {_ _} _ .
+Arguments eq_dep_elim {_ _ _ _ _} _ {_ _} .
 
 
 Definition K_UIP (axiom_K : K) : UIP .
