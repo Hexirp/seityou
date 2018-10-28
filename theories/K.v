@@ -108,6 +108,14 @@ Proof.
  exact JMeq_refl .
 Defined.
 
+Definition UIP_JMeq_hetero
+  {A : Type} {x y z : A} (p : paths x y) (q : paths x z) : JMeq p q .
+Proof.
+ refine (paths_elim (P := fun y' p' => JMeq p' q) _ p) .
+ refine (paths_elim (P := fun z' q' => JMeq idpath q') _ q) .
+ exact JMeq_refl .
+Defined.
+
 Definition UIP_refl_JMeq
   {A : Type} {x : A} (p : paths x x) : JMeq p (idpath x) .
 Proof.
@@ -127,6 +135,15 @@ Definition JMeq_UIP_JMeq
 Proof.
  refine (JMeq_elim (P := fun B' b' p' => JMeq p' q) _ p) .
  refine (JMeq_elim (P := fun B' b' q' => JMeq JMeq_refl q') _ q) .
+ exact JMeq_refl .
+Defined.
+
+Definition JMeq_UIP_JMeq_hetero
+  {A B C : Type} {a : A} {b : B} {c : C} (p : JMeq a b) (q : JMeq a c)
+  : JMeq p q .
+Proof.
+ refine (JMeq_elim (P := fun B' b' p' => JMeq p' q) _ p) .
+ refine (JMeq_elim (P := fun C' c' q' => JMeq JMeq_refl q') _ q) .
  exact JMeq_refl .
 Defined.
 
