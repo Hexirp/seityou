@@ -1,4 +1,4 @@
-Unset Elimination Schemes.
+Export Unset Elimination Schemes.
 
 
 Notation "x -> y" := (forall (_ : x), y)
