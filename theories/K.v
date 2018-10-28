@@ -3,6 +3,11 @@ Add LoadPath "./theories".
 Require Import Basis.
 
 
+Declare ML Module "ltac_plugin".
+
+Export Set Default Proof Mode "Classic".
+
+
 Definition K : Type
   := forall (A : Type) (x : A) (P : paths x x -> Type),
     P idpath -> forall p, P p .
@@ -95,17 +100,56 @@ Definition JMeq_UIP_refl : Type
   := forall (A : Type) (x : A) (p : JMeq x x),
     paths p JMeq_refl .
 
+Definition UIP_JMeq
+  {A : Type} {x y : A} (p q : paths x y) : JMeq p q .
+Proof.
+ refine (paths_elim (P := fun y' p' => JMeq p' q) _ p) .
+ refine (paths_elim (P := fun y' q' => JMeq idpath q') _ q) .
+ exact JMeq_refl .
+Defined.
+
+Definition UIP_refl_JMeq
+  {A : Type} {x : A} (p : paths x x) : JMeq p (idpath x) .
+Proof.
+ refine (paths_elim (P := fun x' p' => JMeq p' idpath) _ p) .
+ exact JMeq_refl .
+Defined.
+
+Definition UIP_refl_JMeq_hetero
+  {A : Type} {x y : A} (p : paths x y) : JMeq p (idpath x) .
+Proof.
+ refine (paths_elim (P := fun y' p' => JMeq p' idpath) _ p) .
+ exact JMeq_refl .
+Defined.
+
+Definition JMeq_UIP_JMeq
+  {A B : Type} {a : A} {b : B} (p q : JMeq a b) : JMeq p q .
+Proof.
+ refine (JMeq_elim (P := fun B' b' p' => JMeq p' q) _ p) .
+ refine (JMeq_elim (P := fun B' b' q' => JMeq JMeq_refl q') _ q) .
+ exact JMeq_refl .
+Defined.
+
+Definition JMeq_UIP_refl_JMeq
+  {A : Type} {x : A} (p : JMeq x x) : JMeq p (JMeq_refl x) .
+Proof.
+ refine (JMeq_elim (P := fun A' x' p' => JMeq p' JMeq_refl) _ p) .
+ exact JMeq_refl .
+Defined.
+
+Definition JMeq_UIP_refl_JMeq_hetero
+  {A B : Type} {a : A} {b : B} (p : JMeq a b) : JMeq p (JMeq_refl a) .
+Proof.
+ refine (JMeq_elim (P := fun B' b' p' => JMeq p' JMeq_refl) _ p) .
+ exact JMeq_refl .
+Defined.
+
 
 Inductive eq_dep
   (A : Type) (P : A -> Type) (x : A) (h : P x) : forall y, P y -> Type
   :=
   | eq_dep_refl : eq_dep A P x h x h
   .
-
-
-Declare ML Module "ltac_plugin".
-
-Export Set Default Proof Mode "Classic".
 
 
 Definition K_UIP (axiom_K : K) : UIP .
