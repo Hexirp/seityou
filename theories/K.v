@@ -16,6 +16,12 @@ Definition UIP_refl : Type
     paths p idpath .
 
 
+Inductive JMeq (A : Type) (a : A) : forall B, B -> Type
+  :=
+  | JMeq_refl : JMeq A a A a
+  .
+
+
 Declare ML Module "ltac_plugin".
 
 Export Set Default Proof Mode "Classic".
