@@ -162,29 +162,57 @@ Proof.
 Defined.
 
 
-Inductive eq_dep
-  (A : Type) (B : A -> Type) (x : A) (h : B x) : forall y, B y -> Type
-  :=
-  | eq_dep_refl : eq_dep A B x h x h
-  .
+Section DependentEquality.
 
-Definition eq_dep_elim_nodep
-  (A : Type) (B : A -> Type) (x : A) (h : B x) (P : forall y, B y -> Type)
-  (case_eq_dep_refl : P x h) (y : A) (h' : B y)
-  (x : eq_dep A B x h y h') : P y h'
-  := match x with eq_dep_refl _ _ _ _ => case_eq_dep_refl end .
+  Variable A : Type .
+  Variable B : A -> Type .
 
-Definition eq_dep_elim
-  (A : Type) (B : A -> Type) (x : A) (h : B x)
-  (P : forall y h', eq_dep A B x h y h' -> Type)
-  (case_eq_dep_refl : P x h (eq_dep_refl A B x h))
-  (y : A) (h' : B y) (x : eq_dep A B x h y h') : P y h' x
-  := match x with eq_dep_refl _ _ _ _ => case_eq_dep_refl end .
+  Arguments A : default implicits .
+  Arguments B : default implicits .
 
-Arguments eq_dep {_ _ _} _ {_} _ .
-Arguments eq_dep_refl {_ _ _} _ .
-Arguments eq_dep_elim_nodep {_ _ _ _ _} _ {_ _} _ .
-Arguments eq_dep_elim {_ _ _ _ _} _ {_ _} .
+  Inductive eq_dep (x : A) (xh : B x) : forall y, B y -> Type
+    :=
+    | eq_dep_refl : eq_dep x xh x xh
+    .
+
+  Definition eq_dep_elim_nodep
+    (x : A) (xh : B x) (P : forall y, B y -> Type)
+    (case_eq_dep_refl : P x xh)
+    (y : A) (yh : B y)
+    (x : eq_dep x xh y yh) : P y yh
+    := match x with eq_dep_refl _ _ => case_eq_dep_refl end .
+
+  Definition eq_dep_elim
+    (x : A) (xh : B x) (P : forall y yh, eq_dep x xh y yh -> Type)
+    (case_eq_dep_refl : P x xh (eq_dep_refl x xh))
+    (y : A) (yh : B y)
+    (x : eq_dep x xh y yh) : P y yh x
+    := match x with eq_dep_refl _ _ => case_eq_dep_refl end .
+
+  Arguments eq_dep {_} _ {_} _ .
+  Arguments eq_dep_refl {_ _}, [_] _ .
+  Arguments eq_dep_elim_nodep {_ _ _} _ {_ _} _ .
+  Arguments eq_dep_elim {_ _ _} _ {_ _} .
+
+  Definition eq_dep_inverse
+    {x : A} {xh : B x} {y : A} {yh : B y}
+    (p : eq_dep xh yh) : eq_dep yh xh
+    := eq_dep_elim_nodep (P := fun y' yh' => eq_dep yh' xh) eq_dep_refl p .
+
+  Definition eq_dep_concat
+    {x : A} {xh : B x} {y : A} {yh : B y} {z : A} {zh : B z}
+    (p : eq_dep xh yh) (q : eq_dep yh zh) : eq_dep xh zh
+    := eq_dep_elim_nodep (eq_dep_elim_nodep eq_dep_refl p) q .
+
+  Definition paths_eq_dep
+    {x : A} {h i : B x} (p : paths h i) : eq_dep h i
+    := paths_elim_nodep eq_dep_refl p .
+
+  Definition eq_dep_JMeq
+    {x y : A} {xh : B x} {yh : B y} (p : eq_dep xh yh) : JMeq xh yh
+    := eq_dep_elim_nodep (P := fun y' yh' => JMeq xh yh') JMeq_refl p .
+
+End DependentEquality.
 
 
 Definition K_UIP (axiom_K : K) : UIP .
