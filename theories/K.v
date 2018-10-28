@@ -33,13 +33,41 @@ Definition JMeq_elim
   (B : Type) (b : B) (x : JMeq A a B b) : P B b x
   := match x with JMeq_refl _ _ => case_JMeq_refl end .
 
+Arguments JMeq {_} _ {_} _ .
+Arguments JMeq_refl {_ _}, [_] _ .
+Arguments JMeq_elim_nodep {_ _ _} _ {_ _} _ .
+Arguments JMeq_elim {_ _ _} _ {_ _} _ .
+
+Definition JMeq_inverse
+  {A B : Type} {a : A} {b : B}
+  (x : JMeq a b) : JMeq b a
+  := JMeq_elim_nodep (P := fun B' b' => JMeq b' a) JMeq_refl x .
+
+Definition JMeq_concat
+  {A B C : Type} {a : A} {b : B} {c : C}
+  (x : JMeq a b) (y : JMeq b c) : JMeq a c
+  := JMeq_elim_nodep (JMeq_elim_nodep JMeq_refl x) y .
+
+Definition JMeq_transport
+  {P : forall T, T -> Type} {A B : Type}
+  {a : A} {b : B} (x : JMeq a b)
+  (u : P A a) : P B b
+  := JMeq_elim_nodep u x .
+
+Definition ap_dep_JMeq
+  {A : Type} {B : A -> Type}
+  (f : forall a, B a)
+  {x y : A} (p : paths x y)
+  : JMeq (f x) (f y)
+  := paths_elim_nodep (P := fun y' => JMeq (f x) (f y')) JMeq_refl p .
+
 Definition paths_JMeq
-  (A : Type) (x y : A)
-  (p : paths x y) : JMeq A x A y
-  := paths_elim_nodep (JMeq_refl A x) p .
+  {A : Type} {x y : A}
+  (p : paths x y) : JMeq x y
+  := paths_elim_nodep JMeq_refl p .
 
 Definition JMeqp : Type
-  := forall (A : Type) (x y : A), JMeq A x A y -> paths x y .
+  := forall (A : Type) (x y : A), JMeq x y -> paths x y .
 
 
 Inductive eq_dep
