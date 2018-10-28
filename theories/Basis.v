@@ -219,7 +219,7 @@ Module Functional.
     := paths_elim (case_idpath a) x .
 
   Definition inverse
-    {A : Type} (x y : A)
+    {A : Type} {x y : A}
     (p : paths x y) : paths y x
     := paths_elim_nodep (P := fun y' => paths y' x) idpath p .
 

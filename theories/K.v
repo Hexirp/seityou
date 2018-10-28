@@ -54,7 +54,7 @@ Definition UIP_refl_K (axiom_UIP_refl : UIP_refl) : K .
 Proof.
  refine (fun A x P c p => _) .
  refine (paths_elim_nodep (P := fun p' => P p') c _) .
- refine (inverse p idpath _) .
+ refine (inverse _) .
  exact (axiom_UIP_refl A x p) .
 Defined.
 
@@ -63,6 +63,6 @@ Proof.
  refine (fun A x y p => _) .
  refine (paths_elim (P := fun y' p' => forall q : paths x y', paths p' q) _ p) .
  refine (fun q => _) .
- refine (inverse q idpath _) .
+ refine (inverse _) .
  exact (axiom_UIP_refl A x q) .
 Defined.
