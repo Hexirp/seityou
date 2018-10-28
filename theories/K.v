@@ -211,6 +211,10 @@ Definition eq_dep_JMeq
   {x y : A} {xh : B x} {yh : B y} (p : eq_dep xh yh) : JMeq xh yh
   := eq_dep_elim_nodep (P := fun y' yh' => JMeq xh yh') JMeq_refl p .
 
+Definition JMeq_eq_dep : Type
+  := forall (A : Type) (B : A -> Type) (x y : A) (xh : B x) (yh : B y),
+    JMeq xh yh -> eq_dep xh yh .
+
 Definition JMeq_eq_dep_id
   {A B : Type} (a : A) (b : B) (p : JMeq a b)
   : eq_dep (B := idmap) a b
@@ -266,4 +270,23 @@ Proof.
  refine (fun q => _) .
  refine (inverse _) .
  exact (axiom_UIP_refl A x q) .
+Defined.
+
+
+Definition not_JMeq_eq_dep (axiom_JMeq_eq_dep : JMeq_eq_dep) : empty .
+Proof.
+ pose (A := sum unit unit : Type) .
+ pose (B := const unit : sum unit unit -> Type) .
+ pose (x := left tt : A) .
+ pose (y := right tt : A) .
+ pose (xh := tt : B x) .
+ pose (yh := tt : B y) .
+ pose (H := axiom_JMeq_eq_dep A B x y xh yh : JMeq xh yh -> eq_dep xh yh) .
+ pose (p := JMeq_refl : JMeq xh yh) .
+ pose (q := H p : eq_dep xh yh) .
+ pose (D := sum_elim_nodep (const unit) (const empty) : A -> Type) .
+ change (D y) .
+ refine (eq_dep_elim_nodep (P := fun y' yh' => D y') _ q) .
+ change unit .
+ exact tt .
 Defined.
