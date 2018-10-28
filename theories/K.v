@@ -206,6 +206,15 @@ Definition paths_eq_dep
   {x : A} {h i : B x} (p : paths h i) : eq_dep h i
   := paths_elim_nodep eq_dep_refl p .
 
+Definition eq_dep_paths_shallow
+  {A : Type} {B : A -> Type}
+  {x y : A} {xh : B x} {yh : B y} (p : eq_dep xh yh) : paths x y
+  := eq_dep_elim_nodep (P := fun y' _ => paths x y') idpath p .
+
+Definition eq_dep_paths : Type
+  := forall (A : Type) (B : A -> Type) (x : A) (xh : B x),
+    paths xh xh .
+
 Definition eq_dep_JMeq
   {A : Type} {B : A -> Type}
   {x y : A} {xh : B x} {yh : B y} (p : eq_dep xh yh) : JMeq xh yh
@@ -214,6 +223,18 @@ Definition eq_dep_JMeq
 Definition JMeq_eq_dep : Type
   := forall (A : Type) (B : A -> Type) (x y : A) (xh : B x) (yh : B y),
     JMeq xh yh -> eq_dep xh yh .
+
+Definition JMeq_eq_dep_weak
+  {A : Type} {B : A -> Type}
+  {x y : A} {xh : B x} {yh : B y}
+  (p : paths x y) (q : JMeq xh yh) : eq_dep xh yh .
+Proof.
+ revert yh q .
+ refine (
+  paths_elim_nodep _ p
+    (P := fun y' => forall yh : B y', JMeq xh yh -> eq_dep xh yh)
+ ) .
+Admitted.
 
 Definition JMeq_eq_dep_id
   {A B : Type} (a : A) (b : B) (p : JMeq a b)
@@ -286,7 +307,7 @@ Proof.
  pose (q := H p : eq_dep xh yh) .
  pose (D := sum_elim_nodep (const unit) (const empty) : A -> Type) .
  change (D y) .
- refine (eq_dep_elim_nodep (P := fun y' yh' => D y') _ q) .
+ refine (eq_dep_elim_nodep (P := fun y' _ => D y') _ q) .
  change unit .
  exact tt .
 Defined.
