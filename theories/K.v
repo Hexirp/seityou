@@ -214,6 +214,14 @@ Section DependentEquality.
 
 End DependentEquality.
 
+Arguments eq_dep {_ _ _} _ {_} .
+Arguments eq_dep_refl {_ _ _ _}, {_ _} [_] _ .
+
+Definition JMeq_eq_dep_id
+  {A B : Type} (a : A) (b : B) (p : JMeq a b)
+  : @eq_dep Type idmap A a B b
+  := JMeq_elim_nodep eq_dep_refl p .
+
 
 Definition K_UIP (axiom_K : K) : UIP .
 Proof.
