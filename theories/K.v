@@ -21,6 +21,33 @@ Inductive JMeq (A : Type) (a : A) : forall B, B -> Type
   | JMeq_refl : JMeq A a A a
   .
 
+Definition JMeq_elim_nodep
+  (A : Type) (a : A) (P : forall B, B -> Type)
+  (case_JMeq_refl : P A a)
+  (B : Type) (b : B) (x : JMeq A a B b) : P B b
+  := match x with JMeq_refl _ _ => case_JMeq_refl end .
+
+Definition JMeq_elim
+  (A : Type) (a : A) (P : forall B b, JMeq A a B b -> Type)
+  (case_JMeq_refl : P A a (JMeq_refl A a))
+  (B : Type) (b : B) (x : JMeq A a B b) : P B b x
+  := match x with JMeq_refl _ _ => case_JMeq_refl end .
+
+Definition paths_JMeq
+  (A : Type) (x y : A)
+  (p : paths x y) : JMeq A x A y
+  := paths_elim_nodep (JMeq_refl A x) p .
+
+Definition JMeqp : Type
+  := forall (A : Type) (x y : A), JMeq A x A y -> paths x y .
+
+
+Inductive eq_dep
+  (A : Type) (P : A -> Type) (x : A) (h : P x) : forall y, P y -> Type
+  :=
+  | eq_dep_refl : eq_dep A P x h x h
+  .
+
 
 Declare ML Module "ltac_plugin".
 
