@@ -286,6 +286,16 @@ Proof.
 Defined.
 
 
+Definition JMeq_paths_K (axiom_JMeq_paths : JMeq_paths) : K .
+Proof.
+ refine (fun A x P c p => _) .
+ refine (transport _ c) .
+ refine (axiom_JMeq_paths (paths x x) idpath p _) .
+ refine (JMeq_inverse _) .
+ exact (UIP_refl_JMeq p) .
+Defined.
+
+
 Definition not_JMeq_eq_dep (axiom_JMeq_eq_dep : JMeq_eq_dep) : empty .
 Proof.
  pose (A := sum unit unit : Type) .
