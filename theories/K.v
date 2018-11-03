@@ -295,6 +295,12 @@ Proof.
  exact (UIP_refl_JMeq p) .
 Defined.
 
+Definition JMeq_paths_UIP (axiom_JMeq_paths : JMeq_paths) : UIP .
+Proof.
+ refine (fun A x y p q => _) .
+ refine (axiom_JMeq_paths (paths x y) p q _) .
+ exact (UIP_JMeq p q) .
+Defined.
 
 Definition not_JMeq_eq_dep (axiom_JMeq_eq_dep : JMeq_eq_dep) : empty .
 Proof.
