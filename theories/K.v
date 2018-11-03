@@ -289,10 +289,11 @@ Defined.
 Definition JMeq_paths_K (axiom_JMeq_paths : JMeq_paths) : K .
 Proof.
  refine (fun A x P c p => _) .
- refine (transport (P := idmap) _ c) .
- refine (axiom_JMeq_paths Type (P idpath) (P p) _) .
- Fail refine (paths_elim (P := fun x' p' => JMeq (P idpath) (P p')) _ p) .
-Abort.
+ refine (transport _ c) .
+ refine (inverse _) .
+ refine (axiom_JMeq_paths (paths x x) p idpath _) .
+ exact (UIP_refl_JMeq p) .
+Defined.
 
 
 Definition not_JMeq_eq_dep (axiom_JMeq_eq_dep : JMeq_eq_dep) : empty .
