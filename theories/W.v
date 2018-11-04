@@ -2,7 +2,7 @@ Add LoadPath "./theories".
 
 Require Import Basis.
 
-Private Inductive w (A : Type) (B : A -> Type)
+Polymorphic Cumulative Private Inductive w (A : Type) (B : A -> Type)
   :=
   | sup : forall x : A, (B x -> w A B) -> w A B
   .
