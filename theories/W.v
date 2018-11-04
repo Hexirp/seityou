@@ -2,21 +2,21 @@ Add LoadPath "./theories".
 
 Require Import Basis.
 
-Polymorphic Cumulative Private Inductive w@{i j} (A : Type@{i}) (B : A -> Type@{j})
+Polymorphic Cumulative Private Inductive w@{i j k} (A : Type@{i}) (B : A -> Type@{j}) : Type@{k}
   :=
   | sup : forall x : A, (B x -> w A B) -> w A B
   .
 
-Polymorphic Definition w_rect@{i j k}
-  (A : Type@{i}) (B : A -> Type@{j}) (P : w A B -> Type@{k})
+Polymorphic Definition w_rect@{i j k l}
+  (A : Type@{i}) (B : A -> Type@{j}) (P : w@{i j k} A B -> Type@{l})
   (case_sup : forall x u, (forall y, P (u y)) -> P (sup A B x u))
   (x : w A B) : P x
   .
 Proof.
 Admitted.
 
-Polymorphic Definition w_rect_c@{i j k}
-  (A : Type@{i}) (B : A -> Type@{j}) (P : w A B -> Type@{k})
+Polymorphic Definition w_rect_c@{i j k l}
+  (A : Type@{i}) (B : A -> Type@{j}) (P : w@{i j k} A B -> Type@{l})
   (c : forall x u, (forall y, P (u y)) -> P (sup A B x u))
   (x : A) (u : B x -> w A B)
   : paths
@@ -26,8 +26,8 @@ Polymorphic Definition w_rect_c@{i j k}
 Proof.
 Admitted.
 
-Definition nat@{i j k l} : Type@{k} := w@{i j} Type@{l} (fun A => sum unit A).
+Polymorphic Definition nat@{i j k l} : Type@{l} := w@{j k l} Type@{i} (fun A => sum unit A).
 
-Definition zero@{i j k} : nat.
+Polymorphic Definition zero@{i j k l m n o} : nat@{l m n o}.
 Proof.
- refine (sup@{i j} Type@{k} (fun A => sum unit A) nat _).
+ refine (sup@{m n o} Type@{l} (fun A => sum unit A) nat@{i j k l} _). Show Proof.
