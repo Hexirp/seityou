@@ -56,6 +56,7 @@ Proof.
 Defined.
 
 Definition nat_rect
+  {axiom_funext : funext}
   (P : nat -> Type)
   (case_zero : P zero)
   (case_succ : forall xp : nat, P xp -> P (succ xp))
@@ -77,12 +78,8 @@ Proof.
    ).
    exact case_zero.
   +
-   cut funext.
-   *
-    refine (fun f => f _ _ _ _ _).
+    refine (axiom_funext _ _ _ _ _).
     exact (fun x => match x with end).
-   *
-    admit.
  -
   refine (match ir with tt => _ end).
   refine (fun u t => _).
@@ -96,10 +93,6 @@ Proof.
    refine (case_succ (u tt) _).
    exact (t tt).
   +
-   cut funext.
-   *
-    refine (fun f => f _ _ _ _ _).
-    exact (fun x => match x with tt => idpath end).
-   *
-    admit.
-Admitted.
+   refine (axiom_funext _ _ _ _ _).
+   exact (fun x => match x with tt => idpath end).
+Defined.
