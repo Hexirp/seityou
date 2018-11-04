@@ -40,3 +40,9 @@ Proof.
  change (D (trunc_succ Hv)) with unit.
  exact tt.
 Defined.
+
+Definition succ : ti -> ti.
+Proof.
+ refine (w_rect
+     trunc_index (fun x => dsum (fun y => paths (trunc_succ y) x)) (fun _ => ti) _).
+ refine (fun x u t => _).
