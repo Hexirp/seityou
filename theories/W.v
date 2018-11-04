@@ -54,3 +54,52 @@ Proof.
  refine (fun H => _).
  exact x.
 Defined.
+
+Definition nat_rect
+  (P : nat -> Type)
+  (case_zero : P zero)
+  (case_succ : forall xp : nat, P xp -> P (succ xp))
+  (x : nat) : P x
+  .
+Proof.
+ refine (w_rect _ _ _ _ x).
+ refine (fun i => _).
+ refine (match i with left il => _ | right ir => _ end).
+ -
+  refine (match il with tt => _ end).
+  refine (fun u t => _).
+  cut (paths absurd u).
+  +
+   refine (fun p => _).
+   refine (
+    transport p _
+    (P := fun u' => P (sup (sum unit unit) (sum_elim_nodep (const empty) (const unit)) (left tt) u'))
+   ).
+   exact case_zero.
+  +
+   cut funext.
+   *
+    refine (fun f => f _ _ _ _ _).
+    exact (fun x => match x with end).
+   *
+    admit.
+ -
+  refine (match ir with tt => _ end).
+  refine (fun u t => _).
+  cut (paths (fun _ => u tt) u).
+  +
+   refine (fun p => _).
+   refine (
+    transport p _
+    (P := fun u' => P (sup (sum unit unit) (sum_elim_nodep (const empty) (const unit)) (right tt) u'))
+   ).
+   refine (case_succ (u tt) _).
+   exact (t tt).
+  +
+   cut funext.
+   *
+    refine (fun f => f _ _ _ _ _).
+    exact (fun x => match x with tt => idpath end).
+   *
+    admit.
+Admitted.
