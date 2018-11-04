@@ -26,7 +26,9 @@ Polymorphic Definition w_rect_c@{i j k l}
 Proof.
 Admitted.
 
-Definition ti : Type := w trunc_index (fun x => dsum (fun y => paths (trunc_succ y) x)).
+Definition tb : trunc_index -> Type := fun x => dsum (fun y => paths (trunc_succ y) x).
+
+Definition ti : Type := w trunc_index tb.
 
 Definition zero : ti.
 Proof.
@@ -43,6 +45,10 @@ Defined.
 
 Definition succ : ti -> ti.
 Proof.
- refine (w_rect
-     trunc_index (fun x => dsum (fun y => paths (trunc_succ y) x)) (fun _ => ti) _).
+ refine (w_rect trunc_index tb (fun _ => ti) _).
  refine (fun x u t => _).
+ refine (sup _ _ (trunc_succ x) _).
+ refine (fun H => _).
+ refine (u _).
+ revert u t H.
+ refine (match x with minus_two => _ | trunc_succ xp => _ end).
