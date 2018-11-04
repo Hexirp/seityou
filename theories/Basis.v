@@ -284,7 +284,7 @@ Arguments dprod_elim {_ _ _} _ _.
 
 (** [A] の上での等式型。
 
-    "equality type" や "identity type" であり、旧来の Coq では [eq] と
+    "equality type" や "identity type" であり、旧来のCoqでは [eq] と
     呼ばれるが、HoTTの流儀に従い [paths] と名付ける。 *)
 Inductive paths (A : Type) (a : A) : A -> Type
   :=
@@ -309,68 +309,113 @@ Arguments paths_elim_nodep {_ _ _} _ {_} _ .
 Arguments paths_elim {_ _ _} _ {_} _ .
 
 
+(** ** Functional - Basic Functions
+
+    標準的な関数を記述する。 *)
+
 Module Functional.
 
+  (** 恒等関数。
+
+      HoTTのライブラリに見られるように [Notation idmap := (fun x => x)] と
+      定義することもでき、展開が必要ないことや宇宙の階層関係で優位性を持つが、
+      意図しない変換を発生させうる [Notation] をできるたけ使いたくないため
+      こうする。 *)
   Definition idmap {A} : A -> A
     := fun x => x .
 
+  (** 定数関数。 *)
   Definition const {A B} : A -> B -> A
     := fun x y => x .
 
+  (** 関数合成 *)
   Definition compose {A B C} : (B -> C) -> (A -> B) -> (A -> C)
     := fun f g x => f (g x) .
 
+  (** 関数合成の依存版。 *)
   Definition compose_dep
     {A B C} (f : forall b, C b) (g : A -> B)
     : forall a, C (g a)
     := fun x => f (g x) .
 
+  (** [empty] の値は存在しえないため、"ex falso quodlibet" よりどのような型も
+      返すことが出来る。
+
+      旧来のCoqには [exfalso] として存在する。 *)
   Definition absurd {A} : empty -> A
     := empty_elim_nodep .
 
+  (** 一番最初の値を取り出す。 *)
   Definition fst {A B} : prod A B -> A
     := prod_elim_nodep (fun a _ => a) .
 
+  (** 二番目の値を取り出す。 *)
   Definition snd {A B} : prod A B -> B
     := prod_elim_nodep (fun _ b => b) .
 
+  (** カリー化された関数を対からの関数に変換する。 *)
   Definition uncurry {A B C} : (A -> B -> C) -> (prod A B -> C)
     := prod_elim_nodep .
 
+  (** [dsum] 版の [fst] 。 *)
   Definition dsum_fst {A B} : @dsum A B -> A
     := dsum_elim_nodep (fun xv _ => xv) .
 
+  (** [dsum] 版の [snd] 。 *)
   Definition dsum_snd {A B} (x : @dsum A B) : B (dsum_fst x)
     := dsum_elim (P := fun x' => B (dsum_fst x')) (fun _ xH => xH) x .
 
+  (** [paths] には二つの定義方法が存在する。今までの定義は「基点付き」であり、
+      「基点なし」もある。このような定義である。
+
+      <<
+        Inductive paths (A : Type) : A -> A -> Type
+          :=
+          | idpath : forall a : A, paths A a a
+          .
+      >>
+
+      この二つの方法で定義された [paths] は等価である。この「等価」の意味は
+      強い。詳細は等式型のバリエーションを集めた Equality に譲る。
+
+      とにかく、帰納法も対応するものがある。 [paths] に対する帰納法は特に
+      道帰納法と呼ばれるから、基点無し道帰納法となる。これは、左右対称である
+      ことによって、いくつかのケースで便利かもしれない。 *)
+
+  (** 依存無し基点無し道帰納法。 *)
   Definition paths_elim_nodep_nop
     {A : Type} {P : A -> A -> Type}
     (case_idpath : forall a, P a a)
     (a a' : A) (x : paths a a') : P a a'
     := paths_elim_nodep (case_idpath a) x .
 
+  (** 基点無し道帰納法。 *)
   Definition paths_elim_nop
     {A : Type} {P : forall a a', paths a a' -> Type}
     (case_idpath : forall a, P a a idpath)
     (a a' : A) (x : paths a a') : P a a' x
     := paths_elim (case_idpath a) x .
 
+  (** 道を反転する。 *)
   Definition inverse
     {A : Type} {x y : A}
     (p : paths x y) : paths y x
     := paths_elim_nodep (P := fun y' => paths y' x) idpath p .
 
+  (** 道を結合する。 *)
   Definition concat
     {A : Type} {x y z : A}
     (p : paths x y) (q : paths y z) : paths x z
     := paths_elim_nodep (paths_elim_nodep idpath p) q .
 
+  (** 道に沿って輸送する。 *)
   Definition transport
     {A : Type} {P : A -> Type}
     {x y : A} (p : paths x y)
     (u : P x) : P y
     := paths_elim_nodep u p .
 
+  (** 道の両辺に関数を適用する。 *)
   Definition ap
     {A B : Type} (f : A -> B)
     {x y : A} (p : paths x y)
@@ -379,6 +424,10 @@ Module Functional.
 
 End Functional.
 
+
+(** ** Categorical - Categorical Functions
+
+    これはあまり大真面目ではない部分である。削除されるかもしれない。 *)
 
 Module Categorical.
 
