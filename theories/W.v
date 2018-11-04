@@ -28,6 +28,6 @@ Admitted.
 
 Polymorphic Definition nat@{i j k l} : Type@{l} := w@{j k l} Type@{i} (fun A => sum unit A).
 
-Polymorphic Definition zero@{i j k l m n o} : nat@{l m n o}.
+Polymorphic Definition zero@{i j k l} : nat@{i j k l}.
 Proof.
- refine (sup@{m n o} Type@{l} (fun A => sum unit A) nat@{i j k l} _). Show Proof.
+ refine (w_rect Type@{i} (fun A => sum unit A) (fun x => x) _ _) .
