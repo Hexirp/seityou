@@ -25,3 +25,9 @@ Definition w_rect_c
   .
 Proof.
 Admitted.
+
+Definition nat : Type := w Type (fun A => sum unit A).
+
+Definition zero : nat.
+Proof.
+ refine (sup _ _ nat _).
