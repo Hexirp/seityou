@@ -314,8 +314,8 @@ Proof.
  pose (p := JMeq_refl : JMeq xh yh) .
  pose (q := H p : eq_dep xh yh) .
  pose (D := sum_elim_nodep (const unit) (const empty) : A -> Type) .
- change (D y) with empty .
+ change empty with (D y) .
  refine (eq_dep_elim_nodep (P := fun y' _ => D y') _ q) .
- change unit with (D x) .
+ change (D x) with unit .
  exact tt .
 Defined.
