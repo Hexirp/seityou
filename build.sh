@@ -5,4 +5,4 @@ COQ_PATH=/c/coq
 
 PATH=$COQ_PATH/bin:$PATH
 
-coqc theories/Basis.v theories/K.v
+coqc theories/Basis.v theories/K.v theories/W.v
