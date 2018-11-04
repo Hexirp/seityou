@@ -158,23 +158,23 @@ Arguments exp_elim {_ _ _} _ _.
     "dependent sum type" である。 *)
 Inductive dsum (A : Type) (B : A -> Type) : Type
   :=
-  | evi : forall x : A, B x -> dsum A B
+  | dpair : forall x : A, B x -> dsum A B
   .
 
 Definition dsum_elim_nodep
   (A : Type) (B : A -> Type) (P : Type)
   (case_evi : forall x, B x -> P)
   (x : dsum A B) : P
-  := match x with evi _ _ xv xH => case_evi xv xH end .
+  := match x with dpair _ _ xv xH => case_evi xv xH end .
 
 Definition dsum_elim
   (A : Type) (B : A -> Type) (P : dsum A B -> Type)
-  (case_evi : forall xv xH, P (evi A B xv xH))
+  (case_evi : forall xv xH, P (dpair A B xv xH))
   (x : dsum A B) : P x
-  := match x with evi _ _ xv xH => case_evi xv xH end .
+  := match x with dpair _ _ xv xH => case_evi xv xH end .
 
 Arguments dsum {_} _ .
-Arguments evi {_ _} _ _ .
+Arguments dpair {_ _} _ _ .
 Arguments dsum_elim_nodep {_ _ _} _ _ .
 Arguments dsum_elim {_ _ _} _ _ .
 
@@ -320,7 +320,7 @@ Module Categorical.
   Definition dependent_coproduct
     {X : Type} {A : X -> Type} {B : Type}
     : (forall x, A x -> B) -> (dsum A -> B)
-    := fun f x => match x with evi xv xH => f xv xH end .
+    := fun f x => match x with dpair xv xH => f xv xH end .
 
   Definition dependent_product
     {X : Type} {A : Type} {B : X -> Type}

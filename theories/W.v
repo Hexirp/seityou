@@ -32,7 +32,7 @@ Definition zero : ti.
 Proof.
  refine (sup _ _ minus_two _).
  refine (fun H => _).
- refine (match H with evi Hv HH => _ end).
+ refine (match H with dpair Hv HH => _ end).
  refine (absurd _).
  pose (D := trunc_index_rec empty (const unit) : trunc_index -> Type).
  change empty with (D minus_two).
