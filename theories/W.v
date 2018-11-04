@@ -26,8 +26,8 @@ Polymorphic Definition w_rect_c@{i j k l}
 Proof.
 Admitted.
 
-Polymorphic Definition nat@{i j k l} : Type@{l} := w@{j k l} Type@{i} (fun A => sum unit A).
+Definition nat : Type := w unit (fun _ => unit).
 
-Polymorphic Definition zero@{i j k l} : nat@{i j k l}.
+Definition zero : nat.
 Proof.
- refine (w_rect Type@{i} (fun A => sum unit A) (fun x => x) _ _) .
+ refine (sup _ _ tt _).
