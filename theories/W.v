@@ -37,29 +37,20 @@ Definition w_rect_c
 Proof.
 Admitted.
 
-Definition tb : trunc_index -> Type := fun x => dsum (fun y => paths (trunc_succ y) x).
+Definition nat : Type := w (sum unit unit) (sum_elim_nodep (const empty) (const unit)).
 
-Definition ti : Type := w trunc_index tb.
-
-Definition zero : ti.
+Definition zero : nat.
 Proof.
- refine (sup _ _ minus_two _).
+ refine (sup _ _ (left tt) _).
  refine (fun H => _).
- refine (match H with dpair Hv HH => _ end).
  refine (absurd _).
- pose (D := trunc_index_rec empty (const unit) : trunc_index -> Type).
- change empty with (D minus_two).
- refine (transport HH _).
- change (D (trunc_succ Hv)) with unit.
- exact tt.
+ exact H.
 Defined.
 
-Definition succ : ti -> ti.
+Definition succ : nat -> nat.
 Proof.
- refine (w_rect trunc_index tb (fun _ => ti) _).
- refine (fun x u t => _).
- refine (sup _ _ (trunc_succ x) _).
+ refine (fun x => _).
+ refine (sup _ _ (right tt) _).
  refine (fun H => _).
- refine (u _).
- revert u t H.
- refine (match x with minus_two => _ | trunc_succ xp => _ end).
+ exact x.
+Defined.
