@@ -28,6 +28,86 @@
     - https://github.com/HoTT/HoTT/blob/fd5b9b9002e40cc94d6434039698a423bf3068ad/theories/Basics/Overture.v#L15 *)
 Export Unset Elimination Schemes.
 
+(** 除去子の名前は、このようなルールで名付けられる。
+
+    普通の型は、非帰納的であるか、帰納的であるか、余帰納的であるかである。
+    また、除去子は、除去する値に型が依存しないか、依存するかの違いがある。
+
+    型 [thing] に対して、
+    - 非帰納的であるならば、 [thing_elim_nodep], [thing_elim]
+    - 帰納的であるならば、 [thing_rec], [thing_rect]
+    - 余帰納的であるならば、 [thing_corec], [thing_corect]
+
+    ここでの [thing_corect] はどのようなものなのかわからない。依存型の圏論的な
+    双対にヒントがあるのではないかと見ているが、納得できる答えは知らない。
+    ここでは、単純に定義しないことにする。
+
+    非帰納的な例:
+    <<
+      Inductive thing : Type := mk_thing : unit -> thing .
+
+      Definition thing_elim_nodep
+        (P : Type) (case_mk_thing : unit -> P) (x : thing) : P
+        := match x with mk_thing a => case_mk_thing a end .
+
+      Definition thing_elim
+        (P : thing -> Type) (case_mk_thing : forall t, P (mk_thing t))
+        (x : thing) : P x
+        := match x with mk_thing a => case_mk_thing a end .
+    >>
+
+    帰納的な例:
+    <<
+      Inductive nat : Type := zero : nat | succ : nat -> nat .
+
+      Definition nat_rec
+        (P : Type) (case_zero : P) (case_succ : P -> P) (x : nat) : P
+        :=
+          let go :=
+            fix go x :=
+              match x with
+              | zero => case_zero
+              | succ xp => case_succ (go xp)
+              end
+          in
+            go x
+        .
+
+      Definition nat_rect
+        (P : nat -> Type)
+        (case_zero : P zero)
+        (case_succ : forall xp, P xp -> P (succ xp))
+        (x : nat) : P x
+        :=
+          let go :=
+            fix go x :=
+              match x with
+              | zero => case_zero
+              | succ xp => case_succ (go xp)
+              end
+          in
+            go x
+        .
+    >>
+
+    余帰納的な例:
+    <<
+      CoInductive stream (A : Type) := cons : A -> stream A -> stream A .
+
+      Definition
+        (P : Type)
+        (case_head : P -> A) (case_tail : P -> P)
+        (x : P) : stream A
+        :=
+          let go :=
+            cofix go x :=
+              cons (case_head x) (case_tail (go x))
+          in
+            go x
+        .
+    >>
+
+    *)
 
 (** ** Basic Types
 
