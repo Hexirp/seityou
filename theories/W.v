@@ -26,8 +26,17 @@ Polymorphic Definition w_rect_c@{i j k l}
 Proof.
 Admitted.
 
-Definition nat : Type := w unit (fun _ => unit).
+Definition ti : Type := w trunc_index (fun x => dsum (fun y => paths (trunc_succ y) x)).
 
-Definition zero : nat.
+Definition zero : ti.
 Proof.
- refine (sup _ _ tt _).
+ refine (sup _ _ minus_two _).
+ refine (fun H => _).
+ refine (match H with evi Hv HH => _ end).
+ refine (absurd _).
+ pose (D := trunc_index_rec empty (const unit) : trunc_index -> Type).
+ change empty with (D minus_two).
+ refine (transport HH _).
+ change (D (trunc_succ Hv)) with unit.
+ exact tt.
+Defined.
