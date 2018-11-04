@@ -315,7 +315,11 @@ Proof.
  pose (q := H p : eq_dep xh yh) .
  pose (D := sum_elim_nodep (const unit) (const empty) : A -> Type) .
  change empty with (D y) .
- refine (eq_dep_elim_nodep (P := fun y' _ => D y') _ q) .
- change (D x) with unit .
- exact tt .
+ refine (transport (x := x) _ _) .
+ -
+  refine (eq_dep_paths_shallow (xh := xh) (yh := yh) _) .
+  exact q .
+ -
+  change (D x) with unit .
+  exact tt .
 Defined.
