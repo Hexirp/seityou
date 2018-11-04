@@ -1,14 +1,19 @@
-(** * Basis - Basic definitions *)
-(** 標準的な定義を行う。 *)
+(** * Basis - Basic definitions
 
-(** 新しい帰納型を定義した時に、自動で帰納法の原理／除去規則が定義されないようにする。 *)
-(** 除去規則を自動生成される名前ではなく独自の名前付け規則で定義したいため。 *)
-(** これにより、 [induction] と [elim] 戦略が使えなくなる。 *)
-(** 陽に除去規則を使うことで代替することにする。 *)
-(** 代わりに [Local Unset Elimination Schemes] を使えば、 *)
-(** [Scheme] コマンドを使うなりして[hoge_ind], [hoge_rec], [hoge_rect] を定義することで、 *)
-(** [induction] と [elim] 戦略が使えるようになるが、そこまでする価値を感じないので、 *)
-(** そうしない。 *)
+    標準的な定義を行う。 *)
+
+(** 新しい帰納型を定義した時に、自動で帰納法の原理／除去規則が定義されない
+    ようにする。
+
+    除去規則を自動生成される名前ではなく独自の名前付け規則で定義したいため。
+
+    これにより、 [induction] と [elim] 戦略が使えなくなるので、陽に除去規則を
+    使うことで代替することにする。
+
+    代わりに [Local Unset Elimination Schemes] を使えば、 [Scheme] コマンドを
+    使うなりして[hoge_ind], [hoge_rec], [hoge_rect] を定義することで、
+    [induction] と [elim] 戦略が使えるようになるが、そこまでする価値を感じない
+    ので、そうしない。 *)
 Export Unset Elimination Schemes.
 
 
