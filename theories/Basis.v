@@ -29,10 +29,18 @@
 Export Unset Elimination Schemes.
 
 
+(** ** Basic Types
+
+    標準的な型を定義する。 *)
+
+(** 関数型の記法。
+
+    関数型は [y] が定数関数であるときの依存積型である。 *)
 Notation "x -> y" := (forall (_ : x), y)
   (at level 99, right associativity, y at level 200)
   .
 
+(** 値を持たない型。 *)
 Inductive empty : Type
   :=
   .
@@ -47,6 +55,8 @@ Arguments empty .
 Arguments empty_elim_nodep {_} _ .
 Arguments empty_elim {_} _ .
 
+
+(** ただ一つの値を持つ型。 *)
 Inductive unit : Type
   :=
   | tt : unit
@@ -64,6 +74,7 @@ Arguments unit .
 Arguments unit_elim_nodep {_} _ _ .
 Arguments unit_elim {_} _ _ .
 
+(** [A] と [B] の直和型。 *)
 Inductive sum (A : Type) (B : Type) : Type
   :=
   | left : A -> sum A B
@@ -95,6 +106,7 @@ Arguments right {_ _} _ .
 Arguments sum_elim_nodep {_ _ _} _ _ _ .
 Arguments sum_elim {_ _ _} _ _ _ .
 
+(** [A] と [B] の直積型。 *)
 Inductive prod (A : Type) (B : Type) : Type
   :=
   | pair : A -> B -> prod A B
@@ -117,6 +129,11 @@ Arguments pair {_ _} _ _ .
 Arguments prod_elim_nodep {_ _ _} _ _ .
 Arguments prod_elim {_ _ _} _ _ .
 
+(** [A] から [B] への関数型。
+
+    網羅性のためであって、普段使いは推奨されない。
+
+    "exponential object" である。 *)
 Definition exp (A B : Type) : Type
   := A -> B.
 
@@ -136,6 +153,9 @@ Arguments exp _ _ .
 Arguments exp_elim_nodep {_ _ _} _ _.
 Arguments exp_elim {_ _ _} _ _.
 
+(** [A] と [B] の依存和型。
+
+    "dependent sum type" である。 *)
 Inductive dsum (A : Type) (B : A -> Type) : Type
   :=
   | evi : forall x : A, B x -> dsum A B
@@ -158,6 +178,11 @@ Arguments evi {_ _} _ _ .
 Arguments dsum_elim_nodep {_ _ _} _ _ .
 Arguments dsum_elim {_ _ _} _ _ .
 
+(** [A] と [B] の依存積型。
+
+    網羅性のためであって、普段使いは推奨されない。
+
+    "dependent product type" である。 *)
 Definition dprod (A : Type) (B : A -> Type) : Type
   := forall x : A, B x .
 
@@ -177,6 +202,10 @@ Arguments dprod {_} _ .
 Arguments dprod_elim_nodep {_ _ _} _ _.
 Arguments dprod_elim {_ _ _} _ _.
 
+(** [A] の上での等式型。
+
+    "equality type" や "identity type" であり、旧来の Coq では [eq] と
+    呼ばれるが、HoTTの流儀に従い [paths] と名付ける。 *)
 Inductive paths (A : Type) (a : A) : A -> Type
   :=
   | idpath : paths A a a
