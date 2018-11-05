@@ -48,3 +48,19 @@ Proof.
  -
   exact (K_paths_contr IC q) .
 Defined.
+
+
+Definition based_paths {X : Type} (x : X) : Type := dsum (paths x) .
+
+Definition contr_based_paths
+  {X : Type} (x : X) : is_contr (based_paths x) .
+Proof.
+ unfold is_contr .
+ refine (dpair (dpair x idpath) _) .
+ unfold is_contr_center .
+ refine (dsum_elim _) .
+ refine (fun yv => _) .
+ refine (paths_elim  _
+   (P := fun yv' yH' => paths (dpair x idpath) (dpair yv' yH'))) .
+ exact idpath .
+Defined.
