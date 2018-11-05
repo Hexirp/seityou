@@ -8,11 +8,22 @@ Declare ML Module "ltac_plugin".
 Export Set Default Proof Mode "Classic".
 
 
+Definition coninv
+  {A : Type} {x y z : A}
+  (p : paths y x) (q : paths y z) : paths x z
+  := concat (inverse p) q .
+
+Definition coninv_pp
+  {A : Type} {x y : A}
+  (p : paths x y) : paths (coninv p p) idpath
+  := paths_elim (P := fun y' p' => paths (coninv p' p') idpath) idpath p .
+
+
 Definition paths_contr
   {A : Type} (IC : is_contr A) (x y : A) : paths x y .
 Proof.
  unfold is_contr in IC .
- refine (concat (y := dsum_fst IC) (inverse _) _) .
+ refine (coninv (y := dsum_fst IC) _ _) .
  -
   exact (dsum_snd IC x) .
  -
@@ -21,22 +32,19 @@ Defined.
 
 Lemma K_paths_contr
   {A : Type} (IC : is_contr A) {x y : A} (p : paths x y)
-  : paths p (paths_contr IC x y) .
+  : paths (paths_contr IC x y) p .
 Proof.
- refine (paths_elim (P := fun y' p' => paths p' (paths_contr IC x y')) _ p) .
+ refine (paths_elim (P := fun y' p' => paths (paths_contr IC x y') p') _ p) .
  unfold paths_contr .
- refine (paths_elim (P := fun y' p' => paths idpath (concat (inverse p') p')) _ (dsum_snd IC x)) .
- exact idpath .
+ exact (coninv_pp (dsum_snd IC x)) .
 Defined.
 
 Definition paths_paths_contr
   {A : Type} (IC : is_contr A) {x y : A} (p q : paths x y) : paths p q .
 Proof.
- refine (concat (y := paths_contr IC x y) (inverse _) _) .
+ refine (coninv (y := paths_contr IC x y) _ _) .
  -
-  refine (inverse _) .
   exact (K_paths_contr IC p) .
  -
-  refine (inverse _) .
   exact (K_paths_contr IC q) .
 Defined.
