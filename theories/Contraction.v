@@ -11,6 +11,7 @@ Export Set Default Proof Mode "Classic".
 Definition paths_contr
   {A : Type} (IC : is_contr A) (x y : A) : paths x y .
 Proof.
+ unfold is_contr in IC .
  refine (concat (y := dsum_fst IC) (inverse _) _) .
  -
   exact (dsum_snd IC x) .
@@ -23,7 +24,7 @@ Lemma K_paths_contr
   : paths p (paths_contr IC x y) .
 Proof.
  refine (paths_elim (P := fun y' p' => paths p' (paths_contr IC x y')) _ p) .
- change (paths_contr IC x x) with (concat (inverse (dsum_snd IC x)) (dsum_snd IC x)) .
+ unfold paths_contr .
  refine (paths_elim (P := fun y' p' => paths idpath (concat (inverse p') p')) _ (dsum_snd IC x)) .
  exact idpath .
 Defined.
