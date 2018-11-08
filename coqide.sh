@@ -5,4 +5,4 @@ COQ_PATH=/c/coq
 
 PATH=$COQ_PATH/bin:$PATH
 
-coqide -nois
+coqide -nois -I theories/
