@@ -1,5 +1,3 @@
-Add LoadPath "./theories".
-
 Require Import Basis.
 
 

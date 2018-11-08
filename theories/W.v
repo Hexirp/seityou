@@ -1,5 +1,3 @@
-Add LoadPath "./theories".
-
 Require Import Basis.
 
 (** [A] に関して [B] で添え字付けられた整礎的な型。
