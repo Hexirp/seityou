@@ -322,7 +322,7 @@ Module Functional.
   (** 恒等関数。
 
       HoTTのライブラリに見られるように [Notation idmap := (fun x => x)] と
-      定義することもでき、展開が必要ないことや宇宙の階層関係で優位性を持つが、
+      定義することもでき、展開が必要ないことや宇宙多相の関係で良い面があるが、
       意図しない変換を発生させうる [Notation] をできるたけ使いたくないため
       こうする。 *)
   Definition idmap {A} : A -> A
@@ -400,13 +400,17 @@ Module Functional.
     (a a' : A) (x : paths a a') : P a a' x
     := paths_elim (case_idpath a) x .
 
-  (** 道を反転する。 *)
+  (** 道を反転する。
+
+      旧来のCoqには [eq_sym] として存在する。 *)
   Definition inverse
     {A : Type} {x y : A}
     (p : paths x y) : paths y x
     := paths_elim_nodep (P := fun y' => paths y' x) idpath p .
 
-  (** 道を結合する。 *)
+  (** 道を結合する。
+
+      旧来のCoqには [eq_truns] として存在する。 *)
   Definition concat
     {A : Type} {x y z : A}
     (p : paths x y) (q : paths y z) : paths x z
@@ -419,7 +423,9 @@ Module Functional.
     (u : P x) : P y
     := paths_elim_nodep u p .
 
-  (** 道の両辺に関数を適用する。 *)
+  (** 道の両辺に関数を適用する。
+
+      旧来のCoqには [f_equal] として存在する。 *)
   Definition ap
     {A B : Type} (f : A -> B)
     {x y : A} (p : paths x y)
