@@ -554,7 +554,7 @@ Module Homotopical.
     {f g : B -> C} (p : pwpaths f g)
     (h : A -> B)
     : pwpaths (compose f h) (compose g h)
-    := compose_dep p h .
+    := compose10 p h .
 
   Definition section
     {A B : Type}
