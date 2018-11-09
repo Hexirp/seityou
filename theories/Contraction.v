@@ -32,7 +32,8 @@ Lemma K_paths_contr
   {A : Type} (IC : is_contr A) {x y : A} (p : paths x y)
   : paths (paths_contr IC x y) p .
 Proof.
- refine (paths_elim (P := fun y' p' => paths (paths_contr IC x y') p') _ p) .
+ refine (paths_elim _ p
+   (P := fun y' p' => paths (paths_contr IC x y') p')) .
  unfold paths_contr .
  exact (coninv_pp (dsum_snd IC x)) .
 Defined.

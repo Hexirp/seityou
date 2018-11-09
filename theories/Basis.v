@@ -663,7 +663,7 @@ Module Homotopical.
 
   Definition funext_equiv : Type
     := forall (A : Type) (B : A -> Type) (f g : forall a, B a),
-      is_equiv (@pwpaths_paths A B f g) .
+      is_equiv (pwpaths_paths (f := f) (g := g)) .
 
   Definition funext__funext_equiv (H : funext_equiv) : funext
     := fun A B f g => dsum_fst (H A B f g) .
