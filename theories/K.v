@@ -300,24 +300,23 @@ Proof.
  exact (UIP_JMeq p q) .
 Defined.
 
-Definition not_JMeq_eq_dep (axiom_JMeq_eq_dep : JMeq_eq_dep) : empty .
+Definition not_JMeq_eq_dep
+  (A : Type) (x y : A) (D : A -> Type)
+  (Dx : paths (D x) unit) (Dy : paths (D y) empty)
+  (axiom_JMeq_eq_dep : JMeq_eq_dep) : empty .
 Proof.
- pose (A := sum unit unit : Type) .
- pose (B := const unit : sum unit unit -> Type) .
- pose (x := left tt : A) .
- pose (y := right tt : A) .
+ pose (B := const unit : A -> Type) .
  pose (xh := tt : B x) .
  pose (yh := tt : B y) .
- pose (H := axiom_JMeq_eq_dep A B x y xh yh : JMeq xh yh -> eq_dep xh yh) .
+ pose (H := axiom_JMeq_eq_dep A B x y xh yh) .
  pose (p := JMeq_refl : JMeq xh yh) .
  pose (q := H p : eq_dep xh yh) .
- pose (D := sum_elim_nodep (const unit) (const empty) : A -> Type) .
- change empty with (D y) .
- refine (transport (x := x) _ _) .
+ refine (cast Dy _) .
+ refine (transport (x := x) (y := y) _ _) .
  -
   refine (eq_dep_paths_shallow (xh := xh) (yh := yh) _) .
   exact q .
  -
-  change (D x) with unit .
+  refine (cast (inverse Dx) _) .
   exact tt .
 Defined.
