@@ -432,6 +432,11 @@ Module Functional.
     : paths (f x) (f y)
     := paths_elim_nodep (P := fun y' => paths (f x) (f y')) idpath p .
 
+  Definition cast
+    {A B : Type}
+    (p : paths A B) (x : A) : B
+    := transport p x .
+
 End Functional.
 
 
