@@ -311,12 +311,14 @@ Proof.
  pose (H := axiom_JMeq_eq_dep A B x y xh yh) .
  pose (p := JMeq_refl : JMeq xh yh) .
  pose (q := H p : eq_dep xh yh) .
- refine (cast Dy _) .
- refine (transport (x := x) (y := y) _ _) .
+ refine (cast (A := unit) (B := empty) _ tt) .
+ refine (concat (inverse _) (y := D x) (concat _ (y := D y) _)) .
  -
+  exact Dx .
+ -
+  refine (ap D _) .
   refine (eq_dep_paths_shallow (xh := xh) (yh := yh) _) .
   exact q .
  -
-  refine (cast (inverse Dx) _) .
-  exact tt .
+  exact Dy .
 Defined.
