@@ -605,18 +605,32 @@ Module Homotopical.
     : pwpaths (compose f h) (compose g h)
     := compose10 p h .
 
+  (** [s] は [r] の断面 (section) である。
+
+      [s] は [r] の右逆射である。 *)
   Definition section
     {A B : Type}
     (s : A -> B) (r : B -> A)
     : Type
     := pwpaths (compose r s) idmap .
 
+  (** [r] は [s] の引き込み (retraction) である。
+
+      [r] は [s] の左逆射である。 *)
   Definition retraction
     {A B : Type}
     (r : B -> A) (s : A -> B)
     : Type
     := pwpaths (compose r s) idmap .
 
+  (** [f] と [g] は随伴的である。
+
+      [A] の値を対象として [@paths A] を射とした圏（実際は大群 (Groupoid) で
+      ある）から [B] の値を対象とした同じような圏への関手は、ただの関数
+      [f : A -> B] として表される。対象の変換は、そのまま適用すればよく、
+      [x] から [y] への射の変換は [ap f : paths x y -> paths (f x) (f y)] と
+      する。この時、その関手 [f : A -> B] から [g : A -> B] への自然変換は
+      [pwpaths f g] で表される。 *)
   Definition is_adjoint
     {A B : Type}
     (f : A -> B) (g : B -> A)
