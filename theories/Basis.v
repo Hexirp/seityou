@@ -410,7 +410,17 @@ Module Functional.
 
   (** 道を結合する。
 
-      旧来のCoqには [eq_truns] として存在する。 *)
+      旧来のCoqには [eq_truns] として存在する。
+
+      <<
+        paths_elim_nodep p q
+      >>
+
+      このような定義もできるが、ここでは [p] と [q] を両方分解することによって
+      その引数の両方が [idpath] であるときだけ [idpath] に簡約されるように
+      なるので、証明がもっと堅牢かつ対称的になる。上の定義を使ったときは [q] が
+      [idpath] であるだけで [p] に簡約される。このバージョンの定義は Path の
+      [contrans] を見よ。 *)
   Definition concat
     {A : Type} {x y z : A}
     (p : paths x y) (q : paths y z) : paths x z
