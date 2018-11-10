@@ -342,10 +342,10 @@ Module Functional.
     : forall a, C (g a)
     := fun x => f (g x) .
 
-  (** [empty] の値は存在しえないため、"ex falso quodlibet" よりどのような型も
-      返すことが出来る。
+  (** 矛盾による安全なエラー。
 
-      旧来のCoqには [exfalso] として存在する。 *)
+      [empty] の値は存在しえないため、"ex falso quodlibet" よりどのような型も
+      返すことが出来る。旧来のCoqには [exfalso] として存在する。 *)
   Definition absurd {A} : empty -> A
     := empty_elim_nodep .
 
