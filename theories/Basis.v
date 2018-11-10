@@ -630,7 +630,12 @@ Module Homotopical.
       [f : A -> B] として表される。対象の変換は、そのまま適用すればよく、
       [x] から [y] への射の変換は [ap f : paths x y -> paths (f x) (f y)] と
       する。この時、その関手 [f : A -> B] から [g : A -> B] への自然変換は
-      [pwpaths f g] で表される。 *)
+      [pwpaths f g] で表される。
+
+      [f . g] を [compose f g] と [f == g] を [pwpaths f g] と書く。
+      [F : A -> B], [G : B -> A], [retr : F . G == id], [sect : G . F == id] が
+      あったとき、f
+      )
   Definition is_adjoint
     {A B : Type}
     (f : A -> B) (g : B -> A)
