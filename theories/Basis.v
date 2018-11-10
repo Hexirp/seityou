@@ -502,7 +502,7 @@ Module Homotopical.
     : B
     := f x .
 
-  (** [f] を [p] に適用する。 *)
+  (** [f] を [p] に適用する。 [ap] のシノニム。 *)
   Definition ap01
     {A B : Type}
     (f : A -> B)
@@ -559,7 +559,7 @@ Module Homotopical.
       (P := fun y' p' => paths (transport p' (f x)) (f y'))
       .
 
-  (** [ap01] の依存版。 *)
+  (** [ap01] の依存版。 [ap_dep] のシノニム。 *)
   Definition ap01_dep
     {A : Type} {B : A -> Type}
     (f : forall a, B a)
