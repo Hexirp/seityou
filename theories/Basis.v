@@ -496,6 +496,22 @@ Module Homotopical.
     : forall a, C a
     := fun x : A => f x (g x) .
 
+  (** [ap] のバリエーションは以下の命令規則に従う。
+
+      [apNK] は関数のK次道を値のN次道に適用する。関数が依存版である場合は、
+      [apNK_dep] となる。関数がLつの値を取るとき、値のN次道はLつあり、名前は
+      [apNK_L] となる。
+
+      K次道は値、値の道、値の道の道といったものを表す。これは縮小 (Truncation)
+      にも関わる表記法である。型 [A] に対して、そのK次道は、
+
+      * 0-path: A
+      * 1-path: paths A x y
+      * 2-path: paths (paths A x y) p q
+      * 3-path: paths (paths (paths A x y) p q) r s
+
+      このようなことである。 *)
+
   (** [f] を [x] に適用する。 *)
   Definition ap00
     {A B : Type}
