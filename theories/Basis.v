@@ -599,7 +599,7 @@ Module Homotopical.
 
   (** [ap01] の依存版。
 
-      [ap_dep] のシノニム。 *)
+      [ap_dep] の別名。 *)
   Definition ap01_dep
     {A : Type} {B : A -> Type}
     (f : forall a, B a)
