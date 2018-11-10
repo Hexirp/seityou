@@ -673,7 +673,13 @@ Module Homotopical.
 
       二つ目は、ある写像 [f : A -> B] の相同的繊維 (homotopy fiber) が
       可縮 (contractible) であるときであるという Vladimir Voevodsky 氏の定義を
-      使うことである。 *)
+      使うことである。この概念は相同的全単射 (homotopy bijection) と呼ぶ。
+
+      三つ目は、ある写像 [f : A -> B] が相同的逆射を右か左かに分けてそれぞれ
+      持つときであるという André Joyal の興味深い提案による定義である。
+      この概念は相同的同型 (homotopy isomorphism) と呼ぶ。
+
+      このライブラリでは随伴等価を採用する。 *)
 
   (** [f] と [g] は [retr] と [sect] を通じて随伴的である。
 
