@@ -425,7 +425,8 @@ Module Functional.
 
   (** 道の両辺に関数を適用する。
 
-      旧来のCoqには [f_equal] として存在する。 *)
+      "application" であり、 "action on path" でもある。旧来のCoqには [f_equal]
+      として存在する。 *)
   Definition ap
     {A B : Type} (f : A -> B)
     {x y : A} (p : paths x y)
