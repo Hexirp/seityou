@@ -567,16 +567,23 @@ Module Homotopical.
     : paths (transport p (f x)) (f y)
     := ap_dep f p .
 
+  (** 点ごとの道。関数の外延性等値性。
+
+      "pointwize paths" である。 *)
   Definition pwpaths
     {A : Type} {B : A -> Type} (f g : forall a, B a) : Type
     := forall a, paths (f a) (g a) .
 
+  (** 道から、点ごとの道を得る。
+
+      逆は [funext] であり、証明も反証もできない。 *)
   Definition pwpaths_paths
     {A : Type} {B : A -> Type}
     {f g : forall a, B a} (p : paths f g)
     : pwpaths f g
     := ap10_dep p .
 
+  (** 点ごとの道の両辺に、左から関数を合成する。 *)
   Definition pwpaths_compose01
     {A B C : Type}
     (f : B -> C)
@@ -584,6 +591,7 @@ Module Homotopical.
     : pwpaths (compose f g) (compose f h)
     := compose01 (fun a => ap (x := g a) (y := h a) f) p .
 
+  (** 点ごとの道の両辺に、右から関数を合成する。 *)
   Definition pwpaths_compose10
     {A B C : Type}
     {f g : B -> C} (p : pwpaths f g)
