@@ -482,7 +482,9 @@ Module Homotopical.
 
   Export Functional.
 
-  (** 最初の引数が依存関数である関数合成。 *)
+  (** 最初の引数が依存関数である関数合成。
+
+      [compose_dep] の別名。 *)
   Definition compose10
     {A B C} (f : forall b, C b) (g : A -> B)
     : forall a, C (g a)
@@ -502,7 +504,9 @@ Module Homotopical.
     : B
     := f x .
 
-  (** [f] を [p] に適用する。 [ap] のシノニム。 *)
+  (** [f] を [p] に適用する。
+
+      [ap] の別名。 *)
   Definition ap01
     {A B : Type}
     (f : A -> B)
@@ -559,7 +563,9 @@ Module Homotopical.
       (P := fun y' p' => paths (transport p' (f x)) (f y'))
       .
 
-  (** [ap01] の依存版。 [ap_dep] のシノニム。 *)
+  (** [ap01] の依存版。
+
+      [ap_dep] のシノニム。 *)
   Definition ap01_dep
     {A : Type} {B : A -> Type}
     (f : forall a, B a)
