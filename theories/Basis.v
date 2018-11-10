@@ -474,20 +474,27 @@ Module Categorical.
 End Categorical.
 
 
+(** ** Homotopical - Homotopical Definitions
+
+    Homotopy Type Theory において一般的な定義をする。 *)
+
 Module Homotopical.
 
   Export Functional.
 
+  (** 最初の引数が依存関数である関数合成。 *)
   Definition compose10
     {A B C} (f : forall b, C b) (g : A -> B)
     : forall a, C (g a)
     := compose_dep f g .
 
+  (** 二番目の引数が依存関数である関数合成。 *)
   Definition compose01
     {A B C} (f : forall a, B a -> C a) (g : forall a, B a)
     : forall a, C a
     := fun x : A => f x (g x) .
 
+  (** [f] を [x] に適用する。 *)
   Definition ap00
     {A B : Type}
     (f : A -> B)
@@ -495,6 +502,7 @@ Module Homotopical.
     : B
     := f x .
 
+  (** [f] を [p] に適用する。 *)
   Definition ap01
     {A B : Type}
     (f : A -> B)
@@ -502,6 +510,7 @@ Module Homotopical.
     : paths (f x) (f y)
     := ap f p .
 
+  (** [p] を [x] に適用する。 *)
   Definition ap10
     {A B : Type}
     {f g : A -> B} (p : paths f g)
@@ -509,6 +518,7 @@ Module Homotopical.
     : paths (f x) (g x)
     := paths_elim_nodep (P := fun g' => paths (f x) (g' x)) idpath p .
 
+  (** [ap10] の依存版。 *)
   Definition ap10_dep
     {A : Type} {B : A -> Type}
     {f g : forall a, B a} (p : paths f g)
@@ -516,6 +526,7 @@ Module Homotopical.
     : paths (f x) (g x)
     := paths_elim_nodep (P := fun g' => paths (f x) (g' x)) idpath p .
 
+  (** [p] を [q] に適用する。 *)
   Definition ap11
     {A B : Type}
     {f g : A -> B} (p : paths f g)
@@ -523,6 +534,7 @@ Module Homotopical.
     : paths (f x) (g y)
     := paths_elim_nodep (P := fun g' => paths (f x) (g' y)) (ap f q) p .
 
+  (** [f] を [p] と [q] に適用する。 *)
   Definition ap01_2
     {A B C : Type}
     (f : A -> B -> C)
@@ -531,6 +543,13 @@ Module Homotopical.
     : paths (f x z) (f y w)
     := ap11 (ap f p) q .
 
+  (** [ap] の依存版。
+
+      返される型の [paths (transport p fx) fy] という形は「依存道」と呼ばれる。
+      [fx] と [fy] はそれぞれ [P x] と [P y] という型を持っている。そのため、
+      そのまま [paths fx fy] と書くことはできない。そこで [fx] を [p] によって
+      輸送することで両辺の型を合わせている。依存型に対する道。 [p] に依存する
+      道。詳細は等式型のバリエーションを集めた Equality に譲る。 *)
   Definition ap_dep
     {A : Type} {B : A -> Type}
     (f : forall a, B a)
@@ -540,6 +559,7 @@ Module Homotopical.
       (P := fun y' p' => paths (transport p' (f x)) (f y'))
       .
 
+  (** [ap01] の依存版。 *)
   Definition ap01_dep
     {A : Type} {B : A -> Type}
     (f : forall a, B a)
