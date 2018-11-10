@@ -623,7 +623,7 @@ Module Homotopical.
     : Type
     := pwpaths (compose r s) idmap .
 
-  (** [f] と [g] は随伴的である。
+  (** [f] と [g] は [retr] と [sect] を通じて随伴的である。
 
       [A] の値を対象として [@paths A] を射とした圏（実際は大群 (Groupoid) で
       ある）から [B] の値を対象とした同じような圏への関手は、ただの関数
@@ -643,17 +643,22 @@ Module Homotopical.
     : Type
     := pwpaths (pwpaths_compose10 retr f) (pwpaths_compose01 f sect) .
 
+  (** [A] と [B] は [f] と [g] を通じて等価 (equivalence) である。 *)
   Definition is_equiv_rel
     {A B : Type}
     (f : A -> B) (g : B -> A)
     : Type
     := dsum (fun retr => dsum (fun sect => is_adjoint f g retr sect)) .
 
+  (** [f] は等価射 (equivalence) である。 *)
   Definition is_equiv
     {A B : Type} (f : A -> B)
     : Type
     := dsum (fun equiv_inv => is_equiv_rel f equiv_inv) .
 
+  (** [A] と [B] は等価 (equivalence) である。
+
+      この型は "type of equivalences" と呼ばれる。 *)
   Definition equiv
     (A B : Type) : Type
     := dsum (fun f : A -> B => is_equiv f) .
