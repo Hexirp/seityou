@@ -416,7 +416,12 @@ Module Functional.
     (p : paths x y) (q : paths y z) : paths x z
     := paths_elim_nodep (paths_elim_nodep idpath p) q .
 
-  (** 道に沿って輸送する。 *)
+  (** 道に沿って輸送する。
+
+      [paths_elim_nodep] の重要な帰結であり、引数を並べ変えただけである。
+
+      「 [transport A P x y] は [u : P x] を [p : paths x y] に沿って [P y] へ
+      輸送する」。 *)
   Definition transport
     {A : Type} {P : A -> Type}
     {x y : A} (p : paths x y)
