@@ -61,3 +61,15 @@ Proof.
  refine (@paths_elim X x _ _) .
  exact idpath .
 Defined.
+
+Definition based_paths_elim
+  {A : Type} (a : A) (P : based_paths a -> Type)
+  (c : forall a' p, P (dpair a' p))
+  (x : based_paths a) : P x
+  := match x with dpair a' p => c a' p end .
+
+Definition paths_elim_by_based_paths
+  {A : Type} (a : A) (P : based_paths a -> Type)
+  (c : P (dpair a idpath))
+  (x : based_paths a) : P x
+  := @paths_elim A a (fun a' p => P (dpair a' p)) c (dsum_fst x) (dsum_snd x) .
