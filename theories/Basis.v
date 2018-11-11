@@ -366,8 +366,8 @@ Module Functional.
     := dsum_elim_nodep (fun xv _ => xv) .
 
   (** [dsum] 版の [snd] 。 *)
-  Definition dsnd {A B} (x : @dsum A B) : B (dsum_fst x)
-    := dsum_elim (P := fun x' => B (dsum_fst x')) (fun _ xH => xH) x .
+  Definition dsnd {A B} (x : @dsum A B) : B (dfst x)
+    := dsum_elim (P := fun x' => B (dfst x')) (fun _ xH => xH) x .
 
   (** [paths] には二つの定義方法が存在する。今までの定義は「基点付き」であり、
       「基点なし」もある。このような定義である。
@@ -782,7 +782,7 @@ Module Homotopical.
       is_equiv (pwpaths_paths (f := f) (g := g)) .
 
   Definition funext__funext_equiv (H : funext_equiv) : funext
-    := fun A B f g => dsum_fst (H A B f g) .
+    := fun A B f g => dfst (H A B f g) .
 
   Definition pType : Type := dsum (fun A => A) .
 

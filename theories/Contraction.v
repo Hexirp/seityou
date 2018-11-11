@@ -21,11 +21,11 @@ Definition path_contr
   {A : Type} (IC : is_contr A) (x y : A) : paths x y .
 Proof.
  unfold is_contr in IC .
- refine (coninv (y := dsum_fst IC) _ _) .
+ refine (coninv (y := dfst IC) _ _) .
  -
-  exact (dsum_snd IC x) .
+  exact (dsnd IC x) .
  -
-  exact (dsum_snd IC y) .
+  exact (dsnd IC y) .
 Defined.
 
 Lemma K_path_contr
@@ -35,7 +35,7 @@ Proof.
  refine (paths_elim _ p
    (P := fun y' p' => paths (path_contr IC x y') p')) .
  unfold path_contr .
- exact (coninv_pp (dsum_snd IC x)) .
+ exact (coninv_pp (dsnd IC x)) .
 Defined.
 
 Definition path_path_contr
@@ -89,18 +89,18 @@ Definition paths_elim_by_based_paths
   (c : P (dpair a idpath))
   (x : based_paths a) : P x .
 Proof.
- refine (transport (x := dpair (dsum_fst x) (dsum_snd x)) _ _) .
+ refine (transport (x := dpair (dfst x) (dsnd x)) _ _) .
  -
   refine (dsum_elim _ x
-    (P := fun x' => paths (dpair (dsum_fst x') (dsum_snd x')) x')) .
+    (P := fun x' => paths (dpair (dfst x') (dsnd x')) x')) .
   refine (fun xv xH => _) .
-  unfold dsum_fst .
+  unfold dfst .
   unfold dsum_elim_nodep .
-  unfold dsum_snd .
+  unfold dsnd .
   unfold dsum_elim .
   exact idpath .
  -
-  refine (paths_elim (P := fun a' p => P (dpair a' p)) c (dsum_snd x)).
+  refine (paths_elim (P := fun a' p => P (dpair a' p)) c (dsnd x)).
 Defined.
 
 
@@ -117,7 +117,7 @@ Definition contr_retract
   (retr : retraction r s) : is_contr Y .
 Proof.
  unfold is_contr .
- refine (dpair (r (dsum_fst IC)) _) .
+ refine (dpair (r (dfst IC)) _) .
  unfold is_contr_center .
  refine (fun y => _) .
  unfold retraction in retr .
