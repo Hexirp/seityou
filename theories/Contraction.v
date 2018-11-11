@@ -51,6 +51,11 @@ Defined.
 
 Definition based_paths {X : Type} (x : X) : Type := dsum (paths x) .
 
+Definition path_based_paths
+  {X : Type} {x : X} (p : based_paths x)
+  : paths (dpair x idpath) p
+  := dsum_elim (@paths_elim X x _ idpath) p .
+
 Definition contr_based_paths
   {X : Type} (x : X) : is_contr (based_paths x) .
 Proof.
