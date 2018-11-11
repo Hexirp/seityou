@@ -58,8 +58,6 @@ Proof.
  refine (dpair (dpair x idpath) _) .
  unfold is_contr_center .
  refine (dsum_elim _) .
- refine (fun yv => _) .
- refine (paths_elim  _
-   (P := fun yv' yH' => paths (dpair x idpath) (dpair yv' yH'))) .
+ refine (@paths_elim X x _ _) .
  exact idpath .
 Defined.
