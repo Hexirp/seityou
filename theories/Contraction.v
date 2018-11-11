@@ -73,5 +73,6 @@ Definition paths_elim_by_based_paths
   (c : P (dpair a idpath))
   (x : based_paths a) : P x .
 Proof.
+ refine (transport (x := dpair (dsum_fst x) (dsum_snd x)) _ _) .
  refine ( @paths_elim A a (fun a' p => P (dpair a' p)) c (dsum_fst x) (dsum_snd x)).
 Defined.
