@@ -71,5 +71,17 @@ Definition based_paths_elim
 Definition paths_elim_by_based_paths
   {A : Type} (a : A) (P : based_paths a -> Type)
   (c : P (dpair a idpath))
-  (x : based_paths a) : P x
-  := @paths_elim A a (fun a' p => P (dpair a' p)) c (dsum_fst x) (dsum_snd x) .
+  (x : based_paths a) : P x .
+Proof.
+ refine (transport (x := dpair (dsum_fst x) (dsum_snd x)) _ _) .
+ -
+  refine (dsum_elim (P := fun x' => paths (dpair (dsum_fst x') (dsum_snd x')) x') _ x) .
+  refine (fun xv xH => _) .
+  unfold dsum_fst .
+  unfold dsum_elim_nodep .
+  unfold dsum_snd .
+  unfold dsum_elim .
+  exact idpath .
+ -
+  refine (@paths_elim A a (fun a' p => P (dpair a' p)) c (dsum_fst x) (dsum_snd x)).
+Defined.
