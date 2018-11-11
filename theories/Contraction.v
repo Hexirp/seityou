@@ -102,3 +102,31 @@ Proof.
  -
   refine (paths_elim (P := fun a' p => P (dpair a' p)) c (dsum_snd x)).
 Defined.
+
+
+Definition contr_dom_equiv
+  {A B : Type} (IC : is_contr A) (f : A -> B) {x y : A}
+  : paths (f x) (f y) .
+Proof.
+ refine (ap f _) .
+ exact (path_contr IC x y) .
+Defined.
+
+Definition contr_retract
+  {X Y} (IC : is_contr X) (r : X -> Y) (s : Y -> X)
+  (retr : retraction r s) : is_contr Y .
+Proof.
+ unfold is_contr .
+ refine (dpair (r (dsum_fst IC)) _) .
+ unfold is_contr_center .
+ refine (fun y => _) .
+ unfold retraction in retr .
+ unfold pwpaths in retr .
+ unfold compose in retr .
+ unfold idmap in retr .
+ refine (concat (y := r (s y)) _ _).
+ -
+  exact (contr_dom_equiv IC r) .
+ -
+  exact (retr y) .
+Defined.
