@@ -76,6 +76,7 @@ Proof.
  refine (transport (x := dpair (dsum_fst x) (dsum_snd x)) _ _) .
  -
   refine (dsum_elim (P := fun x' => paths (dpair (dsum_fst x') (dsum_snd x')) x') _ x) .
+  refine (fun xv xH => _) .
  -
   refine ( @paths_elim A a (fun a' p => P (dpair a' p)) c (dsum_fst x) (dsum_snd x)).
 Defined.
