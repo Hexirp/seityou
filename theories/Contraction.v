@@ -17,7 +17,7 @@ Definition coninv_pp
   := paths_elim (P := fun y' p' => paths (coninv p' p') idpath) idpath p .
 
 
-Definition paths_contr
+Definition path_contr
   {A : Type} (IC : is_contr A) (x y : A) : paths x y .
 Proof.
  unfold is_contr in IC .
@@ -28,24 +28,24 @@ Proof.
   exact (dsum_snd IC y) .
 Defined.
 
-Lemma K_paths_contr
+Lemma K_path_contr
   {A : Type} (IC : is_contr A) {x y : A} (p : paths x y)
-  : paths (paths_contr IC x y) p .
+  : paths (path_contr IC x y) p .
 Proof.
  refine (paths_elim _ p
-   (P := fun y' p' => paths (paths_contr IC x y') p')) .
- unfold paths_contr .
+   (P := fun y' p' => paths (path_contr IC x y') p')) .
+ unfold path_contr .
  exact (coninv_pp (dsum_snd IC x)) .
 Defined.
 
-Definition paths_paths_contr
+Definition path_path_contr
   {A : Type} (IC : is_contr A) {x y : A} (p q : paths x y) : paths p q .
 Proof.
- refine (coninv (y := paths_contr IC x y) _ _) .
+ refine (coninv (y := path_contr IC x y) _ _) .
  -
-  exact (K_paths_contr IC p) .
+  exact (K_path_contr IC p) .
  -
-  exact (K_paths_contr IC q) .
+  exact (K_path_contr IC q) .
 Defined.
 
 
