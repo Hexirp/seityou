@@ -362,11 +362,11 @@ Module Functional.
     := prod_elim_nodep .
 
   (** [dsum] 版の [fst] 。 *)
-  Definition dsum_fst {A B} : @dsum A B -> A
+  Definition dfst {A B} : @dsum A B -> A
     := dsum_elim_nodep (fun xv _ => xv) .
 
   (** [dsum] 版の [snd] 。 *)
-  Definition dsum_snd {A B} (x : @dsum A B) : B (dsum_fst x)
+  Definition dsnd {A B} (x : @dsum A B) : B (dsum_fst x)
     := dsum_elim (P := fun x' => B (dsum_fst x')) (fun _ xH => xH) x .
 
   (** [paths] には二つの定義方法が存在する。今までの定義は「基点付き」であり、
