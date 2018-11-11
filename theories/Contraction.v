@@ -81,6 +81,7 @@ Proof.
   unfold dsum_elim_nodep .
   unfold dsum_snd .
   unfold dsum_elim .
+  exact idpath .
  -
-  refine ( @paths_elim A a (fun a' p => P (dpair a' p)) c (dsum_fst x) (dsum_snd x)).
+  refine (@paths_elim A a (fun a' p => P (dpair a' p)) c (dsum_fst x) (dsum_snd x)).
 Defined.
