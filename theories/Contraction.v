@@ -66,9 +66,7 @@ Proof.
  unfold is_contr .
  refine (dpair (dpair x idpath) _) .
  unfold is_contr_center .
- refine (dsum_elim _) .
- refine (@paths_elim X x _ _) .
- exact idpath .
+ exact path_based_paths .
 Defined.
 
 Definition based_paths_elim
