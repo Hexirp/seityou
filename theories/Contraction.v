@@ -48,6 +48,15 @@ Proof.
   exact (K_path_contr IC q) .
 Defined.
 
+Definition contr_paths_contr
+  {A : Type} (IC : is_contr A) (x y : A) : is_contr (paths x y) .
+Proof.
+ unfold is_contr .
+ refine (dpair (path_contr IC x y) _) .
+ unfold is_contr_center .
+ exact (K_path_contr IC) .
+Defined.
+
 
 Definition based_paths {X : Type} (x : X) : Type := dsum (paths x) .
 
