@@ -77,6 +77,10 @@ Proof.
  -
   refine (dsum_elim (P := fun x' => paths (dpair (dsum_fst x') (dsum_snd x')) x') _ x) .
   refine (fun xv xH => _) .
+  unfold dsum_fst .
+  unfold dsum_elim_nodep .
+  unfold dsum_snd .
+  unfold dsum_elim .
  -
   refine ( @paths_elim A a (fun a' p => P (dpair a' p)) c (dsum_fst x) (dsum_snd x)).
 Defined.
