@@ -104,7 +104,7 @@ Proof.
 Defined.
 
 
-Definition contr_dom_equiv
+Definition paths_contr_dom
   {A B : Type} (IC : is_contr A) (f : A -> B) {x y : A}
   : paths (f x) (f y) .
 Proof.
@@ -126,7 +126,7 @@ Proof.
  unfold idmap in retr .
  refine (concat (y := r (s y)) _ _).
  -
-  exact (contr_dom_equiv IC r) .
+  exact (paths_contr_dom IC r) .
  -
   exact (retr y) .
 Defined.
