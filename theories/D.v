@@ -42,3 +42,30 @@ Definition negate_contradict {A B : Type}
 Definition negate_contradict' {A B : Type}
   : negate A B -> contradict' A B
   := uncurry .
+
+(* false: contradict A B -> negate' A B *)
+
+(* false: negate' A B -> contradict A B *)
+
+
+Definition sum_negate' {A B : Type}
+  : sum A B -> negate' A B .
+Proof.
+ refine (sum_elim_nodep _ _) .
+ -
+  refine (fun a f => _) .
+  refine (absurd _) .
+  refine (f _) .
+  exact a .
+ -
+  refine (fun b f => _) .
+  exact b .
+Defined.
+
+(* classic: negate' A B -> sum A B *)
+
+(* classic: negate' A B -> negate' B A *)
+
+Definition inv_contradict {A B : Type}
+  : contradict A B -> contradict B A
+  := fun f a b => f b a .
