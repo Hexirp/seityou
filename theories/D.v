@@ -106,3 +106,7 @@ Defined.
 
 
 Definition opposite (A B : Type) : Type := prod (contradict A B) (sum A B) .
+
+Definition unique (A B : Type) : Type := is_contr (sum A B) .
+
+(* todo: opposite A B <-> unique A B *)
