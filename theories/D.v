@@ -69,3 +69,13 @@ Defined.
 (* classic: negate' A B -> sum A B *)
 
 (* classic: negate' A B -> negate' B A *)
+
+
+Definition id_contradict {A : Type}
+  : contradict A (A -> empty)
+  := fun x f => f x .
+
+(* classic: sum A (A -> empty) *)
+
+
+Definition opposite (A B : Type) : Type := prod (contradict A B) (sum A B) .
