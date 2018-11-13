@@ -77,5 +77,32 @@ Definition id_contradict {A : Type}
 
 (* classic: sum A (A -> empty) *)
 
+Definition down_contradict {A B : Type}
+  (f : contradict ((A -> empty) -> empty) ((B -> empty) -> empty))
+  : contradict A B .
+Proof.
+ refine (fun a b => _) .
+ refine (f _ _) .
+ -
+  exact (fun f => f a) .
+ -
+  exact (fun f => f b) .
+Defined.
+
+(* classic: up_contradict *)
+
+Definition up_sum {A B : Type}
+  (H : sum A B)
+  : sum ((A -> empty) -> empty) ((B -> empty) -> empty).
+Proof.
+ refine (sum_elim_nodep _ _ H) .
+ -
+  exact (fun a => left (fun f => f a)) .
+ -
+  exact (fun b => right (fun f => f b)) .
+Defined.
+
+(* classic: down_sum *)
+
 
 Definition opposite (A B : Type) : Type := prod (contradict A B) (sum A B) .
