@@ -47,6 +47,10 @@ Definition negate_contradict' {A B : Type}
 
 (* false: negate' A B -> contradict A B *)
 
+Definition inv_contradict {A B : Type}
+  : contradict A B -> contradict B A
+  := fun f a b => f b a .
+
 
 Definition sum_negate' {A B : Type}
   : sum A B -> negate' A B .
@@ -65,7 +69,3 @@ Defined.
 (* classic: negate' A B -> sum A B *)
 
 (* classic: negate' A B -> negate' B A *)
-
-Definition inv_contradict {A B : Type}
-  : contradict A B -> contradict B A
-  := fun f a b => f b a .
