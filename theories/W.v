@@ -1,5 +1,11 @@
 Require Import Basis.
 
+
+Declare ML Module "ltac_plugin".
+
+Export Set Default Proof Mode "Classic".
+
+
 (** [A] に関して [B] で添え字付けられた整礎的な型。
 
     [nat = 1 + nat] はよく知られているとおりである。
