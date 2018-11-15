@@ -146,7 +146,6 @@ Proof.
 Defined.
 
 (* false: opposite A B -> opposite' A B *)
-(* true: is_hprop A -> is_hprop B -> opposite A B -> opposite' A B *)
 
 Definition is_hprop (A : Type) : Type
   := is_trunc (trunc_succ minus_two) A .
