@@ -166,9 +166,9 @@ Proof.
   refine (ap D _) .
   exact (p (left y)) .
  -
-  refine (fun x p a => _) .
+  refine (fun x p b => _) .
   refine (absurd _) .
-  exact (opposite'_contradict (dpair (right x) p) a x) .
+  exact (opposite'_contradict (dpair (right x) p) b x) .
 Defined.
 
 Definition is_hprop_opposite'_right
