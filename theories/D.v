@@ -164,7 +164,9 @@ Proof.
   refine (dpair (left x) _) .
   refine (sum_elim _ _) .
   +
-   admit.
+   refine (fun a => _) .
+   refine (ap left _) .
+   exact (dfst (IHPA x a)) .
   +
    refine (fun b => _) .
    refine (absurd _) .
@@ -178,8 +180,10 @@ Proof.
    refine (absurd _) .
    refine (CAB a x) .
   +
-   admit.
-Admitted.
+   refine (fun b => _) .
+   refine (ap right _) .
+   exact (dfst (IHPB x b)) .
+Defined.
 
 Definition is_hprop_opposite'_left
   {A B : Type} (H : opposite' A B) : is_hprop A .
