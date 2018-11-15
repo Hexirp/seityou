@@ -432,9 +432,9 @@ Module Functional.
 
       このような定義もできるが、ここでは [p] と [q] を両方分解することによって
       その引数の両方が [idpath] であるときだけ [idpath] に簡約されるように
-      なるので、証明がもっと堅牢かつ対称的になる。上の定義を使ったときは [q] が
-      [idpath] であるだけで [p] に簡約される。このバージョンの定義は Path の
-      [contrans] を見よ。 *)
+      なるので、証明がもっと堅牢かつ対称的になっている。上の定義を使ったときは
+      [q] が [idpath] であるだけで [p] に簡約されてしまう。このバージョンの
+      定義は Path の [contrans] を見よ。 *)
   Definition concat
     {A : Type} {x y z : A}
     (p : paths x y) (q : paths y z) : paths x z
