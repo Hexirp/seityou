@@ -369,6 +369,12 @@ Module Functional.
   Definition dsnd {A B} (x : @dsum A B) : B (dfst x)
     := dsum_elim (P := fun x' => B (dfst x')) (fun _ xH => xH) x .
 
+  Definition drop {A B C} : (A -> @dsum B C) -> A -> B
+    := compose dfst .
+
+  Definition catch {A B C} (f : A -> @dsum B C) : forall x, C (drop f x)
+    := fun x => dsnd (f x) .
+
   (** [paths] には二つの定義方法が存在する。今までの定義は「基点付き」であり、
       「基点なし」もある。このような定義である。
 
