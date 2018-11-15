@@ -119,50 +119,30 @@ Proof.
   refine (fun x p a b => _) .
   refine (cast (A := unit) (B := empty) _ tt) .
   pose (
-    D := sum_elim_nodep (A := A) (B := B) (const unit) (const empty)
+    D := sum_elim_nodep (A := A) (B := B) (P := Type) (const unit) (const empty)
     ) .
   change (paths (D (left x)) (D (right b))) .
+  refine (ap D _).
+  exact (p (right b)) .
  -
   refine (fun x p a b => _) .
+  refine (cast (A := unit) (B := empty) _ tt) .
+  pose (
+    D := sum_elim_nodep (A := A) (B := B) (P := Type) (const empty) (const unit)
+    ) .
+  change (paths (D (right x)) (D (left a))) .
+  refine (ap D _).
+  exact (p (left a)) .
+Defined.
 
 Definition opposite'_opposite
   {A B : Type} (H : opposite' A B) : opposite A B .
 Proof.
- unfold opposite .
- unfold opposite' in H .
- unfold is_contr in H .
- refine (dsum_elim_nodep _ H) .
- refine (fun Hv HH => _) .
  refine (pair _ _) .
  -
-  unfold contradict .
-  refine (fun a b => _) .
-  revert Hv HH .
-  refine (sum_elim _ _) .
-  +
-   refine (fun Hva I => _) .
-   unfold is_contr_center in I .
-   refine (cast (A := unit) (B := empty) _ tt) .
-   pose (
-     D
-       := sum_elim_nodep (const unit) (const empty)
-       : sum A B -> Type ) .
-   change (paths (D (left Hva)) (D (right b))) .
-   refine (ap D _) .
-   exact (I (right b)) .
-  +
-   refine (fun Hvb I => _) .
-   unfold is_contr_center in I .
-   refine (cast (A := unit) (B := empty) _ tt) .
-   pose (
-     D
-       := sum_elim_nodep (const empty) (const unit)
-       : sum A B -> Type ) .
-   change (paths (D (right Hvb)) (D (left a))) .
-   refine (ap D _) .
-   exact (I (left a)) .
+  exact (opposite'_contradict H) .
  -
-  exact Hv .
+  exact (dfst H) .
 Defined.
 
 Definition is_hprop (A : Type) : Type
