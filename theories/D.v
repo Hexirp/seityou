@@ -148,3 +148,26 @@ Proof.
  -
   exact Hv .
 Defined.
+
+Definition is_hprop (A : Type) : Type
+  := is_trunc (trunc_succ minus_two) A .
+
+Definition is_hprop_opposite'_left
+  {A B : Type} (H : opposite' A B) : is_hprop A .
+Proof.
+ unfold is_hprop .
+ unfold is_trunc .
+ unfold trunc_index_rec .
+ unfold paths_is .
+ unfold opposite' in H .
+ unfold is_contr in H .
+ refine (dsum_elim_nodep (fun Hv HH => _) H) .
+ unfold is_contr_center in HH .
+ revert Hv HH .
+ refine (sum_elim (fun Hva HH => _) (fun Hvb HH => _) ) .
+ -
+  refine (fun x y => _) .
+  admit.
+ -
+  admit.
+Admitted.
