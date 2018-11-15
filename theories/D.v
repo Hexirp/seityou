@@ -145,8 +145,41 @@ Proof.
   exact (dfst H) .
 Defined.
 
+(* false: opposite A B -> opposite' A B *)
+(* true: is_hprop A -> is_hprop B -> opposite A B -> opposite' A B *)
+
 Definition is_hprop (A : Type) : Type
   := is_trunc (trunc_succ minus_two) A .
+
+Definition opposite_opposite'
+  {A B : Type} (IHPA : is_hprop A) (IHPB : is_hprop B)
+  (H : opposite A B) : opposite' A B .
+Proof.
+ revert H .
+ refine (prod_elim_nodep _) .
+ refine (fun CAB => _).
+ refine (sum_elim_nodep _ _) .
+ -
+  refine (fun x => _) .
+  refine (dpair (left x) _) .
+  refine (sum_elim _ _) .
+  +
+   admit.
+  +
+   refine (fun b => _) .
+   refine (absurd _) .
+   refine (CAB x b) .
+ -
+  refine (fun x => _) .
+  refine (dpair (right x) _) .
+  refine (sum_elim _ _) .
+  +
+   refine (fun a => _) .
+   refine (absurd _) .
+   refine (CAB a x) .
+  +
+   admit.
+Admitted.
 
 Definition is_hprop_opposite'_left
   {A B : Type} (H : opposite' A B) : is_hprop A .
