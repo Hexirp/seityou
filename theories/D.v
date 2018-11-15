@@ -172,6 +172,12 @@ Proof.
   unfold is_contr_center .
   refine (fun x => _) .
   pose (p := HH (left x)) .
+  pose (
+    D := sum_elim_nodep idmap (const Hva)
+    : sum A B -> A ) .
+  change (paths (D (left Hva)) (D (left x))) .
+  refine (ap D _) .
+  exact p .
  -
   admit.
 Admitted.
