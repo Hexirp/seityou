@@ -179,5 +179,9 @@ Proof.
   refine (ap D _) .
   exact p .
  -
-  admit.
-Admitted.
+  refine (fun x => _) .
+  refine (absurd _) .
+  refine (_ x Hvb) .
+  pose (H' := opposite'_opposite H) .
+  exact (fst H') .
+Defined.
