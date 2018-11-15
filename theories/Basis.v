@@ -494,6 +494,8 @@ Module Homotopical.
     : forall a, C a
     := fun x : A => f x (g x) .
 
+  (** *** Application *)
+
   (** [ap] のバリエーションは以下の命令規則に従う。
 
       [apNK] は関数のK次道を値のN次道に適用する。関数が依存版である場合は、
@@ -588,6 +590,8 @@ Module Homotopical.
     : paths (transport p (f x)) (f y)
     := ap_dep f p .
 
+  (** *** Pointwise paths *)
+
   (** 点ごとの道。関数の外延性等値性。
 
       "pointwize paths" である。 *)
@@ -637,6 +641,8 @@ Module Homotopical.
     (r : B -> A) (s : A -> B)
     : Type
     := pwpaths (compose r s) idmap .
+
+  (** *** Equivalence *)
 
   (** 等価性 (Equivalence) は相同型理論 (Homotopy Type Theory) の中心的な
       概念である。「等価性」を定義する前に、私たちは [A] と [B] の二つの型が
@@ -704,6 +710,8 @@ Module Homotopical.
     (A B : Type) : Type
     := dsum (fun f : A -> B => is_equiv f) .
 
+  (** *** Truncation *)
+
   Inductive trunc_index : Type
     :=
     | minus_two : trunc_index
@@ -755,6 +763,8 @@ Module Homotopical.
     (n : trunc_index) (A : Type) (H : is_trunc (trunc_succ n) A)
     (x y : A) : is_trunc n (paths x y)
     := H x y .
+
+  (** *** Others *)
 
   Definition funext : Type
     := forall (A : Type) (B : A -> Type) (f g : forall a, B a),
