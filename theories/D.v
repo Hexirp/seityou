@@ -151,33 +151,22 @@ Definition is_hprop (A : Type) : Type
 Definition is_hprop_opposite'_left
   {A B : Type} (H : opposite' A B) : is_hprop A .
 Proof.
- unfold is_hprop .
- unfold is_trunc .
- unfold trunc_index_rec .
- unfold paths_is .
- unfold opposite' in H .
- unfold is_contr in H .
- refine (dsum_elim_nodep (fun Hv HH => _) H) .
- unfold is_contr_center in HH .
- revert Hv HH .
- refine (sum_elim (fun Hva HH => _) (fun Hvb HH => _) ) .
+ revert H .
+ refine (dsum_elim_nodep _) .
+ refine (sum_elim _ _) .
  -
+  refine (fun x p => _) .
   refine (contr_paths_contr _) .
-  unfold is_contr .
-  refine (dpair Hva _) .
-  unfold is_contr_center .
-  refine (fun x => _) .
-  pose (p := HH (left x)) .
+  refine (dpair x _) .
+  refine (fun y => _) .
   pose (
-    D := sum_elim_nodep idmap (const Hva)
-    : sum A B -> A ) .
-  change (paths (D (left Hva)) (D (left x))) .
+    D := sum_elim_nodep (A := A) (B := B) idmap (const x)
+    ) .
+  change (paths (D (left x)) (D (left y))) .
   refine (ap D _) .
-  exact p .
+  exact (p (left y)) .
  -
-  refine (fun x => _) .
+  refine (fun x p a => _) .
   refine (absurd _) .
-  refine (_ x Hvb) .
-  pose (H' := opposite'_opposite H) .
-  exact (fst H') .
+  exact (opposite'_contradict (dpair (right x) p) a x) .
 Defined.
