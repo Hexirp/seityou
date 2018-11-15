@@ -1,4 +1,4 @@
-Require Import Basis.
+Require Import Basis Contraction.
 
 
 Declare ML Module "ltac_plugin".
@@ -166,8 +166,12 @@ Proof.
  revert Hv HH .
  refine (sum_elim (fun Hva HH => _) (fun Hvb HH => _) ) .
  -
-  refine (fun x y => _) .
-  admit.
+  refine (contr_paths_contr _) .
+  unfold is_contr .
+  refine (dpair Hva _) .
+  unfold is_contr_center .
+  refine (fun x => _) .
+  pose (p := HH (left x)) .
  -
   admit.
 Admitted.
