@@ -170,3 +170,26 @@ Proof.
   refine (absurd _) .
   exact (opposite'_contradict (dpair (right x) p) a x) .
 Defined.
+
+Definition is_hprop_opposite'_right
+  {A B : Type} (H : opposite' A B) : is_hprop B .
+Proof.
+ revert H .
+ refine (dsum_elim_nodep _) .
+ refine (sum_elim _ _) .
+ -
+  refine (fun x p a => _) .
+  refine (absurd _) .
+  exact (opposite'_contradict (dpair (left x) p) x a) .
+ -
+  refine (fun x p => _) .
+  refine (contr_paths_contr _) .
+  refine (dpair x _) .
+  refine (fun y => _) .
+  pose (
+    D := sum_elim_nodep (A := A) (B := B) (const x) idmap
+    ) .
+  change (paths (D (right x)) (D (right y))) .
+  refine (ap D _) .
+  exact (p (right y)) .
+Defined.
