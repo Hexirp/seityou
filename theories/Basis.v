@@ -759,6 +759,15 @@ Module Homotopical.
   Definition is_trunc (n : trunc_index) (A : Type) : Type
     := trunc_index_rec is_contr paths_is n A .
 
+  Definition contr (A : Type) : Type
+    := is_trunc minus_two A .
+
+  Definition is_hprop (A : Type) : Type
+    := is_trunc (trunc_succ minus_two) A .
+
+  Definition is_hset (A : Type) : Type
+    := is_trunc (trunc_succ (trunc_succ minus_two)) A .
+
   Definition trunc_paths
     (n : trunc_index) (A : Type) (H : is_trunc (trunc_succ n) A)
     (x y : A) : is_trunc n (paths x y)
