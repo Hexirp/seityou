@@ -125,6 +125,7 @@ Proof.
   refine (sum_elim _ _) .
   +
    refine (fun Hva I => _) .
+   unfold is_contr_center in I .
    refine (cast (A := unit) (B := empty) _ tt) .
    pose (
      D
@@ -132,10 +133,10 @@ Proof.
        : sum A B -> Type ) .
    change (paths (D (left Hva)) (D (right b))) .
    refine (ap D _) .
-   unfold is_contr_center in I .
    exact (I (right b)) .
   +
    refine (fun Hvb I => _) .
+   unfold is_contr_center in I .
    refine (cast (A := unit) (B := empty) _ tt) .
    pose (
      D
@@ -143,7 +144,6 @@ Proof.
        : sum A B -> Type ) .
    change (paths (D (right Hvb)) (D (left a))) .
    refine (ap D _) .
-   unfold is_contr_center in I .
    exact (I (left a)) .
  -
   exact Hv .
