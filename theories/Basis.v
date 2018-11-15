@@ -313,7 +313,7 @@ Arguments paths_elim_nodep {_ _ _} _ {_} _ .
 Arguments paths_elim {_ _ _} _ {_} _ .
 
 
-(** ** Functional - Basic Functions
+(** ** Functional - Basic functions
 
     標準的な関数を記述する。 *)
 
@@ -458,41 +458,7 @@ Module Functional.
 End Functional.
 
 
-(** ** Categorical - Categorical Functions
-
-    これはあまり大真面目ではない部分である。削除されるかもしれない。 *)
-
-Module Categorical.
-
-  Definition initial {A : Type} : empty -> A
-    := fun x => match x with end .
-
-  Definition terminal {A : Type} : A -> unit
-    := fun _ => tt .
-
-  Definition coproduct {A B C : Type}
-    : (A -> C) -> (B -> C) -> (sum A B -> C)
-    := fun f g x =>
-      match x with left y => f y | right z => g z end .
-
-  Definition product {A B C : Type}
-    : (A -> B) -> (A -> C) -> (A -> prod B C)
-    := fun f g x => pair (f x) (g x) .
-
-  Definition dependent_coproduct
-    {X : Type} {A : X -> Type} {B : Type}
-    : (forall x, A x -> B) -> (dsum A -> B)
-    := fun f x => match x with dpair xv xH => f xv xH end .
-
-  Definition dependent_product
-    {X : Type} {A : Type} {B : X -> Type}
-    : (forall x, A -> B x) -> (A -> dprod B)
-    := fun f x => fun y => f y x .
-
-End Categorical.
-
-
-(** ** Homotopical - Homotopical Definitions
+(** ** Homotopical - Homotopical definitions
 
     Homotopy Type Theory において一般的な定義をする。 *)
 
