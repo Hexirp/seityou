@@ -109,6 +109,22 @@ Definition opposite (A B : Type) : Type := prod (contradict A B) (sum A B) .
 
 Definition opposite' (A B : Type) : Type := is_contr (sum A B) .
 
+Definition opposite'_contradict
+  {A B : Type} (H : opposite' A B) : contradict A B .
+Proof.
+ revert H .
+ refine (dsum_elim _) .
+ refine (sum_elim _ _) .
+ -
+  refine (fun x p a b => _) .
+  refine (cast (A := unit) (B := empty) _ tt) .
+  pose (
+    D := sum_elim_nodep (A := A) (B := B) (const unit) (const empty)
+    ) .
+  change (paths (D (left x)) (D (right b))) .
+ -
+  refine (fun x p a b => _) .
+
 Definition opposite'_opposite
   {A B : Type} (H : opposite' A B) : opposite A B .
 Proof.
