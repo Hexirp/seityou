@@ -147,9 +147,6 @@ Defined.
 
 (* false: opposite A B -> opposite' A B *)
 
-Definition is_hprop (A : Type) : Type
-  := is_trunc (trunc_succ minus_two) A .
-
 Definition opposite_opposite'
   {A B : Type} (IHPA : is_hprop A) (IHPB : is_hprop B)
   (H : opposite A B) : opposite' A B .
