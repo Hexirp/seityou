@@ -135,7 +135,7 @@ Definition empty_elim_nodep (P : Type) (x : empty) : P
 Definition empty_elim (P : empty -> Type) (x : empty) : P x
   := match x with end .
 
-Arguments empty .
+(* Arguments empty . *)
 Arguments empty_elim_nodep {_} _ .
 Arguments empty_elim {_} _ .
 
@@ -154,7 +154,7 @@ Definition unit_elim
   (P : unit -> Type) (case_tt : P tt) (x : unit) : P x
   := match x with tt => case_tt end .
 
-Arguments unit .
+(* Arguments unit . *)
 Arguments unit_elim_nodep {_} _ _ .
 Arguments unit_elim {_} _ _ .
 
@@ -184,7 +184,7 @@ Definition sum_elim
     | right _ _ b => case_right b
   end .
 
-Arguments sum _ _ .
+(* Arguments sum _ _ . *)
 Arguments left {_ _} _ .
 Arguments right {_ _} _ .
 Arguments sum_elim_nodep {_ _ _} _ _ _ .
@@ -208,7 +208,7 @@ Definition prod_elim
   (x : prod A B) : P x
   := match x with pair _ _ a b => case_pair a b end .
 
-Arguments prod _ _ .
+(* Arguments prod _ _ . *)
 Arguments pair {_ _} _ _ .
 Arguments prod_elim_nodep {_ _ _} _ _ .
 Arguments prod_elim {_ _ _} _ _ .
@@ -233,7 +233,7 @@ Definition exp_elim
   (x : exp A B) : P x
   := case x .
 
-Arguments exp _ _ .
+(* Arguments exp _ _ . *)
 Arguments exp_elim_nodep {_ _ _} _ _.
 Arguments exp_elim {_ _ _} _ _.
 
