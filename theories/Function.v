@@ -160,3 +160,21 @@ Definition cast
   {A B : Type}
   (p : paths A B) (x : A) : B
   := transport p x .
+
+(** [paths_elim_nodep] の反転。
+
+    [pattern], [inverse] タクティックと同じことをやるのに便利である。 *)
+Definition paths_rev_elim_nodep
+  {A : Type} {a : A} {P : A -> Type}
+  (c : forall a', paths a a' -> P a')
+  : P a
+  := c a idpath .
+
+(** [paths_elim] の反転。
+
+    網羅性のためであって意味はあまりない。 *)
+Definition paths_rev_elim
+  {A : Type} {a : A} {P : forall a', paths a a' -> Type}
+  (c : forall a' p, P a' p)
+  : P a idpath
+  := c a idpath .
