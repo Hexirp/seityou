@@ -70,7 +70,7 @@ Definition skolemize {A B C}
   (f : forall a, @dsum B (C a)) (a : A) : C a (skolem f a)
   := dsnd (f a) .
 
-(** [paths] には二つの定義方法が存在する。今までの定義は「基点付き」であり、
+(** [paths] には二つの定義方法が存在する。Basis の定義は「基点付き」であり、
     「基点なし」もある。このような定義である。
 
     <<
