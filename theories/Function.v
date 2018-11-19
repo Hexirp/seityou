@@ -73,7 +73,7 @@ Definition dfst_forall {A B C}
 
     スコーレム関数が満たす条件を取り出す、とも表現できる。 *)
 Definition dsnd_forall {A B C}
-  (f : forall a, @dsum B (C a)) (a : A) : C a (fst_forall f a)
+  (f : forall a, @dsum B (C a)) (a : A) : C a (dfst_forall f a)
   := dsnd (f a) .
 
 (** [paths] には二つの定義方法が存在する。Basis の定義は「基点付き」であり、
