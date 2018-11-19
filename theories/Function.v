@@ -72,7 +72,7 @@ Definition skolem {A B C}
 (** 関数の結果に [snd] を適用する。
 
     スコーレム関数が満たす条件を取り出す、とも表現できる。 *)
-Definition skolemize {A B C}
+Definition skolemed {A B C}
   (f : forall a, @dsum B (C a)) (a : A) : C a (skolem f a)
   := dsnd (f a) .
 
