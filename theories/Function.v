@@ -155,7 +155,6 @@ Definition ap
   : paths (f x) (f y)
   := paths_elim_nodep (P := fun y' => paths (f x) (f y')) idpath p .
 
-
 (** [A] と [B] が等しいとき [x : A] を [B] に変換する。 *)
 Definition cast
   {A B : Type}
