@@ -1,9 +1,10 @@
-(** ** Homotopical - Homotopical definitions
+(** ** Homotopy - Homotopical definitions
 
     Homotopy Type Theory において一般的な定義をする。 *)
 
 
-Export Functional.
+Require Export Functional.
+
 
 (** 最初の引数が依存関数である関数合成。
 

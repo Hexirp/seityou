@@ -1,6 +1,9 @@
-(** ** Functional - Basic functions
+(** ** Function - Basic functions
 
     標準的な関数を記述する。 *)
+
+
+Require Export Basis.
 
 
 (** 恒等関数。
