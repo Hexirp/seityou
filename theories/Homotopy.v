@@ -44,7 +44,7 @@ Definition ap00
   (f : A -> B)
   (x : A)
   : B
-  := f x .
+  := apply f x .
 
 (** [f] を [p] に適用する。
 

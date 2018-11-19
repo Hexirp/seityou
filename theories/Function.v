@@ -29,6 +29,12 @@ Definition compose_dep
   : forall a, C (g a)
   := fun x => f (g x) .
 
+(** 適用。
+
+    [idmap] を関数だけに制限したもの。 *)
+Definition apply {A B} : (A -> B) -> A -> B
+  := fun f x => f x .
+
 (** 矛盾による安全なエラー。
 
     [empty] の値は存在しえないため、"ex falso quodlibet" よりどのような型も
