@@ -66,14 +66,14 @@ Definition dsnd {A B} (x : @dsum A B) : B (dfst x)
 
     スコーレム関数を取り出す、とも表現できる。 *)
 Definition dfst_forall {A B C}
-  (f : forall a, @dsum B (C a)) (a : A) : B
+  (f : forall a, @dsum (B a) (C a)) (a : A) : B a
   := dfst (f a) .
 
 (** 関数の結果に [dsnd] を適用する。
 
     スコーレム関数が満たす条件を取り出す、とも表現できる。 *)
 Definition dsnd_forall {A B C}
-  (f : forall a, @dsum B (C a)) (a : A) : C a (dfst_forall f a)
+  (f : forall a, @dsum (B a) (C a)) (a : A) : C a (dfst_forall f a)
   := dsnd (f a) .
 
 (** [paths] には二つの定義方法が存在する。Basis の定義は「基点付き」であり、
