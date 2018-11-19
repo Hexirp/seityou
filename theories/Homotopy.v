@@ -1,4 +1,4 @@
-(** ** Homotopy - Homotopical definitions
+(** * Homotopy - Homotopical definitions
 
     Homotopy Type Theory において一般的な定義をする。 *)
 
@@ -20,7 +20,7 @@ Definition compose01
   : forall a, C a
   := fun x : A => f x (g x) .
 
-(** *** Application *)
+(** ** Application *)
 
 (** [ap] のバリエーションは以下の命令規則に従う。
 
@@ -116,7 +116,7 @@ Definition ap01_dep
   : paths (transport p (f x)) (f y)
   := ap_dep f p .
 
-(** *** Pointwise paths *)
+(** ** Pointwise paths *)
 
 (** 点ごとの道。関数の外延性等値性。
 
@@ -168,7 +168,7 @@ Definition retraction
   : Type
   := pwpaths (compose r s) idmap .
 
-(** *** Equivalence *)
+(** ** Equivalence *)
 
 (** 等価性 (Equivalence) は相同型理論 (Homotopy Type Theory) の中心的な
     概念である。「等価性」を定義する前に、私たちは [A] と [B] の二つの型が
@@ -236,7 +236,7 @@ Definition equiv
   (A B : Type) : Type
   := dsum (fun f : A -> B => is_equiv f) .
 
-(** *** Truncation *)
+(** ** Truncation *)
 
 Inductive trunc_index : Type
   :=
@@ -299,7 +299,7 @@ Definition trunc_paths
   (x y : A) : is_trunc n (paths x y)
   := H x y .
 
-(** *** Others *)
+(** ** Others *)
 
 Definition funext : Type
   := forall (A : Type) (B : A -> Type) (f g : forall a, B a),
