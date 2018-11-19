@@ -3,7 +3,7 @@ Require Import Basis Contraction.
 
 Declare ML Module "ltac_plugin".
 
-Export Set Default Proof Mode "Classic".
+Set Default Proof Mode "Classic".
 
 
 Definition contradict (A B : Type) : Type

@@ -3,7 +3,7 @@ Require Export Homotopy.
 
 Declare ML Module "ltac_plugin".
 
-Export Set Default Proof Mode "Classic".
+Set Default Proof Mode "Classic".
 
 
 (** [A] に関して [B] で添え字付けられた整礎的な型。
