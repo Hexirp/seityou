@@ -62,17 +62,17 @@ Definition dfst {A B} : @dsum A B -> A
 Definition dsnd {A B} (x : @dsum A B) : B (dfst x)
   := dsum_elim (P := fun x' => B (dfst x')) (fun _ xH => xH) x .
 
-(** 関数の結果に [fst] を適用する。
+(** 関数の結果に [dfst] を適用する。
 
     スコーレム関数を取り出す、とも表現できる。 *)
-Definition fst_forall {A B C}
+Definition dfst_forall {A B C}
   (f : forall a, @dsum B (C a)) (a : A) : B
   := dfst (f a) .
 
-(** 関数の結果に [snd] を適用する。
+(** 関数の結果に [dsnd] を適用する。
 
     スコーレム関数が満たす条件を取り出す、とも表現できる。 *)
-Definition snd_forall {A B C}
+Definition dsnd_forall {A B C}
   (f : forall a, @dsum B (C a)) (a : A) : C a (fst_forall f a)
   := dsnd (f a) .
 
