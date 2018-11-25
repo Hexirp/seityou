@@ -29,6 +29,7 @@ Definition lt (m n : nat) : Type := le (S m) n .
 
 Definition well_founded_lt : well_founded lt .
 Proof.
+ refine (nat_rec _) .
 Admitted.
 
 Definition ss (m n : nat) : Type := paths m (S (S n)) .
