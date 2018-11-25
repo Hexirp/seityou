@@ -19,6 +19,18 @@ Definition well_founded {A : Type} (R : A -> A -> Type) : Type
 
 Inductive nat : Type := O : nat | S : nat -> nat .
 
+Inductive le (m : nat) : nat -> Type
+  :=
+  | le_refl : le m m
+  | le_succ : forall n, le m n -> le m (S n)
+  .
+
+Definition lt (m n : nat) : Type := le (S m) n .
+
+Definition well_founded_lt : well_founded lt .
+Proof.
+Admitted.
+
 Definition ss (m n : nat) : Type := paths m (S (S n)) .
 
 Definition well_founded_ss : well_founded ss .
