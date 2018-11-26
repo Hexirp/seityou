@@ -255,6 +255,11 @@ Definition equiv
   (A B : Type) : Type
   := dsum (fun f : A -> B => is_equiv f) .
 
+(** [equiv A B] から等価射 [A -> B] を取り出す。 *)
+Definition equiv_fun
+  {A B : Type} : equiv A B -> A -> B
+  := dfst .
+
 (** ** Truncation *)
 
 Inductive trunc_index : Type
