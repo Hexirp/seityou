@@ -260,6 +260,11 @@ Definition equiv_fun
   {A B : Type} : equiv A B -> A -> B
   := dfst .
 
+(** [equiv_fun] は [is_equiv] である。 *)
+Definition equiv_fun_is_equiv
+  {A B : Type} : forall x : equiv A B, is_equiv (equiv_fun x)
+  := dsnd .
+
 (** ** Truncation *)
 
 Inductive trunc_index : Type
