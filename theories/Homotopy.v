@@ -267,6 +267,14 @@ Definition equiv_fun_is_equiv
 
 (** ** Truncation *)
 
+(** 縮小 (Truncation) は、型の複雑性を測定する。このライブラリでは、ある型が
+    ｎ次縮小 (n-truncated) であるという証拠を [is_trunc n] として形式化する。
+
+    [is_trunc n (@paths A a b)] よりも [is_trunc (S n) A] の方が良く、
+    [is_trunc n (forall a, P a)] よりも [forall a, is_trunc n (P a)] が、
+    [is_trunc n (prod A B)] よりも [prod (is_trunc n A) (is_trunc n B)] が、
+    つまりより小さい型に対するものが良い。 *)
+
 Inductive trunc_index : Type
   :=
   | minus_two : trunc_index
