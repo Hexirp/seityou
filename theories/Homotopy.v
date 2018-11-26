@@ -150,24 +150,6 @@ Definition pwpaths_compose10
   : pwpaths (compose f h) (compose g h)
   := compose10 p h .
 
-(** [s] は [r] の断面 (section) である。
-
-    [s] は [r] の右逆射である。 *)
-Definition section
-  {A B : Type}
-  (s : A -> B) (r : B -> A)
-  : Type
-  := pwpaths (compose r s) idmap .
-
-(** [r] は [s] の引き込み (retraction) である。
-
-    [r] は [s] の左逆射である。 *)
-Definition retraction
-  {A B : Type}
-  (r : B -> A) (s : A -> B)
-  : Type
-  := pwpaths (compose r s) idmap .
-
 (** ** Equivalence *)
 
 (** 等価性 (Equivalence) は相同型理論 (Homotopy Type Theory) の中心的な
@@ -202,19 +184,49 @@ Definition retraction
 (** 言い方: 体系的に [equiv] は「型の等価性」とし [is_equiv] は
     「与えられた射が等価射である」とする。 *)
 
+(** [s] は [r] の断面 (section) である。
+
+    言い換えると [s] は [r] の右逆射である。 *)
+Definition section
+  {A B : Type}
+  (s : A -> B) (r : B -> A)
+  : Type
+  := pwpaths (compose r s) idmap .
+
+(** [r] は [s] の引き込み (retraction) である。
+
+    言い換えると [r] は [s] の左逆射である。 *)
+Definition retraction
+  {A B : Type}
+  (r : B -> A) (s : A -> B)
+  : Type
+  := pwpaths (compose r s) idmap .
+
 (** [f] と [g] は [retr] と [sect] を通じて随伴的である。
 
     [A] の値を対象として [@paths A] を射とした圏（実際は大群 (Groupoid) で
     ある）から [B] の値を対象とした同じような圏への関手は、ただの関数
     [f : A -> B] として表される。対象の変換は、そのまま適用すればよく、
     [x] から [y] への射の変換は [ap f : paths x y -> paths (f x) (f y)] と
-    する。この時、その関手 [f : A -> B] から [g : A -> B] への自然変換は
-    [pwpaths f g] で表される。
+    となる。この時、その関手 [f : A -> B] から [g : A -> B] への自然変換は
+    [forall x, paths (f x) (g x)] で、すなわち [pwpaths f g] で表される。
 
-    [retr] は余単位であり [sect] は単位であるが、大群であるため逆を取ることが
-    できる。そのため、区別はあまりない。それらの間で単位―余単位恒等式が
-    成立すれば随伴であると認められる。見慣れない形だが、逆を取れば見慣れた形
-    になる。 *)
+    こう考えると、ある二つの等式圏 [A] と [B] の間に関手 [f : A -> B] と
+    [g : B -> A] があり、それぞれ余単位射と単位射と呼ばれる二つの自然変換
+    [r : pwpaths (compose f g) idmap] と [s : pwpaths idmap (compose g f)] が
+    あるとし、さらにそれらの合成が二つの条件を満たすとき、随伴であると呼ばれる
+    ことになる。これは、普通の圏での随伴の定義を適用しただけである。
+
+    ここで Equivalence の前説で書いた通り、実際にはただ一つの条件だけでよく
+    （むしろ、一つだけの方が相同的な性質に関してよく振る舞う）、これは等式圏
+    であるからである。即ち、その条件は [r] の両辺に [f] を右から合成したもの
+    と、そして [s] の両辺に [f] を左から合成したものを、さらに合成したとき、
+    それが恒等関手になることだと定められる。
+
+    この時 [s] を反転させて [s : pwpaths (compose g f) idmap] という風に
+    [r] と綺麗に型をそろえてやると、一般的に、道を移項させることが出来ること
+    から [paths (concat (inverse p) q) idpath)] は [paths q p] と同じこと
+    になることから定義を簡略化でき、この定義もそのようになっている。 *)
 Definition is_adjoint
   {A B : Type}
   (f : A -> B) (g : B -> A)
