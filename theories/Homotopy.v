@@ -275,6 +275,18 @@ Definition equiv_fun_is_equiv
     [is_trunc n (prod A B)] よりも [prod (is_trunc n A) (is_trunc n B)] が、
     つまりより小さい型に対するものが良い。 *)
 
+(** 空間 [A] は、このような時で可縮であり、このような時というのは、一つの点
+    [x : A] があって、一つの（点ごと）相同的接続 (homotopy connecting) 、
+    [A] の上での恒等写像から [x] への定値写像 (constant map) までのがあるとき
+    である。ゆえに、一つの [contr A] の値は依存ペアで、最初の構成要素が
+    一つの点 [x] であり、二番目の構成要素が、一つの [A] から [x] への引き込み
+    である。 *)
+
+Definition is_contr_center (A : Type) (x : A) : Type
+  := forall y, paths x y .
+
+Definition is_contr (A : Type) : Type
+  := dsum (is_contr_center A) .
 
 (** 縮小 (Truncation) は、高階道空間の文脈において、型の複雑性を測る。
     (-2) 次縮小である型は、可縮である型のことであり、その相同 (Homotopy) は
@@ -328,19 +340,6 @@ Definition trunc_index_rect
         end
     in go x
   .
-
-(** 空間 [A] は、このような時で可縮であり、このような時というのは、一つの点
-    [x : A] があって、一つの（点ごと）相同的接続 (homotopy connecting) 、
-    [A] の上での恒等写像から [x] への定値写像 (constant map) までのがあるとき
-    である。ゆえに、一つの [contr A] の値は依存ペアで、最初の構成要素が
-    一つの点 [x] であり、二番目の構成要素が、一つの [A] から [x] への引き込み
-    である。 *)
-
-Definition is_contr_center (A : Type) (x : A) : Type
-  := forall y, paths x y .
-
-Definition is_contr (A : Type) : Type
-  := dsum (is_contr_center A) .
 
 Definition paths_is (P : Type -> Type) (A : Type) : Type
   := forall (x y : A), P (paths x y) .
