@@ -293,7 +293,7 @@ Definition equiv_fun_is_equiv
     全ての道が自明であるという意味で、離散的である。私たちは、その空間群を
     「集合」と呼ぶ。 *)
 
-(** 縮小度。つまり n 次縮小と書いたときの "n" を表す。 *)
+(** 縮小度。つまり n 次縮小と書いたときの "n" を表す型。 *)
 Inductive trunc_index : Type
   :=
   | minus_two : trunc_index
