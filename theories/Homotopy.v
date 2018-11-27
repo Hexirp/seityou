@@ -329,6 +329,13 @@ Definition trunc_index_rect
     in go x
   .
 
+(** 空間 [A] は、このような時で可縮であり、このような時というのは、一つの点
+    [x : A] があって、一つの（点ごと）相同的接続 (homotopy connecting) 、
+    [A] の上での恒等写像から [x] への定値写像 (constant map) までのがあるとき
+    である。ゆえに、一つの [contr A] の値は依存ペアで、最初の構成要素が
+    一つの点 [x] であり、二番目の構成要素が、一つの [A] から [x] への引き込み
+    である。 *)
+
 Definition is_contr_center (A : Type) (x : A) : Type
   := forall y, paths x y .
 
