@@ -292,6 +292,8 @@ Definition equiv_fun_is_equiv
     単一の道を持つかである。そのような空間は沢山の点を持ち得るが、それは
     全ての道が自明であるという意味で、離散的である。私たちは、その空間群を
     「集合」と呼ぶ。 *)
+
+(** 縮小度。つまり n 次縮小と書いたときの "n" を表す。 *)
 Inductive trunc_index : Type
   :=
   | minus_two : trunc_index
