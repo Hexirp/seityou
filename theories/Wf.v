@@ -123,7 +123,7 @@ Defined.
 
 Definition lt (m n : nat) : Type := le (S m) n .
 
-Lemma concat_lt_lt_S : forall m n o, lt m n -> lt n (S o) -> lt m o .
+Lemma concat_lt_lt_S : forall m n o, lt m n -> le n o -> lt m o .
 Proof.
  refine (fun m n o x y => _) .
  revert o y .
@@ -150,8 +150,18 @@ Proof.
   +
    exact oH .
   +
-   exact nH .
-Defined.
+   refine (_ (idpath (S xp))) .
+   refine (match nH in le _ o' return paths o' (S xp) -> le n xp with le_refl _ => _ | le_succ _ op opH => _ end) .
+   *
+    refine (fun p => _) .
+    refine (transport _ (le_refl n)) .
+    pose (D := nat_rect (P := fun _ => nat) O (fun xp _ => xp)) .
+    change (paths (D (S n)) (D (S xp))) .
+    refine (ap D _) .
+    exact p .
+   *
+   
+Admitted.
 
 Definition well_founded_lt : well_founded lt .
 Proof.
