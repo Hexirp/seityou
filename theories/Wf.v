@@ -93,8 +93,14 @@ Proof.
   refine (acc _) .
   refine (fun y yH => _) .
   refine (absurd _) .
-  refine (_ (idpath (S y))) .
-  refine (match yH in le (S y) O eeee ).
+  refine (_ (idpath O)) .
+  refine (match yH in le _ z' return paths z' O -> empty with le_refl _ => _ | le_succ _ zp zpH => _ end) .
+  +
+   admit.
+  +
+   admit.
+ -
+  admit.
 Admitted.
 
 Definition ss (m n : nat) : Type := paths m (S (S n)) .
