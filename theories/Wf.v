@@ -123,6 +123,10 @@ Defined.
 
 Definition lt (m n : nat) : Type := le (S m) n .
 
+Lemma concat_lt_lt_S : forall m n o, lt n (S o) -> lt m n -> lt m o .
+Proof.
+Admitted.
+
 Lemma well_founded_lt_steps : forall m n, lt n m -> Acc lt n .
 Proof.
  refine (nat_rect _ _) .
@@ -140,7 +144,12 @@ Proof.
   refine (acc _) .
   refine (fun o oH => _) .
   refine (xpIH _ _) .
-Admitted.
+  refine (concat_lt_lt_S o n xp _ _) .
+  +
+   exact nH .
+  +
+   exact oH .
+Defined.
 
 Definition well_founded_lt : well_founded lt .
 Proof.
