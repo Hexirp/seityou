@@ -123,6 +123,10 @@ Defined.
 
 Definition lt (m n : nat) : Type := le (S m) n .
 
+Lemma well_founded_lt_steps : forall m n, lt n m -> Acc lt n .
+Proof.
+Admitted.
+
 Definition well_founded_lt : well_founded lt .
 Proof.
  refine (nat_rect _ _) .
@@ -139,12 +143,9 @@ Proof.
  -
   refine (fun xp xpH => _) .
   refine (acc _) .
-  refine (fun y => _) .
-  refine (match y with O => _ | S yp => _ end) .
-  +
-   
+  refine (fun y yH => _) .
   refine (match xpH with acc xpHp => _ end) .
-  admit . refine (xpHp _ _) .
+  refine (xpHp _ _) .
 Admitted.
 
 Definition ss (m n : nat) : Type := paths m (S (S n)) .
