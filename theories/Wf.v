@@ -56,14 +56,13 @@ Proof.
  refine (nat_rect _ _) .
  -
   refine (acc _) .
-  refine (fun x H => _) .
-  unfold succ in H .
+  refine (fun y yH => _) .
   pose (D := nat_rec (P := Type) empty (const unit)) .
   refine (absurd _) .
   refine (cast (A := unit) _ tt) .
-  change (paths (D (S x)) (D O)) .
+  change (paths (D (S y)) (D O)) .
   refine (ap D _) .
-  exact H .
+  exact yH .
  -
   refine (fun xp xpH => _) .
   refine (acc _) .
