@@ -402,7 +402,7 @@ Definition path_forall_2
   {f g : forall x y, P x y}
   (p : forall x y, paths (f x y) (g x y))
   : paths f g
-  := path_forall ax (fun x => path_forall (f := f x) (g := g x) ax (p x)) .
+  := path_forall ax (fun x => path_forall ax (p x)) .
 
 Definition pType : Type := dsum (fun A => A) .
 
