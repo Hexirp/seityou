@@ -274,7 +274,7 @@ Definition eissect
     "equiv_inv is adjunction" である。若干の疑いあり。 *)
 Definition eisadj
   {A B : Type} {f : A -> B} (H : is_equiv f) {x : A}
-  : paths (eisretr (f x)) (ap f (eissect x))
+  : paths (eisretr H (f x)) (ap f (eissect H x))
   := dsnd (dsnd (dsnd H)) x .
 
 (** [A] と [B] は等価 (equivalence) である。
