@@ -389,7 +389,7 @@ Definition path_forall
   (f g : forall x, P x)
   (p : forall x, paths (f x) (g x))
   : paths f g
-  := dsnd (dfst ax) p .
+  := dfst (dsnd ax) p .
 
 Definition path_forall_2
   (ax : funext)
