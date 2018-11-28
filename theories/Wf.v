@@ -127,6 +127,9 @@ Definition well_founded_lt : well_founded lt .
 Proof.
  refine (fun x => acc (fun y yH => _)) .
  revert x yH .
+ refine (le_rec _ _) .
+ -
+  
 Admitted.
 
 Definition ss (m n : nat) : Type := paths m (S (S n)) .
