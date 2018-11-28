@@ -284,9 +284,11 @@ Definition equiv_fun_is_equiv
     一つの点 [x] であり、二番目の構成要素が、一つの [A] から [x] への引き込み
     である。 *)
 
+(** [x] は全ての点への道を持つ。 *)
 Definition is_contr_center (A : Type) (x : A) : Type
   := forall y, paths x y .
 
+(** [A] は可縮である。 *)
 Definition is_contr (A : Type) : Type
   := dsum (is_contr_center A) .
 
@@ -309,7 +311,9 @@ Definition is_contr (A : Type) : Type
     全ての道が自明であるという意味で、離散的である。私たちは、その空間群を
     「集合」と呼ぶ。 *)
 
-(** 縮小度。つまり n 次縮小と書いたときの "n" を表す型。 *)
+(** 縮小度。つまり n 次縮小と書いたときの "n" を表す型。
+
+    -2 がスタートで、一つずつ増えていく。 *)
 Inductive trunc_index : Type
   :=
   | minus_two : trunc_index
@@ -345,23 +349,29 @@ Definition trunc_index_rect
     in go x
   .
 
+(** 全ての道空間が [P] という性質を満たす。 *)
 Definition paths_is (P : Type -> Type) (A : Type) : Type
   := forall (x y : A), P (paths x y) .
 
+(** [A] は [n] 次縮小である。 *)
 Definition is_trunc (n : trunc_index) (A : Type) : Type
   := trunc_index_rec is_contr paths_is n A .
 
 (** *** Others *)
 
+(** [A] は -2 次縮小（可縮）である。 *)
 Definition contr (A : Type) : Type
   := is_trunc minus_two A .
 
+(** [A] は -1 次縮小（命題）である。 *)
 Definition is_hprop (A : Type) : Type
   := is_trunc (trunc_succ minus_two) A .
 
+(** [A] は 0 次縮小（集合）である。 *)
 Definition is_hset (A : Type) : Type
   := is_trunc (trunc_succ (trunc_succ minus_two)) A .
 
+(** 道に対する縮小。 *)
 Definition trunc_paths
   (n : trunc_index) (A : Type) (H : is_trunc (trunc_succ n) A)
   (x y : A) : is_trunc n (paths x y)
