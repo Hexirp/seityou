@@ -19,6 +19,21 @@ Definition well_founded {A : Type} (R : A -> A -> Type) : Type
 
 Inductive nat : Type := O : nat | S : nat -> nat .
 
+Definition nat_rec
+  {P : Type}
+  (case_O : P)
+  (case_S : P -> P)
+  (x : nat) : P
+  :=
+    let go :=
+      fix go x :=
+        match x with
+        | O => case_O
+        | S xp => case_S (go xp)
+        end
+    in go x
+  .
+
 Definition nat_rect
   {P : nat -> Type}
   (case_O : P O)
@@ -42,8 +57,10 @@ Proof.
  -
   refine (acc _) .
   refine (fun x H => _) .
-  pose (D := nat_rect (P := fun _ => Type) empty (fun _ _ => unit)) .
-  admit.
+  pose (D := nat_rec empty (const unit)) .
+  refine (absurd _) .
+  refine (cast (A := unit) _ tt) .
+  change (paths (D (S x)) (D O)) .
  -
   admit.
 Admitted.
