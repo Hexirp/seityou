@@ -265,6 +265,11 @@ Definition equiv_fun_is_equiv
   {A B : Type} : forall x : equiv A B, is_equiv (equiv_fun x)
   := dsnd .
 
+(** [is_equiv A B] から逆射 [B -> A] を取り出す。 *)
+Definition equiv_inv_fun
+  {A B : Type} {f : A -> B} : is_equiv f -> B -> A
+  := dfst .
+
 (** ** Truncation *)
 
 (** 縮小 (Truncation) は、型の複雑性を測定する。このライブラリでは、ある型が
