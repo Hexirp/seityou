@@ -275,6 +275,8 @@ Definition equiv_fun_is_equiv
     [is_trunc n (prod A B)] よりも [prod (is_trunc n A) (is_trunc n B)] が、
     つまりより小さい型に対するものが良い。 *)
 
+(** *** Contraction *)
+
 (** 空間 [A] は、このような時で可縮であり、このような時というのは、一つの点
     [x : A] があって、一つの（点ごと）相同的接続 (homotopy connecting) 、
     [A] の上での恒等写像から [x] への定値写像 (constant map) までのがあるとき
@@ -287,6 +289,8 @@ Definition is_contr_center (A : Type) (x : A) : Type
 
 Definition is_contr (A : Type) : Type
   := dsum (is_contr_center A) .
+
+(** *** Truncation *)
 
 (** 縮小 (Truncation) は、高階道空間の文脈において、型の複雑性を測る。
     (-2) 次縮小である型は、可縮である型のことであり、その相同 (Homotopy) は
@@ -346,6 +350,8 @@ Definition paths_is (P : Type -> Type) (A : Type) : Type
 
 Definition is_trunc (n : trunc_index) (A : Type) : Type
   := trunc_index_rec is_contr paths_is n A .
+
+(** *** Others *)
 
 Definition contr (A : Type) : Type
   := is_trunc minus_two A .
