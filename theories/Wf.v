@@ -71,9 +71,13 @@ Proof.
   refine (transport (x := xp) _ _) .
   +
    refine (inverse _) .
-   pose (D := nat_rec O idmap) .
+   pose (D := nat_rect (P := fun _ => nat) O (fun xp _ => xp)) .
    change (paths (D (S y)) (D (S xp))) .
-Admitted.
+   refine (ap D _) .
+   exact yH .
+  +
+   exact xpH .
+Defined.
 
 Inductive le (m : nat) : nat -> Type
   :=
