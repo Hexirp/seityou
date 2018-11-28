@@ -66,12 +66,8 @@ Proof.
  -
   refine (acc _) .
   refine (fun y yH => _) .
-  pose (D := nat_rec (P := Type) empty (const unit)) .
   refine (absurd _) .
-  refine (cast (A := unit) _ tt) .
-  change (paths (D (S y)) (D O)) .
-  refine (ap D _) .
-  exact yH .
+  exact (succ_no y yH) .
  -
   refine (fun xp xpH => _) .
   refine (acc _) .
@@ -105,9 +101,9 @@ Proof.
   refine (_ (idpath O)) .
   refine (match yH in le _ z' return paths z' O -> empty with le_refl _ => _ | le_succ _ zp zpH => _ end) .
   +
-   admit.
+   exact (succ_no y) .
   +
-   admit.
+   exact (succ_no zp) .
  -
   admit.
 Admitted.
