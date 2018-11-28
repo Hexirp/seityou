@@ -414,6 +414,8 @@ Definition path_forall_2
     "pointed type" である。 *)
 Definition pType : Type := dsum (fun A => A) .
 
-(** 相同的繊維。 [f] で [y] に移される値の集まり。 *)
+(** 相同的繊維。 [f] で [y] に移される値の集まり。 
+
+    "homotopical fiber" である。点の相同的な逆像。 *)
 Definition hfiber {A B : Type} (f : A -> B) (y : B) : Type
   := dsum (fun x => paths (f x) y) .
