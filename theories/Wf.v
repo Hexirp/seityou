@@ -153,24 +153,10 @@ Defined.
 
 Definition well_founded_lt : well_founded lt .
 Proof.
- refine (nat_rect _ _) .
- -
-  refine (acc _) .
-  refine (fun y yH => _) .
-  refine (absurd _) .
-  refine (_ (idpath O)) .
-  refine (match yH in le _ z' return paths z' O -> empty with le_refl _ => _ | le_succ _ zp zpH => _ end) .
-  +
-   exact (succ_no y) .
-  +
-   exact (succ_no zp) .
- -
-  refine (fun xp xpH => _) .
-  refine (acc _) .
-  refine (fun y yH => _) .
-  refine (match xpH with acc xpHp => _ end) .
-  refine (xpHp _ _) .
-Admitted.
+ refine (fun x => _) .
+ refine (acc _) .
+ exact (well_founded_lt_steps x) .
+Defined.
 
 Definition ss (m n : nat) : Type := paths m (S (S n)) .
 
