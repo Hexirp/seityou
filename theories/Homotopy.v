@@ -381,14 +381,23 @@ Definition trunc_paths
 
 Definition funext : Type
   := forall (A : Type) (B : A -> Type) (f g : forall a, B a),
-    pwpaths f g -> paths f g .
-
-Definition funext_equiv : Type
-  := forall (A : Type) (B : A -> Type) (f g : forall a, B a),
     is_equiv (pwpaths_paths (f := f) (g := g)) .
 
-Definition funext__funext_equiv (H : funext_equiv) : funext
-  := fun A B f g => dfst (H A B f g) .
+Definition path_forall
+  (ax : funext)
+  {A : Type} {P : A -> Type}
+  (f g : forall x, P x)
+  (p : forall x, paths (f x) (g x))
+  : paths f g
+  := dsnd (dfst ax) p .
+
+Definition path_forall_2
+  (ax : funext)
+  {A B : Type} {P : A -> B -> Type}
+  (f g : forall x y, P x y)
+  (p : forall x y, paths (f x y) (g x y))
+  : paths f g
+  := path_forall f g (fun x => path_forall (f x) (g x) p) .
 
 Definition pType : Type := dsum (fun A => A) .
 
