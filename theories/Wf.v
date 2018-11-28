@@ -89,6 +89,22 @@ Inductive le (m : nat) : nat -> Type
   | le_succ : forall n, le m n -> le m (S n)
   .
 
+Definition le_rec
+  {m : nat} {P : nat -> Type}
+  (case_le_refl : P m)
+  (case_le_succ : forall np, le m np -> P np -> P (S np))
+  (n : nat) (x : le m n) : P n .
+Proof.
+ revert n x .
+ refine (fix go n x {struct x} := _) .
+ refine (match x with le_refl _ => _ | le_succ _ np xp => _ end) .
+ -
+  exact case_le_refl .
+ -
+  refine (case_le_succ np xp _) .
+  exact (go np xp) .
+Defined.
+
 Definition le_rect
   {m : nat} {P : forall n, le m n -> Type}
   (case_le_refl : P m (le_refl m))
