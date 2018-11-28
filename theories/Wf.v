@@ -125,6 +125,21 @@ Definition lt (m n : nat) : Type := le (S m) n .
 
 Lemma well_founded_lt_steps : forall m n, lt n m -> Acc lt n .
 Proof.
+ refine (nat_rect _ _) .
+ -
+  refine (fun n nH => _) .
+  refine (absurd _) .
+  refine (_ (idpath O)) .
+  refine (match nH in le _ o' return paths o' O -> empty with le_refl _ => _ | le_succ _ op opH => _ end) .
+  +
+   exact (succ_no n) .
+  +
+   exact (succ_no op) .
+ -
+  refine (fun xp xpIH n nH => _) .
+  refine (acc _) .
+  refine (fun o oH => _) .
+  refine (xpIH _ _) .
 Admitted.
 
 Definition well_founded_lt : well_founded lt .
