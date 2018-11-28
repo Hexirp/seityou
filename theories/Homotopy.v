@@ -384,10 +384,14 @@ Definition trunc_paths
 
 (** ** Others *)
 
+(** 関数外延性の公理の型。 *)
 Definition funext : Type
   := forall (A : Type) (B : A -> Type) (f g : forall a, B a),
     is_equiv (pwpaths_paths (f := f) (g := g)) .
 
+(** 全称量化に対する道。
+
+    旧来の関数外延性の公理の導出とも捉えることが出来る。 *)
 Definition path_forall
   (ax : funext)
   {A : Type} {P : A -> Type}
@@ -396,6 +400,7 @@ Definition path_forall
   : paths f g
   := is_equiv_inv_fun (ax A P f g) p .
 
+(** [path_forall] の二変数版。 *)
 Definition path_forall_2
   (ax : funext)
   {A B : Type} {P : A -> B -> Type}
@@ -404,7 +409,11 @@ Definition path_forall_2
   : paths f g
   := path_forall ax (fun x => path_forall ax (p x)) .
 
+(** 点付きの型。
+
+    "pointed type" である。 *)
 Definition pType : Type := dsum (fun A => A) .
 
+(** 相同的繊維。 [f] で [y] に移される値の集まり。 *)
 Definition hfiber {A B : Type} (f : A -> B) (y : B) : Type
   := dsum (fun x => paths (f x) y) .
