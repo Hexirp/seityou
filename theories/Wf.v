@@ -94,8 +94,7 @@ Proof.
   refine (fun y yH => _) .
   refine (absurd _) .
   refine (_ (idpath (S y))) .
-  revert yH .
-  pose (D := le_rec eeee ).
+  refine (match yH in le (S y) O eeee ).
 Admitted.
 
 Definition ss (m n : nat) : Type := paths m (S (S n)) .
