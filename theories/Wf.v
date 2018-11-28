@@ -51,7 +51,7 @@ Definition nat_rect
 
 Definition succ (m n : nat) : Type := paths (S m) n .
 
-Definition succ_inrefl (m : nat) (x : succ m m) : empty .
+Definition succ_no (m : nat) (x : succ m O) : empty .
 Proof.
  pose (D := nat_rec (P := Type) empty (const unit)) .
  refine (cast (A := unit) _ tt) .
