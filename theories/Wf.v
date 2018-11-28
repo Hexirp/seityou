@@ -38,6 +38,14 @@ Definition succ (m n : nat) : Type := paths (S m) n .
 
 Definition well_founded_succ : well_founded succ .
 Proof.
+ refine (nat_rect _ _) .
+ -
+  refine (acc _) .
+  refine (fun x H => _) .
+  pose (D := nat_rect (P := fun _ => Type) empty (fun _ _ => unit)) .
+  admit.
+ -
+  admit.
 Admitted.
 
 Inductive le (m : nat) : nat -> Type
