@@ -248,6 +248,35 @@ Definition is_equiv
   : Type
   := dsum (fun equiv_inv => is_equiv_rel f equiv_inv) .
 
+(** [is_equiv A B] から逆射 [B -> A] を取り出す。 *)
+Definition equiv_inv
+  {A B : Type} {f : A -> B} : is_equiv f -> B -> A
+  := dfst .
+
+(** [is_equiv A B] から引き込み条件を取り出す。
+
+    "equiv_inv is retraction" である。 *)
+Definition eisretr
+  {A B : Type} {f : A -> B} (H : is_equiv f) {x : A}
+  : paths (f (equiv_inv H x)) x
+  := dfst (dsnd H) x .
+
+(** [is_equiv A B] から断面条件を取り出す。
+
+    "equiv_inv is section" である。 *)
+Definition eissect
+  {A B : Type} {f : A -> B} (H : is_equiv f) {x : A}
+  : paths (equiv_inv H (f x)) x
+  := dfst (dsnd (dsnd H)) x .
+
+(** [is_equiv A B] から随伴条件を取り出す。
+
+    "equiv_inv is adjunction" である。若干の疑いあり。 *)
+Definition eisadj
+  {A B : Type} {f : A -> B} (H : is_equiv f) {x : A}
+  : paths (eisretr (f x)) (ap f (eissect x))
+  := dsnd (dsnd (dsnd H)) x .
+
 (** [A] と [B] は等価 (equivalence) である。
 
     この型は "type of equivalences" と呼ばれる。 *)
@@ -264,11 +293,6 @@ Definition equiv_fun
 Definition equiv_fun_is_equiv
   {A B : Type} : forall x : equiv A B, is_equiv (equiv_fun x)
   := dsnd .
-
-(** [is_equiv A B] から逆射 [B -> A] を取り出す。 *)
-Definition is_equiv_inv_fun
-  {A B : Type} {f : A -> B} : is_equiv f -> B -> A
-  := dfst .
 
 (** ** Truncation *)
 
