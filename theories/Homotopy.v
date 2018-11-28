@@ -386,15 +386,15 @@ Definition funext : Type
 Definition path_forall
   (ax : funext)
   {A : Type} {P : A -> Type}
-  (f g : forall x, P x)
+  {f g : forall x, P x}
   (p : forall x, paths (f x) (g x))
   : paths f g
-  := dfst (dsnd ax) p .
+  := dfst (dsnd (ax A P f g)) p .
 
 Definition path_forall_2
   (ax : funext)
   {A B : Type} {P : A -> B -> Type}
-  (f g : forall x y, P x y)
+  {f g : forall x y, P x y}
   (p : forall x y, paths (f x y) (g x y))
   : paths f g
   := path_forall f g (fun x => path_forall (f x) (g x) p) .
