@@ -422,7 +422,7 @@ Definition path_forall
   {f g : forall x, P x}
   (p : forall x, paths (f x) (g x))
   : paths f g
-  := is_equiv_inv_fun (ax A P f g) p .
+  := equiv_inv (ax A P f g) p .
 
 (** [path_forall] の二変数版。 *)
 Definition path_forall_2
