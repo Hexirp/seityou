@@ -10,8 +10,4 @@ coqc -nois \
  theories/Basis.v \
  theories/Function.v \
  theories/Homotopy.v \
- theories/Contraction.v \
- theories/D.v \
- theories/K.v \
- theories/W.v \
- theories/Wf.v
+ theories/Contraction.v
