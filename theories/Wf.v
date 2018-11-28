@@ -57,12 +57,22 @@ Proof.
  -
   refine (acc _) .
   refine (fun x H => _) .
-  pose (D := nat_rec empty (const unit)) .
+  unfold succ in H .
+  pose (D := nat_rec (P := Type) empty (const unit)) .
   refine (absurd _) .
   refine (cast (A := unit) _ tt) .
   change (paths (D (S x)) (D O)) .
+  refine (ap D _) .
+  exact H .
  -
-  admit.
+  refine (fun xp xpH => _) .
+  refine (acc _) .
+  refine (fun y yH => _) .
+  refine (transport (x := xp) _ _) .
+  +
+   refine (inverse _) .
+   pose (D := nat_rec O idmap) .
+   change (paths (D (S y)) (D (S xp))) .
 Admitted.
 
 Inductive le (m : nat) : nat -> Type
