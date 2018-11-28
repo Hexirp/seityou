@@ -139,8 +139,12 @@ Proof.
  -
   refine (fun xp xpH => _) .
   refine (acc _) .
+  refine (nat_rect _ _) .
+  +
+   admit.
+   +
   refine (fun y yH => _) .
-  revert yH .
+  revert yH . admit.
 Admitted.
 
 Definition ss (m n : nat) : Type := paths m (S (S n)) .
