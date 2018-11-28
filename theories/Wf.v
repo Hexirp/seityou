@@ -96,7 +96,7 @@ Definition le_rect
   (n : nat) (x : le m n) : P n x .
 Proof.
  revert n x .
- refine (fix go n x := _) .
+ refine (fix go n x {struct x} := _) .
  refine (match x with le_refl _ => _ | le_succ _ np xp => _ end) .
  -
   exact case_le_refl .
