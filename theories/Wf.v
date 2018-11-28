@@ -19,6 +19,27 @@ Definition well_founded {A : Type} (R : A -> A -> Type) : Type
 
 Inductive nat : Type := O : nat | S : nat -> nat .
 
+Definition nat_rect
+  {P : nat -> Type}
+  (case_O : P O)
+  (case_S : forall xp, P xp -> P (S xp))
+  (x : nat) : P x
+  :=
+    let go :=
+      fix go x :=
+        match x with
+        | O => case_O
+        | S xp => case_S xp (go xp)
+        end
+    in go x
+  .
+
+Definition succ (m n : nat) : Type := paths (S m) n .
+
+Definition well_founded_succ : well_founded succ .
+Proof.
+Admitted.
+
 Inductive le (m : nat) : nat -> Type
   :=
   | le_refl : le m m
