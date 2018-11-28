@@ -105,7 +105,9 @@ Proof.
   +
    exact (succ_no zp) .
  -
-  admit.
+  refine (fun xp xpH => _) .
+  refine (acc _) .
+  refine (fun y yH => _) .
 Admitted.
 
 Definition ss (m n : nat) : Type := paths m (S (S n)) .
