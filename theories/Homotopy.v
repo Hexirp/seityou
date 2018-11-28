@@ -266,7 +266,7 @@ Definition equiv_fun_is_equiv
   := dsnd .
 
 (** [is_equiv A B] から逆射 [B -> A] を取り出す。 *)
-Definition equiv_inv_fun
+Definition is_equiv_inv_fun
   {A B : Type} {f : A -> B} : is_equiv f -> B -> A
   := dfst .
 
