@@ -394,7 +394,7 @@ Definition path_forall
   {f g : forall x, P x}
   (p : forall x, paths (f x) (g x))
   : paths f g
-  := dfst (dsnd (ax A P f g)) p .
+  := is_equiv_inv_fun (ax A P f g) p .
 
 Definition path_forall_2
   (ax : funext)
