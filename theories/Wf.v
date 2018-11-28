@@ -125,6 +125,8 @@ Definition lt (m n : nat) : Type := le (S m) n .
 
 Lemma concat_lt_lt_S : forall m n o, lt m n -> lt n (S o) -> lt m o .
 Proof.
+ refine (fun m n o x y => _) .
+ revert o y .
 Admitted.
 
 Lemma well_founded_lt_steps : forall m n, lt n m -> Acc lt n .
