@@ -257,7 +257,7 @@ Definition equiv_inv
 
     "equiv_inv is retraction" である。 *)
 Definition eisretr
-  {A B : Type} {f : A -> B} (H : is_equiv f) {x : A}
+  {A B : Type} {f : A -> B} (H : is_equiv f) {x : B}
   : paths (f (equiv_inv H x)) x
   := dfst (dsnd H) x .
 
