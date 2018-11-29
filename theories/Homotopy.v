@@ -187,7 +187,8 @@ Definition pwpaths_compose10
 
 (** [s] は [r] の断面 (section) である。
 
-    言い換えると [s] は [r] の右逆射である。 *)
+    言い換えると [s] は [r] の右逆射である。また [r] は [s] の左逆射、または、
+    引き込み (retraction) である。 *)
 Definition section
   {A B : Type}
   (s : A -> B) (r : B -> A)
@@ -196,7 +197,8 @@ Definition section
 
 (** [r] は [s] の引き込み (retraction) である。
 
-    言い換えると [r] は [s] の左逆射である。 *)
+    言い換えると [r] は [s] の左逆射である。また [s] は [r] の右逆射、または、
+    断面 (section) である。 *)
 Definition retraction
   {A B : Type}
   (r : B -> A) (s : A -> B)
