@@ -400,6 +400,10 @@ Definition is_hprop (A : Type) : Type
 Definition is_hset (A : Type) : Type
   := is_trunc (trunc_succ (trunc_succ minus_two)) A .
 
+(** [R] は -1 次縮小な関係である。 *)
+Definition is_merely_relation {A : Type} (R : A -> A -> Type) : Type
+  := forall x y, is_hprop (R x y) .
+
 (** 道に対する縮小。 *)
 Definition trunc_paths
   (n : trunc_index) (A : Type) (H : is_trunc (trunc_succ n) A)
