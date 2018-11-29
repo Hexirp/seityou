@@ -123,6 +123,15 @@ Defined.
 
 Definition lt (m n : nat) : Type := le (S m) n .
 
+Definition wf_lt : well_founded lt .
+Proof.
+ refine (nat_rect _ _) .
+ -
+  admit.
+ -
+  admit.
+Admitted.
+
 Lemma concat_lt_lt_S : forall m n o, lt m n -> le n o -> lt m o .
 Proof.
  refine (fun m n o x y => _) .
