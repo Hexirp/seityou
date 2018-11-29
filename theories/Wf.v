@@ -148,6 +148,7 @@ Proof.
   refine (absurd _) .
   exact (lt_n_0 y yH) .
  -
+  refine (fun xp xpH_ => match xpH_ with acc xpH => acc _ end) .
   admit.
 Admitted.
 
