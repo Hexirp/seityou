@@ -145,8 +145,19 @@ Proof.
  refine (fun m n x => _) .
  pose (D := nat_rect (P := fun _ => nat) O (fun xp _ => xp)) .
  change (sum (paths m (D (S n))) (le (S m) (D (S n)))) .
- refine (match x with le_refl _ => _ | le_succ _ snp xp => _ end) .
-Admitted.
+ refine (
+   match x in le _ sn return sum (paths m (D sn)) (le (S m) (D sn)) with
+   | le_refl _ => _
+   | le_succ _ snp xp => _ end ) .
+ -
+  change (sum (paths m m) (le (S m) m)) .
+  refine (left _) .
+  exact idpath .
+ -
+  change (sum (paths m snp) (le (S m) snp)) .
+  refine (right _) .
+  exact xp .
+Defined.
 
 Definition wf_lt : well_founded lt .
 Proof.
