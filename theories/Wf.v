@@ -168,7 +168,9 @@ Proof.
   refine (absurd _) .
   exact (lt_n_0 yH) .
  -
-  refine (fun xp xpH_ => match xpH_ with acc xpH => acc _ end) .
+  refine (fun xp xpH_ => _) .
+  refine (match xpH_ with acc xpH => _ end) .
+  refine (acc _).
   refine (fun y yH => _) .
   refine (match lt_m_Sn_case yH with left yHL => _ | right yHR => _ end) .
   +
