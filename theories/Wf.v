@@ -123,6 +123,22 @@ Defined.
 
 Definition lt (m n : nat) : Type := le (S m) n .
 
+Definition lt_n_0 : forall n, lt n O -> empty .
+Proof.
+ unfold lt .
+ refine (fun n x => _) .
+ refine (_ (idpath O)) .
+ refine (
+   match x in le _ i return paths i O -> empty with
+   | le_refl _ => _
+   | le_succ _ ip xp => _
+   end ) .
+ -
+  exact (succ_no n) .
+ -
+  exact (succ_no ip) .
+Defined.
+
 Definition wf_lt : well_founded lt .
 Proof.
  refine (nat_rect _ _) .
