@@ -139,6 +139,15 @@ Proof.
   exact (succ_no ip) .
 Defined.
 
+Definition lt_m_Sn_case : forall m n, lt m (S n) -> sum (paths m n) (lt m n) .
+Proof.
+ unfold lt .
+ refine (fun m n x => _) .
+ pose (D := nat_rect (P := fun _ => nat) O (fun xp _ => xp)) .
+ change (sum (paths m (D (S n))) (le (S m) (D (S n)))) .
+ refine (match x with le_refl _ => _ | le_succ _ snp xp => _ end) .
+Admitted.
+
 Definition wf_lt : well_founded lt .
 Proof.
  refine (nat_rect _ _) .
