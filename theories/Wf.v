@@ -169,8 +169,14 @@ Proof.
   exact (lt_n_0 y yH) .
  -
   refine (fun xp xpH_ => match xpH_ with acc xpH => acc _ end) .
-  admit.
-Admitted.
+  refine (fun y yH => _) .
+  refine (match lt_m_Sn_case y xp yH with left yHL => _ | right yHR => _ end) .
+  +
+   exact (transport (inverse yHL) (acc xpH)) .
+  +
+   refine (xpH y _) .
+   exact yHR .
+Defined.
 
 Lemma concat_lt_lt_S : forall m n o, lt m n -> le n o -> lt m o .
 Proof.
