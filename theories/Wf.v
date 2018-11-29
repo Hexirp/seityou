@@ -143,7 +143,10 @@ Definition wf_lt : well_founded lt .
 Proof.
  refine (nat_rect _ _) .
  -
-  admit.
+  refine (acc _) .
+  refine (fun y yH => _) .
+  refine (absurd _) .
+  exact (lt_n_0 y yH) .
  -
   admit.
 Admitted.
