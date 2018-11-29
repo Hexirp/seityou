@@ -49,6 +49,8 @@ Definition nat_rect
     in go x
   .
 
+Definition pred (m : nat) : nat := match m with O => O | S mp => mp end .
+
 Definition succ (m n : nat) : Type := paths (S m) n .
 
 Definition succ_no (m : nat) (x : succ m O) : empty .
@@ -75,7 +77,7 @@ Proof.
   refine (transport (x := xp) _ _) .
   +
    refine (inverse _) .
-   pose (D := nat_rect (P := fun _ => nat) O (fun xp _ => xp)) .
+   pose (D := pred) .
    change (paths (D (S y)) (D (S xp))) .
    refine (ap D _) .
    exact yH .
@@ -143,7 +145,7 @@ Definition lt_m_Sn_case : forall m n, lt m (S n) -> sum (paths m n) (lt m n) .
 Proof.
  unfold lt .
  refine (fun m n x => _) .
- pose (D := nat_rect (P := fun _ => nat) O (fun xp _ => xp)) .
+ pose (D := pred) .
  change (sum (paths m (D (S n))) (le (S m) (D (S n)))) .
  refine (
    match x in le _ sn return sum (paths m (D sn)) (le (S m) (D sn)) with
@@ -159,7 +161,7 @@ Proof.
   exact xp .
 Defined.
 
-Definition wf_lt : well_founded lt .
+Definition well_founded_lt : well_founded lt .
 Proof.
  refine (nat_rect _ _) .
  -
@@ -176,53 +178,6 @@ Proof.
   +
    refine (xpH y _) .
    exact yHR .
-Defined.
-
-Lemma concat_lt_lt_S : forall m n o, lt m n -> le n o -> lt m o .
-Proof.
- refine (fun m n o x y => _) .
- revert o y .
-Admitted.
-
-Lemma well_founded_lt_steps : forall m n, lt n m -> Acc lt n .
-Proof.
- refine (nat_rect _ _) .
- -
-  refine (fun n nH => _) .
-  refine (absurd _) .
-  refine (_ (idpath O)) .
-  refine (match nH in le _ o' return paths o' O -> empty with le_refl _ => _ | le_succ _ op opH => _ end) .
-  +
-   exact (succ_no n) .
-  +
-   exact (succ_no op) .
- -
-  refine (fun xp xpIH n nH => _) .
-  refine (acc _) .
-  refine (fun o oH => _) .
-  refine (xpIH _ _) .
-  refine (concat_lt_lt_S o n xp _ _) .
-  +
-   exact oH .
-  +
-   refine (_ (idpath (S xp))) .
-   refine (match nH in le _ o' return paths o' (S xp) -> le n xp with le_refl _ => _ | le_succ _ op opH => _ end) .
-   *
-    refine (fun p => _) .
-    refine (transport _ (le_refl n)) .
-    pose (D := nat_rect (P := fun _ => nat) O (fun xp _ => xp)) .
-    change (paths (D (S n)) (D (S xp))) .
-    refine (ap D _) .
-    exact p .
-   *
-   
-Admitted.
-
-Definition well_founded_lt : well_founded lt .
-Proof.
- refine (fun x => _) .
- refine (acc _) .
- exact (well_founded_lt_steps x) .
 Defined.
 
 Definition ss (m n : nat) : Type := paths m (S (S n)) .
