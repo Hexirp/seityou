@@ -53,7 +53,7 @@ Definition pred (m : nat) : nat := match m with O => O | S mp => mp end .
 
 Definition succ (m n : nat) : Type := paths (S m) n .
 
-Definition succ_no (m : nat) (x : succ m O) : empty .
+Definition succ_no {m : nat} (x : succ m O) : empty .
 Proof.
  pose (D := nat_rec (P := Type) empty (const unit)) .
  refine (cast (A := unit) _ tt) .
@@ -69,7 +69,7 @@ Proof.
   refine (acc _) .
   refine (fun y yH => _) .
   refine (absurd _) .
-  exact (succ_no y yH) .
+  exact (succ_no yH) .
  -
   refine (fun xp xpH => _) .
   refine (acc _) .
@@ -125,10 +125,9 @@ Defined.
 
 Definition lt (m n : nat) : Type := le (S m) n .
 
-Definition lt_n_0 : forall n, lt n O -> empty .
+Definition lt_n_0 {n : nat} (x : lt n O) : empty .
 Proof.
- unfold lt .
- refine (fun n x => _) .
+ unfold lt in x .
  refine (_ (idpath O)) .
  refine (
    match x in le _ i return paths i O -> empty with
@@ -136,15 +135,14 @@ Proof.
    | le_succ _ ip xp => _
    end ) .
  -
-  exact (succ_no n) .
+  exact succ_no .
  -
-  exact (succ_no ip) .
+  exact succ_no .
 Defined.
 
-Definition lt_m_Sn_case : forall m n, lt m (S n) -> sum (paths m n) (lt m n) .
+Definition lt_m_Sn_case {m n : nat} (x : lt m (S n)) : sum (paths m n) (lt m n) .
 Proof.
- unfold lt .
- refine (fun m n x => _) .
+ unfold lt ; unfold lt in x .
  pose (D := pred) .
  change (sum (paths m (D (S n))) (le (S m) (D (S n)))) .
  refine (
@@ -168,11 +166,11 @@ Proof.
   refine (acc _) .
   refine (fun y yH => _) .
   refine (absurd _) .
-  exact (lt_n_0 y yH) .
+  exact (lt_n_0 yH) .
  -
   refine (fun xp xpH_ => match xpH_ with acc xpH => acc _ end) .
   refine (fun y yH => _) .
-  refine (match lt_m_Sn_case y xp yH with left yHL => _ | right yHR => _ end) .
+  refine (match lt_m_Sn_case yH with left yHL => _ | right yHR => _ end) .
   +
    exact (transport (inverse yHL) (acc xpH)) .
   +
