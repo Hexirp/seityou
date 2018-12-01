@@ -221,3 +221,10 @@ Proof.
    refine (ap D _) .
    exact yH .
 Defined.
+
+Definition wf_ss : well_founded ss .
+Proof.
+ refine (fun x => _) .
+ generalize (well_founded_lt x) .
+ revert x .
+Admitted.
