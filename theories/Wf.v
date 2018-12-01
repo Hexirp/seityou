@@ -148,7 +148,8 @@ Proof.
  refine (
    match x in le _ sn return sum (paths m (D sn)) (le (S m) (D sn)) with
    | le_refl _ => _
-   | le_succ _ snp xp => _ end ) .
+   | le_succ _ snp xp => _
+   end ) .
  -
   change (sum (paths m m) (le (S m) m)) .
   refine (left _) .
@@ -185,5 +186,15 @@ Definition ss (m n : nat) : Type := paths m (S (S n)) .
 Definition well_founded_ss : well_founded ss .
 Proof.
  refine (fun x => _) .
- refine (acc _) .
+ refine (fst (B := Acc ss (S x)) _) .
+ revert x .
+ refine (nat_rect _ _) .
+ -
+  refine (pair _ _) .
+  +
+   refine (acc _) .
+   refine (fun y yH => _) .
+   refine (absurd _) .
+   unfold ss in yH .
+   exact (succ_no yH) .
 Admitted. (* [nat_rec] だけで証明せよ *)
