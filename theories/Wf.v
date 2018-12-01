@@ -14,6 +14,18 @@ Inductive Acc (A : Type) (R : A -> A -> Type) (x : A) : Type
 Arguments Acc {_} _ _ .
 Arguments acc {_ _ _} _ .
 
+Definition Acc_rec
+  {A : Type} {R : A -> A -> Type} {P : A -> Type}
+  (case_acc : forall a, (forall b, R b a -> P b) -> P a)
+  (a : A) (x : Acc R a) : P a
+  :=
+    let go :=
+      fix go a x :=
+        match x with
+        | acc xps => case_acc a (fun b y => go a y)
+        end
+    in go a x .
+
 Definition well_founded {A : Type} (R : A -> A -> Type) : Type
   := forall x, Acc R x .
 
