@@ -17,14 +17,14 @@ Arguments acc {_ _ _} _ .
 Definition Acc_rec
   {A : Type} {R : A -> A -> Type} {P : A -> Type}
   (case_acc : forall a, (forall b, R b a -> P b) -> P a)
-  (a : A) (x : Acc R a) : P a
-  :=
-    let go :=
-      fix go a x :=
-        match x with
-        | acc xps => case_acc a (fun b y => go a y)
-        end
-    in go a x .
+  (a : A) (x : Acc R a) : P a .
+Proof.
+ revert a x .
+ refine (fix go a x {struct x} := _) .
+ refine (case_acc a _) .
+ refine (fun b bH => _) .
+ refine (go b _) .
+Admitted.
 
 Definition well_founded {A : Type} (R : A -> A -> Type) : Type
   := forall x, Acc R x .
