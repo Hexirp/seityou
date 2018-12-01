@@ -181,7 +181,7 @@ Proof.
    exact yHR .
 Defined.
 
-Definition ss (m n : nat) : Type := paths m (S (S n)) .
+Definition ss (m n : nat) : Type := paths (S (S m)) n .
 
 Definition well_founded_ss : well_founded ss .
 Proof.
@@ -195,6 +195,29 @@ Proof.
    refine (acc _) .
    refine (fun y yH => _) .
    refine (absurd _) .
-   unfold ss in yH .
    exact (succ_no yH) .
-Admitted. (* [nat_rec] だけで証明せよ *)
+  +
+   refine (acc _) .
+   refine (fun y yH => _) .
+   refine (absurd _) .
+   refine (succ_no (m := y) _) .
+   pose (D := pred) .
+   change (paths (D (S (S y))) (D (S O))) .
+   refine (ap D _) .
+   exact yH .
+ -
+  refine (fun xp xpIH => _) .
+  refine (pair _ _) .
+  +
+   exact (snd xpIH) .
+  +
+   refine (acc _) .
+   refine (fun y yH => _) .
+   refine (transport _ (fst xpIH)) .
+   refine (inverse _) .
+   pose (D := pred) .
+   change (paths (D (D (S (S y)))) (D (D (S (S xp))))) .
+   refine (ap D _) .
+   refine (ap D _) .
+   exact yH .
+Defined.
