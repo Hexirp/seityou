@@ -18,9 +18,8 @@ Definition coninv_pp
 
 
 Definition path_contr
-  {A : Type} (IC : is_contr A) (x y : A) : paths x y .
+  {A : Type} (IC : contr A) (x y : A) : paths x y .
 Proof.
- unfold is_contr in IC .
  refine (coninv (y := dfst IC) _ _) .
  -
   exact (dsnd IC x) .
@@ -29,7 +28,7 @@ Proof.
 Defined.
 
 Lemma K_path_contr
-  {A : Type} (IC : is_contr A) {x y : A} (p : paths x y)
+  {A : Type} (IC : contr A) {x y : A} (p : paths x y)
   : paths (path_contr IC x y) p .
 Proof.
  refine (paths_elim _ p
@@ -39,7 +38,7 @@ Proof.
 Defined.
 
 Definition path_path_contr
-  {A : Type} (IC : is_contr A) {x y : A} (p q : paths x y) : paths p q .
+  {A : Type} (IC : contr A) {x y : A} (p q : paths x y) : paths p q .
 Proof.
  refine (coninv (y := path_contr IC x y) _ _) .
  -
@@ -49,11 +48,9 @@ Proof.
 Defined.
 
 Definition contr_paths_contr
-  {A : Type} (IC : is_contr A) (x y : A) : is_contr (paths x y) .
+  {A : Type} (IC : contr A) (x y : A) : contr (paths x y) .
 Proof.
- unfold is_contr .
  refine (dpair (path_contr IC x y) _) .
- unfold is_contr_center .
  exact (K_path_contr IC) .
 Defined.
 
@@ -70,11 +67,9 @@ Proof.
 Defined.
 
 Definition contr_based_paths
-  {X : Type} (x : X) : is_contr (based_paths x) .
+  {X : Type} (x : X) : contr (based_paths x) .
 Proof.
- unfold is_contr .
  refine (dpair (dpair x idpath) _) .
- unfold is_contr_center .
  exact path_based_paths .
 Defined.
 
@@ -94,18 +89,14 @@ Proof.
   refine (dsum_elim _ x
     (P := fun x' => paths (dpair (dfst x') (dsnd x')) x')) .
   refine (fun xv xH => _) .
-  unfold dfst .
-  unfold dsum_elim_nodep .
-  unfold dsnd .
-  unfold dsum_elim .
   exact idpath .
  -
-  refine (paths_elim (P := fun a' p => P (dpair a' p)) c (dsnd x)).
+  exact (paths_elim (P := fun a' p => P (dpair a' p)) c (dsnd x)).
 Defined.
 
 
 Definition paths_contr_dom
-  {A B : Type} (IC : is_contr A) (f : A -> B) {x y : A}
+  {A B : Type} (IC : contr A) (f : A -> B) {x y : A}
   : paths (f x) (f y) .
 Proof.
  refine (ap f _) .
@@ -113,17 +104,11 @@ Proof.
 Defined.
 
 Definition contr_retract
-  {X Y} (IC : is_contr X) (r : X -> Y) (s : Y -> X)
-  (retr : retraction r s) : is_contr Y .
+  {X Y} (IC : contr X) (r : X -> Y) (s : Y -> X)
+  (retr : retraction r s) : contr Y .
 Proof.
- unfold is_contr .
  refine (dpair (r (dfst IC)) _) .
- unfold is_contr_center .
  refine (fun y => _) .
- unfold retraction in retr .
- unfold pwpaths in retr .
- unfold compose in retr .
- unfold idmap in retr .
  refine (concat (y := r (s y)) _ _).
  -
   exact (paths_contr_dom IC r) .
