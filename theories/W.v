@@ -82,7 +82,7 @@ Proof.
    ).
    exact case_zero.
   +
-    refine (axiom_funext _ _ _ _ _).
+    refine (path_forall axiom_funext _).
     exact (fun x => match x with end).
  -
   refine (match ir with tt => _ end).
@@ -97,6 +97,6 @@ Proof.
    refine (case_succ (u tt) _).
    exact (t tt).
   +
-   refine (axiom_funext _ _ _ _ _).
+   refine (path_forall axiom_funext _).
    exact (fun x => match x with tt => idpath end).
 Defined.
