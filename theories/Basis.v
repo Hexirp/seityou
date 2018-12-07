@@ -431,7 +431,7 @@ Definition inverse
     旧来のCoqには [eq_truns] として存在する。
 
     <<
-      paths_elim_nodep p q
+      paths_elim_nodep q p
     >>
 
     このような定義もできるが、ここでは [p] と [q] を両方分解することによって

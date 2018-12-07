@@ -58,3 +58,24 @@ Definition coninv_pp
   {A : Type} {x y : A}
   (p : paths x y) : paths (coninv p p) idpath
   := paths_elim (P := fun y' p' => paths (coninv p' p') idpath) idpath p .
+
+(** [concat] の [transport] を使った定義。 *)
+Definition contrans
+  {A : Type} {x y z : A}
+  (p : paths x y) (q : paths y z) : paths x z
+  := transport q p .
+
+(** [contrans] は [concat] と等しい。 *)
+Definition contrans_concat
+  {A : Type} {x y z : A}
+  (p : paths x y) (q : paths y z)
+  : paths (concat p q) (contrans p q) .
+Proof.
+ refine (
+   paths_elim (P := fun _ q' => paths (concat p q') (contrans p q'))_ q
+   ) .
+ refine (
+   paths_elim (P := fun _ p' => paths (concat p' idpath) (contrans p' idpath)) _ p
+   ) .
+ exact idpath .
+Defined.
