@@ -45,37 +45,55 @@ Set Default Proof Mode "Classic".
     * [concat_p_pp] は [concat p (concat q r)] 。 *)
 
 
+(** ** 記法 *)
+
+Notation "x = y :> T"
+  := (@paths T x y) (at level 70, y at next level, no associativity).
+Notation "x = y"
+  := (x = y :> _) (at level 70, no associativity) .
+Notation "1"
+  := idpath .
+Notation "p @ q"
+  := (concat p q) (at level 20) .
+Notation "p ^"
+  := (inverse p) (at level 3, format "p '^'") .
+Notation "p # x"
+  := (transport p x) (right associativity, at level 65) .
+
+
 (** [p] を反転して [q] を合成する。
 
     [forall y, x = y] のようなパターンの時に便利。 *)
 Definition coninv
   {A : Type} {x y z : A}
-  (p : paths y x) (q : paths y z) : paths x z
-  := concat (inverse p) q .
+  (p : y = x) (q : y = z) : x = z
+  := p^ @ q .
 
 (** [concat p p] は [idpath] に等しい。 *)
 Definition coninv_pp
   {A : Type} {x y : A}
-  (p : paths x y) : paths (coninv p p) idpath
-  := paths_elim (P := fun y' p' => paths (coninv p' p') idpath) idpath p .
+  (p : x = y) : coninv p p = 1
+  := paths_elim (P := fun y' p' => coninv p' p' = 1) 1 p .
 
 (** [concat] の [transport] を使った定義。 *)
 Definition contrans
   {A : Type} {x y z : A}
-  (p : paths x y) (q : paths y z) : paths x z
-  := transport q p .
+  (p : x = y) (q : y = z) : x = z
+  := q # p .
 
 (** [contrans] は [concat] と等しい。 *)
 Definition contrans_concat
   {A : Type} {x y z : A}
-  (p : paths x y) (q : paths y z)
-  : paths (concat p q) (contrans p q) .
+  (p : x = y) (q : y = z)
+  : p @ q = contrans p q .
 Proof.
  refine (
-   paths_elim (P := fun _ q' => paths (concat p q') (contrans p q'))_ q
+   paths_elim _ q
+     (P := fun _ q' => p @ q' = contrans p q')
    ) .
  refine (
-   paths_elim (P := fun _ p' => paths (concat p' idpath) (contrans p' idpath)) _ p
+   paths_elim _ p
+     (P := fun _ p' => p' @ 1 = contrans p' 1)
    ) .
- exact idpath .
+ exact 1 .
 Defined.
