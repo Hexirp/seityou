@@ -6,6 +6,8 @@ Declare ML Module "ltac_plugin".
 Set Default Proof Mode "Classic".
 
 
+(*                                                                            *)
+
 (** ** 名前付け
 
     私たちには、それを参照することなく定理に名前を付けることが出来る、
@@ -19,8 +21,8 @@ Set Default Proof Mode "Classic".
     * アンダースコアを使う。
     * 定理や補題の名前は小文字を使う。
     * 記録体 (Record) やそのほかは大文字でも小文字でもよい。
-    
-    結合に関する定理は [concat_XXX] と書かれ、その部分 [XXX] は、その等式の
+
+    結合に関する定理は [concat_XX] と書かれ、その部分 [XX] は、その等式の
     左辺の式がどのような形をしているか教えてくれる。あなたは、右辺を推測する
     必要があります。この末尾につけられる注釈は、このような記号を使って
     書かれます。
@@ -51,6 +53,7 @@ Definition coninv
   (p : paths y x) (q : paths y z) : paths x z
   := concat (inverse p) q .
 
+(** [concat p p] は [idpath] に等しい。 *)
 Definition coninv_pp
   {A : Type} {x y : A}
   (p : paths x y) : paths (coninv p p) idpath
