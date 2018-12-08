@@ -1,20 +1,9 @@
-Require Export Homotopy.
+Require Import Homotopy Path.
 
 
 Declare ML Module "ltac_plugin".
 
 Set Default Proof Mode "Classic".
-
-
-Definition coninv
-  {A : Type} {x y z : A}
-  (p : paths y x) (q : paths y z) : paths x z
-  := concat (inverse p) q .
-
-Definition coninv_pp
-  {A : Type} {x y : A}
-  (p : paths x y) : paths (coninv p p) idpath
-  := paths_elim (P := fun y' p' => paths (coninv p' p') idpath) idpath p .
 
 
 Definition path_contr

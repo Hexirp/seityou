@@ -6,8 +6,6 @@ Declare ML Module "ltac_plugin".
 Set Default Proof Mode "Classic".
 
 
-(*                                                                            *)
-
 (** ** 名前付け
 
     私たちには、それを参照することなく定理に名前を付けることが出来る、
