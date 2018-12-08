@@ -1,5 +1,5 @@
-Require Import Homotopy Path.
-
+Require Export Homotopy.
+Require Import Path.
 
 Declare ML Module "ltac_plugin".
 

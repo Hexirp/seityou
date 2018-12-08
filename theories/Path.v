@@ -45,18 +45,29 @@ Set Default Proof Mode "Classic".
 
 (** ** 記法 *)
 
-Notation "x = y :> T"
-  := (@paths T x y) (at level 70, y at next level, no associativity).
-Notation "x = y"
-  := (x = y :> _) (at level 70, no associativity) .
-Notation "1"
-  := idpath .
-Notation "p @ q"
-  := (concat p q) (at level 20) .
-Notation "p ^"
-  := (inverse p) (at level 3, format "p '^'") .
-Notation "p # x"
-  := (transport p x) (right associativity, at level 65) .
+Module Notation.
+
+  Notation "x = y :> T"
+    := (@paths T x y) (at level 70, y at next level, no associativity).
+
+  Notation "x = y"
+    := (x = y :> _) (at level 70, no associativity) .
+
+  Notation "1"
+    := idpath .
+
+  Notation "p @ q"
+    := (concat p q) (at level 20) .
+
+  Notation "p ^"
+    := (inverse p) (at level 3, format "p '^'") .
+
+  Notation "p # x"
+    := (transport p x) (right associativity, at level 65) .
+
+End Notation.
+
+Import Notation.
 
 
 (** [p] を反転して [q] を合成する。
