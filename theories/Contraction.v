@@ -94,8 +94,9 @@ Proof.
 Defined.
 
 
-(** 定義域 (domain) が [contr] である関数を適用した結果の間に道がある。 *)
-Definition paths_contr_dom
+(** 定義域 (domain) が [contr] である関数は、
+    命題的定値 (propositionally constant) である。 *)
+Definition contr_dom_constant
   {A B : Type} (IC : contr A) (f : A -> B) {x y : A}
   : paths (f x) (f y) .
 Proof.
