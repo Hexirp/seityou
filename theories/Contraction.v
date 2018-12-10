@@ -90,9 +90,7 @@ Definition paths_elim_by_based_paths
 Proof.
  revert x .
  refine (dsum_elim _) .
- refine (
-   @paths_elim A a (fun xv' xH' => P (dpair xv' xH')) _
-   ) .
+ refine (@paths_elim A a _ _) .
  exact c .
 Defined.
 
