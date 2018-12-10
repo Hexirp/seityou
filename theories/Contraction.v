@@ -23,9 +23,10 @@ Lemma K_path_contr
   {A : Type} (IC : contr A) {x y : A} (p : paths x y)
   : paths (path_contr IC x y) p .
 Proof.
- refine (paths_elim _ p
-   (P := fun y' p' => paths (path_contr IC x y') p')) .
- unfold path_contr .
+ refine (
+   paths_elim _ p
+     (P := fun y' p' => paths (path_contr IC x y') p')
+   ) .
  exact (coninv_pp (dsnd IC x)) .
 Defined.
 
@@ -74,8 +75,12 @@ Defined.
 Definition based_paths_elim
   {A : Type} (a : A) (P : based_paths a -> Type)
   (c : forall a' p, P (dpair a' p))
-  (x : based_paths a) : P x
-  := match x with dpair a' p => c a' p end .
+  (x : based_paths a) : P x .
+Proof.
+ revert x .
+ refine (dsum_elim _) .
+ exact c .
+Defined.
 
 (** [paths_elim] を [based_paths] を使って書き直したもの。 *)
 Definition paths_elim_by_based_paths
@@ -83,14 +88,14 @@ Definition paths_elim_by_based_paths
   (c : P (dpair a idpath))
   (x : based_paths a) : P x .
 Proof.
- refine (transport (x := dpair (dfst x) (dsnd x)) _ _) .
- -
-  refine (dsum_elim _ x
-    (P := fun x' => paths (dpair (dfst x') (dsnd x')) x')) .
-  refine (fun xv xH => _) .
-  exact idpath .
- -
-  exact (paths_elim (P := fun a' p => P (dpair a' p)) c (dsnd x)).
+ revert x .
+ refine (dsum_elim _) .
+ refine (fun xv => _) .
+ refine (
+   paths_elim _
+     (P := fun xv' xH' => P (dpair xv' xH'))
+   ) .
+ exact c .
 Defined.
 
 
@@ -117,7 +122,7 @@ Proof.
  refine (fun y => _) .
  refine (concat (y := r (s y)) _ _).
  -
-  exact (paths_contr_dom IC r) .
+  exact (contr_dom_constant IC r) .
  -
   exact (retr y) .
 Defined.
