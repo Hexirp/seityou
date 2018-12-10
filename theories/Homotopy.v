@@ -1,4 +1,4 @@
-(** * Homotopy - Homotopical definitions
+(** * Homotopy
 
     Homotopy Type Theory において一般的な定義をする。 *)
 

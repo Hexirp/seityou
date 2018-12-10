@@ -1,4 +1,4 @@
-(** * Basis - Basic definitions
+(** * Basis
 
     標準的な定義を行う。 *)
 

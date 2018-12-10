@@ -1,5 +1,11 @@
+(** * Contraction
+
+    可縮性に関する定理や定義。 *)
+
+
 Require Export Homotopy.
 Require Import Path.
+
 
 Declare ML Module "ltac_plugin".
 
