@@ -4,8 +4,44 @@
 
 Require Export Basis.
 
+
+Declare ML Module "ltac_plugin".
+
+Set Default Proof Mode "Classic".
+
+
 Inductive nat : Type
   :=
   | O : nat
   | S : nat -> nat
   .
+
+Definition nat_rec
+  {P : Type}
+  (case_O : P)
+  (case_S : P -> P)
+  (x : nat) : P .
+Proof.
+ revert x .
+ refine (fix go (x : nat) {struct x} : P := _) .
+ refine (match x with O => _ | S xp => _ end) .
+ -
+  exact case_O .
+ -
+  exact (case_S (go xp)) .
+Defined.
+
+Definition nat_rect
+  {P : nat -> Type}
+  (case_O : P O)
+  (case_S : forall n, P n -> P (S n))
+  (x : nat) : P x .
+Proof.
+ revert x .
+ refine (fix go (x : nat) {struct x} : P x := _) .
+ refine (match x with O => _ | S xp => _ end) .
+ -
+  exact case_O .
+ -
+  exact (case_S xp (go xp)) .
+Defined.
