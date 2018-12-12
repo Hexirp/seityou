@@ -10,6 +10,11 @@ Declare ML Module "ltac_plugin".
 Set Default Proof Mode "Classic".
 
 
+(** 自然数。
+
+    ペアノの公理は、最初の自然数と後者関数により自然数を定義するものである。
+    標準ライブラリはこれにより自然数を定義していて、このライブラリもこれを
+    使う。 *)
 Inductive nat : Type
   :=
   | O : nat
