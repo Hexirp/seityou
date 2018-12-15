@@ -49,7 +49,13 @@ Export Unset Elimination Schemes.
 
     それら除去子の引数の名前は「除去する値は [x] である」「結果の型は
     [P] である」「型が持つ引数は元の型の定義と同じ名前である」という
-    ことを除いて自由であるとする。 *)
+    ことを除いて自由であるとする。
+
+    名前につく "elim" は "elimination" 、"nodep" は "no dependent"、
+    "rec" は "recursion" 、"rect" は "rec" に "type" を足したもの、
+    "corec" は "corecursion" 、"corec" は "corec" に "type" を足したもの
+    である。"rect", "corect" に関しては、Coq から引用した名前であり、
+    この由来に対しては若干の疑いがある。 *)
 
 (** ** Basic Types
 
@@ -351,7 +357,9 @@ Definition dsnd_forall {A B C}
 
     とにかく、帰納法も対応するものがある。 [paths] に対する帰納法は特に
     道帰納法と呼ばれるから、基点無し道帰納法となる。これは、左右対称である
-    ことによって、いくつかのケースで便利かもしれない。 *)
+    ことによって、いくつかのケースで便利かもしれない。
+
+    名前につく "nop" は "no point" を縮めたもの。 *)
 
 (** 依存無し基点無し道帰納法。 *)
 Definition paths_elim_nodep_nop
@@ -377,17 +385,17 @@ Definition inverse
 
 (** 道を結合する。
 
-    旧来のCoqには [eq_truns] として存在する。
-
     <<
       paths_elim_nodep q p
     >>
 
     このような定義もできるが、ここでは [p] と [q] を両方分解することによって
     その引数の両方が [idpath] であるときだけ [idpath] に簡約されるように
-    なるので、証明がもっと堅牢かつ対称的になっている。上の定義を使ったときは
+    なるので、証明がより堅牢かつ対称的になっている。上の定義を使ったときは
     [q] が [idpath] であるだけで [p] に簡約されてしまう。このバージョンの
-    定義は Path の [contrans] を見よ。 *)
+    定義は Path の [contrans] を見よ。
+
+    旧来のCoqには [eq_truns] として存在する。*)
 Definition concat
   {A : Type} {x y z : A}
   (p : paths x y) (q : paths y z) : paths x z
@@ -395,10 +403,10 @@ Definition concat
 
 (** 道に沿って輸送する。
 
-    [paths_elim_nodep] の重要な帰結であり、引数を並べ変えただけである。
+    [paths_elim_nodep] の引数を並べ変えただけであるが、重要な関数である。
 
     「 [transport A P x y] は [u : P x] を [p : paths x y] に沿って [P y] へ
-    輸送する」。 *)
+    輸送する」と、表記される。ここで暗黙引数はないとした。 *)
 Definition transport
   {A : Type} {P : A -> Type}
   {x y : A} (p : paths x y)
@@ -421,9 +429,10 @@ Definition cast
   (p : paths A B) (x : A) : B
   := transport p x .
 
-(** [paths_elim_nodep] の反転。
+(** 道帰納法の反転は、[pattern], [inverse] タクティックと同じことをやるために
+    定義されている。名前の "rev" は "reverse" を縮めたもの。 *)
 
-    [pattern], [inverse] タクティックと同じことをやるのに便利である。 *)
+(** [paths_elim_nodep] の反転。 *)
 Definition paths_rev_elim_nodep
   {A : Type} {a : A} {P : A -> Type}
   (c : forall a', paths a a' -> P a')
