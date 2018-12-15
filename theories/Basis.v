@@ -224,24 +224,24 @@ Arguments prod_elim {_ _ _} _ _ .
     網羅性のためであって、普段使いは推奨されない。
 
     "exponential object" である。 *)
-Definition exp (A B : Type) : Type
+Definition fn (A B : Type) : Type
   := A -> B.
 
-Definition exp_elim_nodep
+Definition fn_elim_nodep
   (A : Type) (B : Type) (P : Type)
   (case : (A -> B) -> P)
-  (x : exp A B) : P
+  (x : fn A B) : P
   := case x .
 
-Definition exp_elim
+Definition fn_elim
   (A : Type) (B : Type) (P : (A -> B) -> Type)
   (case : forall f, P f)
-  (x : exp A B) : P x
+  (x : fn A B) : P x
   := case x .
 
-(* Arguments exp _ _ . *)
-Arguments exp_elim_nodep {_ _ _} _ _.
-Arguments exp_elim {_ _ _} _ _.
+(* Arguments fn _ _ . *)
+Arguments fn_elim_nodep {_ _ _} _ _.
+Arguments fn_elim {_ _ _} _ _.
 
 (** [A] と [B] の依存和型。
 
