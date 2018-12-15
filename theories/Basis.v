@@ -158,8 +158,7 @@ Arguments prod_elim {_ _ _} _ _ .
 (** [A] から [B] への関数型。
 
     網羅性のためであって、普段使いは推奨されない。
-
-    名前は "function" を縮めたものである。 *)
+    名前は "function" を縮めたもの。 *)
 Definition fn (A B : Type) : Type
   := A -> B.
 
@@ -182,7 +181,7 @@ Arguments fn_elim {_ _ _} _ _.
 
 (** [A] と [B] の依存和型。
 
-    名前は "dependent sum type" を縮めたものである。 *)
+    名前は "dependent sum type" を縮めたもの。 *)
 Inductive dsum (A : Type) (B : A -> Type) : Type
   :=
   | dpair : forall x : A, B x -> dsum A B
@@ -209,8 +208,7 @@ Arguments dsum_elim {_ _ _} _ _ .
 (** [A] と [B] の依存積型。
 
     網羅性のためであって、普段使いは推奨されない。
-
-    名前は "dependent product type" を縮めたものである。 *)
+    名前は "dependent product type" を縮めたもの。 *)
 Definition dprod (A : Type) (B : A -> Type) : Type
   := forall x : A, B x .
 
@@ -265,29 +263,31 @@ Arguments paths_elim {_ _ _} _ {_} _ .
 (** 恒等関数。
 
     HoTTのライブラリに見られるように [Notation idmap := (fun x => x)] と
-    定義することもでき、展開が必要ないことや宇宙多相の関係で良い面があるが、
-    意図しない変換を発生させうる [Notation] をできるたけ使いたくないため
-    こうする。 *)
+    定義することもでき、展開が必要ないことや宇宙多相の関係で良い面がある。
+    しかし、意図しない表示を発生させうる [Notation] をできるたけ使いたく
+    ないため、このように関数として書く。
+
+    名前は "identity map" を縮めたもの。 *)
 Definition idmap {A} : A -> A
   := fun x => x .
 
-(** 定数関数。 *)
+(** 定数関数。すなわち [const a b = a] であり [const a] は [a] を常に返す。
+
+    名前は "constant" を縮めたもの。 *)
 Definition const {A B} : A -> B -> A
   := fun x y => x .
 
-(** 関数合成 *)
+(** 関数合成。すなわち [compose f g x] は [f (g x)] である。 *)
 Definition compose {A B C} : (B -> C) -> (A -> B) -> (A -> C)
   := fun f g x => f (g x) .
 
-(** 関数合成の依存版。 *)
+(** 関数合成の依存版。 [f] が依存関数となっている。 *)
 Definition compose_dep
   {A B C} (f : forall b, C b) (g : A -> B)
   : forall a, C (g a)
   := fun x => f (g x) .
 
-(** 適用。
-
-    [idmap] を関数だけに制限したもの。 *)
+(** 適用。そのほかに [idmap] を関数だけに制限したものと見ることもできる。 *)
 Definition apply {A B} : (A -> B) -> A -> B
   := fun f x => f x .
 
@@ -298,11 +298,15 @@ Definition apply {A B} : (A -> B) -> A -> B
 Definition absurd {A} : empty -> A
   := empty_elim_nodep .
 
-(** 一番最初の値を取り出す。 *)
+(** 直積の一番最初の値を取り出す。
+
+    名前は "first" を縮めたもの。 *)
 Definition fst {A B} : prod A B -> A
   := prod_elim_nodep (fun a _ => a) .
 
-(** 二番目の値を取り出す。 *)
+(** 直積の二番目の値を取り出す。
+
+    名前は "second" を縮めたもの。 *)
 Definition snd {A B} : prod A B -> B
   := prod_elim_nodep (fun _ b => b) .
 
@@ -403,8 +407,8 @@ Definition transport
 
 (** 道の両辺に関数を適用する。
 
-    "application" であり、 "action on path" でもある。旧来のCoqには [f_equal]
-    として存在する。 *)
+    名前は "application" を縮めたものであり、 "action on path" を縮めたもの
+    でもある。旧来のCoqには [f_equal] として存在する。 *)
 Definition ap
   {A B : Type} (f : A -> B)
   {x y : A} (p : paths x y)
