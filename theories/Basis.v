@@ -156,7 +156,7 @@ Arguments prod_elim {_ _ _} _ _ .
 
     網羅性のためであって、普段使いは推奨されない。
 
-    "exponential object" である。 *)
+    名前は "function" を縮めたものである。 *)
 Definition fn (A B : Type) : Type
   := A -> B.
 
@@ -178,7 +178,7 @@ Arguments fn_elim {_ _ _} _ _.
 
 (** [A] と [B] の依存和型。
 
-    "dependent sum type" である。 *)
+    名前は "dependent sum type" を縮めたものである。 *)
 Inductive dsum (A : Type) (B : A -> Type) : Type
   :=
   | dpair : forall x : A, B x -> dsum A B
@@ -205,7 +205,7 @@ Arguments dsum_elim {_ _ _} _ _ .
 
     網羅性のためであって、普段使いは推奨されない。
 
-    "dependent product type" である。 *)
+    名前は "dependent product type" を縮めたものである。 *)
 Definition dprod (A : Type) (B : A -> Type) : Type
   := forall x : A, B x .
 
@@ -228,7 +228,7 @@ Arguments dprod_elim {_ _ _} _ _.
 (** [A] の上での等式型。
 
     "equality type" や "identity type" であり、旧来のCoqでは [eq] と
-    呼ばれるが、HoTTの流儀に従い [paths] と名付ける。 *)
+    呼ばれるが、HoTT の流儀に従い [paths] と名付けた。 *)
 Inductive paths (A : Type) (a : A) : A -> Type
   :=
   | idpath : paths A a a
