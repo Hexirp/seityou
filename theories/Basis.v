@@ -251,7 +251,7 @@ Arguments paths_elim_nodep {_ _ _} _ {_} _ .
 Arguments paths_elim {_ _ _} _ {_} _ .
 
 
-(** ** Basic Functions
+(** ** Functions
 
     標準的な関数を定義する。 *)
 
