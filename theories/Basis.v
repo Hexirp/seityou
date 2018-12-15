@@ -50,74 +50,7 @@ Export Unset Elimination Schemes.
 
     それら除去子の引数の名前は「除去する値は [x] である」「結果の型は
     [P] である」「型が持つ引数は元の型の定義と同じ名前である」という
-    ことを除いて自由であるとする。
-
-    非帰納的な例:
-    <<
-      Inductive thing : Type := mk_thing : unit -> thing .
-
-      Definition thing_elim_nodep
-        (P : Type) (case_mk_thing : unit -> P) (x : thing) : P
-        := match x with mk_thing a => case_mk_thing a end .
-
-      Definition thing_elim
-        (P : thing -> Type) (case_mk_thing : forall t, P (mk_thing t))
-        (x : thing) : P x
-        := match x with mk_thing a => case_mk_thing a end .
-    >>
-
-    帰納的な例:
-    <<
-      Inductive nat : Type := zero : nat | succ : nat -> nat .
-
-      Definition nat_rec
-        (P : Type) (case_zero : P) (case_succ : P -> P) (x : nat) : P
-        :=
-          let go :=
-            fix go x :=
-              match x with
-              | zero => case_zero
-              | succ xp => case_succ (go xp)
-              end
-          in
-            go x
-        .
-
-      Definition nat_rect
-        (P : nat -> Type)
-        (case_zero : P zero)
-        (case_succ : forall xp, P xp -> P (succ xp))
-        (x : nat) : P x
-        :=
-          let go :=
-            fix go x :=
-              match x with
-              | zero => case_zero
-              | succ xp => case_succ (go xp)
-              end
-          in
-            go x
-        .
-    >>
-
-    余帰納的な例:
-    <<
-      CoInductive stream (A : Type) := cons : A -> stream A -> stream A .
-
-      Definition
-        (P : Type)
-        (case_head : P -> A) (case_tail : P -> P)
-        (x : P) : stream A
-        :=
-          let go :=
-            cofix go x :=
-              cons (case_head x) (case_tail (go x))
-          in
-            go x
-        .
-    >>
-
-    *)
+    ことを除いて自由であるとする。 *)
 
 (** ** Basic Types
 
