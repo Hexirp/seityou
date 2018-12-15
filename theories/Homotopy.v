@@ -120,7 +120,7 @@ Definition ap01_dep
 
 (** 点ごとの道。関数の外延性等値性。
 
-    "pointwize paths" である。 *)
+    名前は "pointwize paths" を縮めたもの。 *)
 Definition pwpaths
   {A : Type} {B : A -> Type} (f g : forall a, B a) : Type
   := forall a, paths (f a) (g a) .
@@ -257,7 +257,7 @@ Definition equiv_inv
 
 (** [is_equiv A B] から引き込み条件を取り出す。
 
-    "equiv_inv is retraction" である。 *)
+   名前は "equiv_inv is retraction" を縮めたもの。 *)
 Definition eisretr
   {A B : Type} {f : A -> B} (H : is_equiv f) {x : B}
   : paths (f (equiv_inv H x)) x
@@ -265,7 +265,7 @@ Definition eisretr
 
 (** [is_equiv A B] から断面条件を取り出す。
 
-    "equiv_inv is section" である。 *)
+    名前は "equiv_inv is section" を縮めたもの。 *)
 Definition eissect
   {A B : Type} {f : A -> B} (H : is_equiv f) {x : A}
   : paths (equiv_inv H (f x)) x
@@ -273,7 +273,7 @@ Definition eissect
 
 (** [is_equiv A B] から随伴条件を取り出す。
 
-    "equiv_inv is adjunction" である。若干の疑いあり。 *)
+    名前は "equiv_inv is adjunction" を縮めたもの。若干の疑いあり。 *)
 Definition eisadj
   {A B : Type} {f : A -> B} (H : is_equiv f) {x : A}
   : paths (eisretr H (x := f x)) (ap f (eissect H (x := x)))
@@ -443,11 +443,11 @@ Definition path_forall_2
 
 (** 点付きの型。
 
-    "pointed type" である。 *)
+    名前は "pointed type" を縮めたもの。 *)
 Definition pType : Type := dsum (fun A => A) .
 
 (** 相同的繊維。 [f] で [y] に移される値の集まり。 
 
-    "homotopical fiber" である。点の相同的な逆像。 *)
+    名前は "homotopical fiber" を縮めたもの。点の相同的な逆像。 *)
 Definition hfiber {A B : Type} (f : A -> B) (y : B) : Type
   := dsum (fun x => paths (f x) y) .
