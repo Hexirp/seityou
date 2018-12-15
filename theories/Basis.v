@@ -237,7 +237,7 @@ Arguments dprod_elim {_ _ _} _ _.
 
 (** [A] の上での等式型。
 
-    "equality type" や "identity type" であり、旧来のCoqでは [eq] と
+    "equality type" や "identity type" であり、旧来の Coq では [eq] と
     呼ばれるが、HoTT の流儀に従い [paths] と名付けた。 *)
 Inductive paths (A : Type) (a : A) : A -> Type
   :=
@@ -268,7 +268,7 @@ Arguments paths_elim {_ _ _} _ {_} _ .
 
 (** 恒等関数。
 
-    HoTTのライブラリに見られるように [Notation idmap := (fun x => x)] と
+    HoTT のライブラリに見られるように [Notation idmap := (fun x => x)] と
     定義することもでき、展開が必要ないことや宇宙多相の関係で良い面がある。
     しかし、意図しない表示を発生させうる [Notation] をできるたけ使いたく
     ないため、このように関数として書く。
@@ -300,7 +300,7 @@ Definition apply {A B} : (A -> B) -> A -> B
 (** 矛盾による安全なエラー。
 
     [empty] の値は存在しえないため、"ex falso quodlibet" よりどのような型も
-    返すことが出来る。旧来のCoqには [exfalso] として存在する。 *)
+    返すことが出来る。旧来の Coq には [exfalso] として存在する。 *)
 Definition absurd {A} : empty -> A
   := empty_elim_nodep .
 
@@ -381,7 +381,7 @@ Definition paths_elim_nop
 
 (** 道を反転する。
 
-    旧来のCoqには [eq_sym] として存在する。 *)
+    旧来の Coq には [eq_sym] として存在する。 *)
 Definition inverse
   {A : Type} {x y : A}
   (p : paths x y) : paths y x
@@ -399,7 +399,7 @@ Definition inverse
     [q] が [idpath] であるだけで [p] に簡約されてしまう。このバージョンの
     定義は Path の [contrans] を見よ。
 
-    旧来のCoqには [eq_truns] として存在する。*)
+    旧来の Coq には [eq_truns] として存在する。*)
 Definition concat
   {A : Type} {x y z : A}
   (p : paths x y) (q : paths y z) : paths x z
@@ -420,7 +420,7 @@ Definition transport
 (** 道の両辺に関数を適用する。
 
     名前は "application" を縮めたものであり、 "action on path" を縮めたもの
-    でもある。旧来のCoqには [f_equal] として存在する。 *)
+    でもある。旧来の Coq には [f_equal] として存在する。 *)
 Definition ap
   {A B : Type} (f : A -> B)
   {x y : A} (p : paths x y)
