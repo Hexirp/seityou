@@ -150,12 +150,20 @@ Proof.
  refine (fun x => _) .
  refine (
    conconinv
-     (y := pwpaths_concat ((h oP (r_fg Po i)) Po (h o f)) (r_hi Po (h o f)))
-     (z := pwpaths_concat ((h o f) oP (g oP (s_hi Po f))) ((h o f) oP s_fg))
+     (y := pwpaths_concat ((h oP (r_fg Po i)) Po (h o f)) (r_hi Po (h o f)) x)
+     (z := pwpaths_concat ((h o f) oP (g oP (s_hi Po f))) ((h o f) oP s_fg) x)
       _
       _
       _
    ) .
+ -
+  revert x .
+  change (
+    pwpaths
+      (pwpaths_concat ((h oP (r_fg Po i)) Po (h o f)) (r_hi Po (h o f)))
+      (pwpaths_concat (h oP (r_fg Po i)) r_hi Po (h o f))
+    ) .
+  exact (fun x => idpath) .
 
 Lemma is_equiv_rel_compose
   {A B C : Type} {f : A -> B} {g : B -> A} {h : B -> C} {i : C -> B}
