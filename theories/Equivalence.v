@@ -39,9 +39,9 @@ Defined.
 Definition is_equiv_idmap {A : Type} : is_equiv (@idmap A) .
 Proof.
  refine (dpair idmap _) .
- refine (dpair (fun x => idpath x) _) .
- refine (dpair (fun x => idpath x) _) .
- exact (fun x => idpath (idpath x)) .
+ refine (dpair retraction_idmap _) .
+ refine (dpair section_idmap _) .
+ exact is_adjoint_idmap .
 Defined.
 
 Definition equiv_idmap {A : Type} : equiv A A .
