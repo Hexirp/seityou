@@ -127,6 +127,15 @@ Proof.
  unfold is_adjoint .
  unfold retr_compose, sect_compose .
  unfold is_adjoint in fg, hi .
+ refine (
+   pwpaths_concat (g := (pwpaths_concat ((h oP (r_fg Po i)) Po (h o f)) (r_hi Po (h o f))))
+     _
+     (pwpaths_concat (g := pwpaths_concat ((h o f) oP (g oP (s_hi Po f))) ((h o f) oP s_fg))
+        _
+        _
+     )
+   )
+ .
  change (
    pwpaths
      (pwpaths_concat ((h oP (r_fg Po i)) Po (h o f)) (r_hi Po (h o f)))
