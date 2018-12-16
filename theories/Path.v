@@ -68,8 +68,12 @@ Definition coninv
 (** [concat p p] は [idpath] に等しい。 *)
 Definition coninv_pp
   {A : Type} {x y : A}
-  (p : x = y) : coninv p p = 1
-  := paths_elim (P := fun y' p' => coninv p' p' = 1) 1 p .
+  (p : x = y) : coninv p p = 1 .
+Proof.
+ revert y p .
+ refine (@paths_elim A x _ _) .
+ exact 1 .
+Defined.
 
 (** [concat] の [transport] を使った定義。 *)
 Definition contrans
@@ -83,13 +87,9 @@ Definition contrans_concat
   (p : x = y) (q : y = z)
   : p @ q = contrans p q .
 Proof.
- refine (
-   paths_elim _ q
-     (P := fun _ q' => p @ q' = contrans p q')
-   ) .
- refine (
-   paths_elim _ p
-     (P := fun _ p' => p' @ 1 = contrans p' 1)
-   ) .
+ revert z q .
+ refine (@paths_elim A y _ _) .
+ revert y p .
+ refine (@paths_elim A x _ _) .
  exact 1 .
 Defined.
