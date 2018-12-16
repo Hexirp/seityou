@@ -54,6 +54,10 @@ Module Notation .
 
   Notation "f 'o' g" := (compose f g) (at level 40, right associativity) .
 
+  Notation "f 'oP' p" := (pwpaths_compose01 f p) (at level 40, no associativity) .
+
+  Notation "p 'Po' h" := (pwpaths_compose10 p h) (at level 40, no associativity) .
+
 End Notation .
 
 Import Notation .
@@ -76,8 +80,8 @@ Lemma pwpaths_compose11
   (f : C -> D) (p : pwpaths g h) (i : A -> B)
   : pwpaths (f o g o i) (f o h o i) .
 Proof.
- refine (pwpaths_compose01 f _) .
- refine (pwpaths_compose10 _ i) .
+ refine (f oP _) .
+ refine (_ Po i) .
  exact p .
 Defined.
 
@@ -91,7 +95,7 @@ Proof.
  refine (pwpaths_concat (g := h o i) _ _) .
  -
   change (pwpaths (h o (f o g) o i) (h o idmap o i)) .
-  refine (pwpaths_compose11 h _ i) .
+  refine (h oP (_ Po i)) .
   exact r_fg .
  -
   exact r_hi .
@@ -107,7 +111,7 @@ Proof.
  refine (pwpaths_concat (g := g o f) _ _) .
  -
   change (pwpaths (g o (i o h) o f) (g o idmap o f)) .
-  refine (pwpaths_compose11 g _ f) .
+  refine (g oP (_ Po f)) .
   exact s_hi .
  -
   exact s_fg .
@@ -122,9 +126,12 @@ Lemma is_adj_compose
 Proof.
  unfold is_adjoint .
  unfold retr_compose, sect_compose .
- unfold pwpaths_compose11 .
  unfold is_adjoint in fg, hi .
- 
+ change (
+   pwpaths
+     (pwpaths_concat ((h oP (r_fg Po i)) Po (h o f)) (r_hi Po (h o f)))
+     (pwpaths_concat ((h o f) oP (g oP (s_hi Po f))) ((h o f) oP s_fg))
+   ) .
 
 Lemma is_equiv_rel_compose
   {A B C : Type} {f : A -> B} {g : B -> A} {h : B -> C} {i : C -> B}
