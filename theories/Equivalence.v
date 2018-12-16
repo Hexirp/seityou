@@ -117,6 +117,16 @@ Proof.
   exact s_fg .
 Defined.
 
+Lemma conconinv
+  {A : Type} {x y z w : A}
+  (p : paths y x) (q : paths y z) (r : paths z w)
+  : paths x w .
+Proof.
+ refine (coninv p _) .
+ refine (concat q _) .
+ exact r .
+Defined.
+
 Lemma is_adj_compose
   {A B C : Type} {f : A -> B} {g : B -> A} {h : B -> C} {i : C -> B}
   (r_fg : retraction f g) (s_fg : section f g)
@@ -127,15 +137,6 @@ Proof.
  unfold is_adjoint .
  unfold retr_compose, sect_compose .
  unfold is_adjoint in fg, hi .
- refine (
-   pwpaths_concat (g := (pwpaths_concat ((h oP (r_fg Po i)) Po (h o f)) (r_hi Po (h o f))))
-     _
-     (pwpaths_concat (g := pwpaths_concat ((h o f) oP (g oP (s_hi Po f))) ((h o f) oP s_fg))
-        _
-        _
-     )
-   )
- .
  change (
    pwpaths
      (pwpaths_concat ((h oP (r_fg Po i)) Po (h o f)) (r_hi Po (h o f)))
