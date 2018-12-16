@@ -137,10 +137,13 @@ Proof.
  unfold is_adjoint .
  unfold retr_compose, sect_compose .
  unfold is_adjoint in fg, hi .
- change (
-   pwpaths
-     (pwpaths_concat ((h oP (r_fg Po i)) Po (h o f)) (r_hi Po (h o f)))
-     (pwpaths_concat ((h o f) oP (g oP (s_hi Po f))) ((h o f) oP s_fg))
+ refine (
+   conconinv
+     (y := pwpaths_concat ((h oP (r_fg Po i)) Po (h o f)) (r_hi Po (h o f)))
+     (z := pwpaths_concat ((h o f) oP (g oP (s_hi Po f))) ((h o f) oP s_fg))
+      _
+      _
+      _
    ) .
 
 Lemma is_equiv_rel_compose
