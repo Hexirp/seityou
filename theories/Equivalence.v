@@ -89,6 +89,22 @@ Proof.
   exact (dfst hi) .
 Defined.
 
+Lemma sect_compose
+  {A B C : Type} {f : A -> B} {g : B -> A} {h : B -> C} {i : C -> B}
+  (fg : is_equiv_rel f g) (hi : is_equiv_rel h i)
+  : section (compose h f) (compose g i) .
+Proof.
+ unfold section .
+ change (pwpaths (compose g (compose (compose i h) f)) idmap) .
+ refine (pwpaths_concat (g := compose g f) _ _) .
+ -
+  change (pwpaths (compose g (compose (compose i h) f)) (compose g (compose idmap f))) .
+  refine (pwpaths_compose11 g _ f) .
+  exact (dfst (dsnd hi)) .
+ -
+  exact (dfst (dsnd fg)) .
+Defined.
+
 Lemma is_equiv_rel_compose
   {A B C : Type} {f : A -> B} {g : B -> A} {h : B -> C} {i : C -> B}
   (fg : is_equiv_rel f g) (hi : is_equiv_rel h i)
