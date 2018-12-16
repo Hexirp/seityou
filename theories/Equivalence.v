@@ -50,6 +50,14 @@ Proof.
  exact is_equiv_idmap .
 Defined.
 
+Module Notation .
+
+  Notation "f 'o' g" := (compose f g) (at level 40, no associativity) .
+
+End Notation .
+
+Import Notation .
+
 Lemma pwpaths_concat
   {A B : Type} {f g h : A -> B}
   (p : pwpaths f g) (q : pwpaths g h)
@@ -66,7 +74,7 @@ Defined.
 Lemma pwpaths_compose11
   {A B C D : Type} {g h : B -> C}
   (f : C -> D) (p : pwpaths g h) (i : A -> B)
-  : pwpaths (compose f (compose g i)) (compose f (compose h i)) .
+  : pwpaths (f o (g o i)) (f o (h o i)) .
 Proof.
  refine (pwpaths_compose01 f _) .
  refine (pwpaths_compose10 _ i) .
@@ -76,10 +84,10 @@ Defined.
 Lemma retr_compose
   {A B C : Type} {f : A -> B} {g : B -> A} {h : B -> C} {i : C -> B}
   (r_fg : retraction f g) (r_hi : retraction h i)
-  : retraction (compose h f) (compose g i) .
+  : retraction (h o f) (g o i) .
 Proof.
  unfold retraction .
- change (pwpaths (compose h (compose (compose f g) i)) idmap) .
+ change (pwpaths (h o ((f o g) o i)) idmap) .
  refine (pwpaths_concat (g := compose h i) _ _) .
  -
   change (pwpaths (compose h (compose (compose f g) i)) (compose h (compose idmap i))) .
