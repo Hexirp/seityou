@@ -77,7 +77,7 @@ Lemma retr_compose
   {A B C : Type} {f : A -> B} {g : B -> A} {h : B -> C} {i : C -> B}
   (r_fg : retraction f g) (s_fg : section f g)
   (r_hi : retraction h i) (s_hi : section h i)
-  (fg : is_adjoint f g r_fg s_fg) (hi : is_adjoint r_hi s_hi)
+  (fg : is_adjoint f g r_fg s_fg) (hi : is_adjoint h i r_hi s_hi)
   : retraction (compose h f) (compose g i) .
 Proof.
  unfold retraction .
@@ -86,14 +86,16 @@ Proof.
  -
   change (pwpaths (compose h (compose (compose f g) i)) (compose h (compose idmap i))) .
   refine (pwpaths_compose11 h _ i) .
-  exact (dfst fg) .
+  exact r_fg .
  -
-  exact (dfst hi) .
+  exact r_hi .
 Defined.
 
 Lemma sect_compose
   {A B C : Type} {f : A -> B} {g : B -> A} {h : B -> C} {i : C -> B}
-  (fg : is_equiv_rel f g) (hi : is_equiv_rel h i)
+  (r_fg : retraction f g) (s_fg : section f g)
+  (r_hi : retraction h i) (s_hi : section h i)
+  (fg : is_adjoint f g r_fg s_fg) (hi : is_adjoint h i r_hi s_hi)
   : section (compose h f) (compose g i) .
 Proof.
  unfold section .
@@ -102,18 +104,20 @@ Proof.
  -
   change (pwpaths (compose g (compose (compose i h) f)) (compose g (compose idmap f))) .
   refine (pwpaths_compose11 g _ f) .
-  exact (dfst (dsnd hi)) .
+  exact s_hi .
  -
-  exact (dfst (dsnd fg)) .
+  exact s_fg .
 Defined.
 
 Lemma is_adj_compose
   {A B C : Type} {f : A -> B} {g : B -> A} {h : B -> C} {i : C -> B}
-  (fg : is_equiv_rel f g) (hi : is_equiv_rel h i)
-  : is_adjoint (compose h f) (compose g i) (retr_compose fg hi) (sect_compose fg hi) .
+  (r_fg : retraction f g) (s_fg : section f g)
+  (r_hi : retraction h i) (s_hi : section h i)
+  (fg : is_adjoint f g r_fg s_fg) (hi : is_adjoint h i r_hi s_hi)
+  : is_adjoint (compose h f) (compose g i) (retr_compose r_fg s_fg r_hi s_hi fg hi) (sect_compose r_fg s_fg r_hi s_hi fg hi) .
 Proof.
  unfold is_adjoint .
- change 
+ unfold retr_compose, sect_compose .
 
 Lemma is_equiv_rel_compose
   {A B C : Type} {f : A -> B} {g : B -> A} {h : B -> C} {i : C -> B}
