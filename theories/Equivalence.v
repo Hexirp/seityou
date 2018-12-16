@@ -122,6 +122,9 @@ Lemma is_adj_compose
 Proof.
  unfold is_adjoint .
  unfold retr_compose, sect_compose .
+ unfold pwpaths_compose11 .
+ refine (fun x => _) .
+ unfold pwpaths_compose10, pwpaths_compose01, ap, paths_elim_nodep .
 
 Lemma is_equiv_rel_compose
   {A B C : Type} {f : A -> B} {g : B -> A} {h : B -> C} {i : C -> B}
