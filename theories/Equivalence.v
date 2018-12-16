@@ -50,10 +50,21 @@ Proof.
  exact is_equiv_idmap .
 Defined.
 
+Lemma retr_compose
+  {A B C : Type} {f : A -> B} {g : B -> A} {h : B -> C} {i : C -> B}
+  (fg : is_equiv_rel f g) (hi : is_equiv_rel h i)
+  : retraction (compose h f) (compose g i) .
+Proof.
+ unfold retraction .
+ change (pwpaths (compose h (compose (compose f g) i)) idmap) .
+ refine (concat (y := 
+
 Lemma is_equiv_rel_compose
   {A B C : Type} {f : A -> B} {g : B -> A} {h : B -> C} {i : C -> B}
   (fg : is_equiv_rel f g) (hi : is_equiv_rel h i)
   : is_equiv_rel (compose h f) (compose g i) .
+Proof.
+ 
 
 Definition is_equiv_compose
   {A B C : Type} {f : A -> B} {g : B -> C}
