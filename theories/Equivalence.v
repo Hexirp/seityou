@@ -75,9 +75,7 @@ Defined.
 
 Lemma retr_compose
   {A B C : Type} {f : A -> B} {g : B -> A} {h : B -> C} {i : C -> B}
-  (r_fg : retraction f g) (s_fg : section f g)
-  (r_hi : retraction h i) (s_hi : section h i)
-  (fg : is_adjoint f g r_fg s_fg) (hi : is_adjoint h i r_hi s_hi)
+  (r_fg : retraction f g) (r_hi : retraction h i)
   : retraction (compose h f) (compose g i) .
 Proof.
  unfold retraction .
@@ -93,9 +91,7 @@ Defined.
 
 Lemma sect_compose
   {A B C : Type} {f : A -> B} {g : B -> A} {h : B -> C} {i : C -> B}
-  (r_fg : retraction f g) (s_fg : section f g)
-  (r_hi : retraction h i) (s_hi : section h i)
-  (fg : is_adjoint f g r_fg s_fg) (hi : is_adjoint h i r_hi s_hi)
+  (s_fg : section f g) (s_hi : section h i)
   : section (compose h f) (compose g i) .
 Proof.
  unfold section .
@@ -113,8 +109,8 @@ Lemma is_adj_compose
   {A B C : Type} {f : A -> B} {g : B -> A} {h : B -> C} {i : C -> B}
   (r_fg : retraction f g) (s_fg : section f g)
   (r_hi : retraction h i) (s_hi : section h i)
-  (fg : is_adjoint f g r_fg s_fg) (hi : is_adjoint h i r_hi s_hi)
-  : is_adjoint (compose h f) (compose g i) (retr_compose r_fg s_fg r_hi s_hi fg hi) (sect_compose r_fg s_fg r_hi s_hi fg hi) .
+  (fg : is_adjoint r_fg s_fg) (hi : is_adjoint r_hi s_hi)
+  : is_adjoint (retr_compose r_fg r_hi) (sect_compose s_fg s_hi) .
 Proof.
  unfold is_adjoint .
  unfold retr_compose, sect_compose .

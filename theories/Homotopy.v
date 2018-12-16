@@ -224,7 +224,7 @@ Definition retraction
     になることから定義を簡略化でき、この定義もそのようになっている。 *)
 Definition is_adjoint
   {A B : Type}
-  (f : A -> B) (g : B -> A)
+  {f : A -> B} {g : B -> A}
   (retr : retraction f g) (sect : section f g)
   : Type
   := pwpaths (pwpaths_compose10 retr f) (pwpaths_compose01 f sect) .
@@ -234,7 +234,10 @@ Definition is_equiv_rel
   {A B : Type}
   (f : A -> B) (g : B -> A)
   : Type
-  := dsum (fun retr => dsum (fun sect => is_adjoint f g retr sect)) .
+  :=
+    dsum (fun retr =>
+      dsum (fun sect =>
+        is_adjoint (f := f) (g := g) retr sect ) ) .
 
 (** [f] は等価射 (equivalence) である。 *)
 Definition is_equiv
