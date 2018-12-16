@@ -12,7 +12,7 @@ Declare ML Module "ltac_plugin".
 Set Default Proof Mode "Classic".
 
 
-Lemma retraction_idmap
+Lemma retr_idmap
   {A : Type}
   : @retraction A A idmap idmap .
 Proof.
@@ -20,7 +20,7 @@ Proof.
  exact (idpath x) .
 Defined.
 
-Lemma section_idmap
+Lemma sect_idmap
   {A : Type}
   : @section A A idmap idmap .
 Proof.
@@ -28,9 +28,9 @@ Proof.
  exact (idpath x) .
 Defined.
 
-Lemma is_adjoint_idmap
+Lemma is_adj_idmap
   {A : Type}
-  : @is_adjoint A A idmap idmap retraction_idmap section_idmap .
+  : @is_adjoint A A idmap idmap retr_idmap sect_idmap .
 Proof.
  refine (fun x => _) .
  exact (idpath (idpath x)) .
@@ -39,9 +39,9 @@ Defined.
 Definition is_equiv_idmap {A : Type} : is_equiv (@idmap A) .
 Proof.
  refine (dpair idmap _) .
- refine (dpair retraction_idmap _) .
- refine (dpair section_idmap _) .
- exact is_adjoint_idmap .
+ refine (dpair retr_idmap _) .
+ refine (dpair sect_idmap _) .
+ exact is_adj_idmap .
 Defined.
 
 Definition equiv_idmap {A : Type} : equiv A A .
