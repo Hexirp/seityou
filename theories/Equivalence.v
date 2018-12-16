@@ -50,6 +50,19 @@ Proof.
  exact is_equiv_idmap .
 Defined.
 
+Lemma pwpaths_concat
+  {A B : Type} {f g h : A -> B}
+  (p : pwpaths f g) (q : pwpaths g h)
+  : pwpaths f h .
+Proof.
+ refine (fun x => _) .
+ refine (concat (y := g x) _ _) .
+ -
+  exact (p x) .
+ -
+  exact (q x) .
+Defined.
+
 Lemma retr_compose
   {A B C : Type} {f : A -> B} {g : B -> A} {h : B -> C} {i : C -> B}
   (fg : is_equiv_rel f g) (hi : is_equiv_rel h i)
