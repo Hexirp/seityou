@@ -15,4 +15,5 @@ Set Default Proof Mode "Classic".
 Definition is_equiv_idmap {A : Type} : is_equiv (@idmap A) .
 Proof.
  refine (dpair idmap _) .
- refine (dpair ?retr _) .
+ refine (dpair _ _) .
+ refine (let ?retl := _ in _) .
