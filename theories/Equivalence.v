@@ -63,6 +63,16 @@ Proof.
   exact (q x) .
 Defined.
 
+Lemma pwpaths_compose11
+  {A B C D : Type} {f : C -> D} {g h : B -> C} {i : A -> B}
+  (p : pwpaths g h)
+  : pwpaths (compose f (compose g i)) (compose f (compose h i)) .
+Proof.
+ refine (pwpaths_compose01 f _) .
+ refine (pwpaths_compose10 _ i) .
+ exact p .
+Defined.
+
 Lemma retr_compose
   {A B C : Type} {f : A -> B} {g : B -> A} {h : B -> C} {i : C -> B}
   (fg : is_equiv_rel f g) (hi : is_equiv_rel h i)
@@ -70,7 +80,9 @@ Lemma retr_compose
 Proof.
  unfold retraction .
  change (pwpaths (compose h (compose (compose f g) i)) idmap) .
- refine (concat (y := 
+ refine (pwpaths_concat (g := compose h i) _ _) .
+ -
+  
 
 Lemma is_equiv_rel_compose
   {A B C : Type} {f : A -> B} {g : B -> A} {h : B -> C} {i : C -> B}
