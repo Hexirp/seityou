@@ -64,8 +64,8 @@ Proof.
 Defined.
 
 Lemma pwpaths_compose11
-  {A B C D : Type} {f : C -> D} {g h : B -> C} {i : A -> B}
-  (p : pwpaths g h)
+  {A B C D : Type} {g h : B -> C}
+  (f : C -> D) (p : pwpaths g h) (i : A -> B)
   : pwpaths (compose f (compose g i)) (compose f (compose h i)) .
 Proof.
  refine (pwpaths_compose01 f _) .
@@ -82,7 +82,12 @@ Proof.
  change (pwpaths (compose h (compose (compose f g) i)) idmap) .
  refine (pwpaths_concat (g := compose h i) _ _) .
  -
-  refine (pwpaths_compose11 (f := h) _ (i := i)) .
+  change (pwpaths (compose h (compose (compose f g) i)) (compose h (compose idmap i))) .
+  refine (pwpaths_compose11 h _ i) .
+  exact (dfst fg) .
+ -
+  exact (dfst hi) .
+Defined.
 
 Lemma is_equiv_rel_compose
   {A B C : Type} {f : A -> B} {g : B -> A} {h : B -> C} {i : C -> B}
