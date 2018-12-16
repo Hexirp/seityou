@@ -12,33 +12,27 @@ Declare ML Module "ltac_plugin".
 Set Default Proof Mode "Classic".
 
 
-Definition retraction_idmap
+Lemma retraction_idmap
   {A : Type}
   : @retraction A A idmap idmap .
 Proof.
  refine (fun x => _) .
- unfold compose, idmap .
  exact (idpath x) .
 Defined.
 
-Definition section_idmap
+Lemma section_idmap
   {A : Type}
   : @section A A idmap idmap .
 Proof.
  refine (fun x => _) .
- unfold compose, idmap .
  exact (idpath x) .
 Defined.
 
-Definition is_adjoint_idmap
+Lemma is_adjoint_idmap
   {A : Type}
   : @is_adjoint A A idmap idmap retraction_idmap section_idmap .
 Proof.
  refine (fun x => _) .
- unfold pwpaths_compose10, pwpaths_compose01 .
- unfold compose10, compose01 .
- unfold retraction_idmap, section_idmap .
- unfold compose_dep, ap, paths_elim_nodep .
  exact (idpath (idpath x)) .
 Defined.
 
