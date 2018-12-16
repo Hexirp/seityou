@@ -318,7 +318,7 @@ Definition snd {A B} : prod A B -> B
 
 (** 対からの関数をカリー化する。 *)
 Definition curry {A B C} : (prod A B -> C) -> (A -> B -> C)
-  := fun f a b => f (pair a b)
+  := fun f a b => f (pair a b) .
 
 (** カリー化された関数を対からの関数に変換する。 *)
 Definition uncurry {A B C} : (A -> B -> C) -> (prod A B -> C)

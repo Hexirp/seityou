@@ -11,6 +11,7 @@ coqc -nois \
  theories/Homotopy.v \
  theories/Path.v \
  theories/Contraction.v \
+ theories/Equivalence.v \
  theories/D.v \
  theories/K.v \
  theories/W.v \

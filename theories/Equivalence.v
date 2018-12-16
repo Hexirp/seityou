@@ -75,7 +75,9 @@ Defined.
 
 Lemma retr_compose
   {A B C : Type} {f : A -> B} {g : B -> A} {h : B -> C} {i : C -> B}
-  (fg : is_equiv_rel f g) (hi : is_equiv_rel h i)
+  (r_fg : retraction f g) (s_fg : section f g)
+  (r_hi : retraction h i) (s_hi : section h i)
+  (fg : is_adjoint f g r_fg s_fg) (hi : is_adjoint r_hi s_hi)
   : retraction (compose h f) (compose g i) .
 Proof.
  unfold retraction .
@@ -104,6 +106,14 @@ Proof.
  -
   exact (dfst (dsnd fg)) .
 Defined.
+
+Lemma is_adj_compose
+  {A B C : Type} {f : A -> B} {g : B -> A} {h : B -> C} {i : C -> B}
+  (fg : is_equiv_rel f g) (hi : is_equiv_rel h i)
+  : is_adjoint (compose h f) (compose g i) (retr_compose fg hi) (sect_compose fg hi) .
+Proof.
+ unfold is_adjoint .
+ change 
 
 Lemma is_equiv_rel_compose
   {A B C : Type} {f : A -> B} {g : B -> A} {h : B -> C} {i : C -> B}
