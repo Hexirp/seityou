@@ -15,12 +15,14 @@ Set Default Proof Mode "Classic".
 Definition is_equiv_idmap {A : Type} : is_equiv (@idmap A) .
 Proof.
  refine (dpair idmap _) .
- cut (@retraction A A idmap idmap) .
+ assert (retr : @retraction A A idmap idmap) .
  -
-  refine (fun retr => _) .
+  exact (fun x => idpath) .
+ -
   refine (dpair retr _) .
-  cut (@section A A idmap idmap) .
+  assert (sect : @section A A idmap idmap) .
   +
-   refine (fun sect => _) .
+   exact (fun x => idpath) .
+  +
    refine (dpair sect _) .
    exact idpath .
