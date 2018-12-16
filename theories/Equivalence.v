@@ -82,7 +82,7 @@ Proof.
  change (pwpaths (compose h (compose (compose f g) i)) idmap) .
  refine (pwpaths_concat (g := compose h i) _ _) .
  -
-  
+  refine (pwpaths_compose11 (f := h) _ (i := i)) .
 
 Lemma is_equiv_rel_compose
   {A B C : Type} {f : A -> B} {g : B -> A} {h : B -> C} {i : C -> B}
