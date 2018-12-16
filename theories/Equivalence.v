@@ -52,7 +52,7 @@ Defined.
 
 Module Notation .
 
-  Notation "f 'o' g" := (compose f g) (at level 40, no associativity) .
+  Notation "f 'o' g" := (compose f g) (at level 40, right associativity) .
 
 End Notation .
 
@@ -74,7 +74,7 @@ Defined.
 Lemma pwpaths_compose11
   {A B C D : Type} {g h : B -> C}
   (f : C -> D) (p : pwpaths g h) (i : A -> B)
-  : pwpaths (f o (g o i)) (f o (h o i)) .
+  : pwpaths (f o g o i) (f o h o i) .
 Proof.
  refine (pwpaths_compose01 f _) .
  refine (pwpaths_compose10 _ i) .
@@ -87,10 +87,10 @@ Lemma retr_compose
   : retraction (h o f) (g o i) .
 Proof.
  unfold retraction .
- change (pwpaths (h o ((f o g) o i)) idmap) .
- refine (pwpaths_concat (g := compose h i) _ _) .
+ change (pwpaths (h o (f o g) o i) idmap) .
+ refine (pwpaths_concat (g := h o i) _ _) .
  -
-  change (pwpaths (compose h (compose (compose f g) i)) (compose h (compose idmap i))) .
+  change (pwpaths (h o (f o g) o i) (h o idmap o i)) .
   refine (pwpaths_compose11 h _ i) .
   exact r_fg .
  -
@@ -100,13 +100,13 @@ Defined.
 Lemma sect_compose
   {A B C : Type} {f : A -> B} {g : B -> A} {h : B -> C} {i : C -> B}
   (s_fg : section f g) (s_hi : section h i)
-  : section (compose h f) (compose g i) .
+  : section (h o f) (g o i) .
 Proof.
  unfold section .
- change (pwpaths (compose g (compose (compose i h) f)) idmap) .
- refine (pwpaths_concat (g := compose g f) _ _) .
+ change (pwpaths (g o (i o h) o f) idmap) .
+ refine (pwpaths_concat (g := g o f) _ _) .
  -
-  change (pwpaths (compose g (compose (compose i h) f)) (compose g (compose idmap f))) .
+  change (pwpaths (g o (i o h) o f) (g o idmap o f)) .
   refine (pwpaths_compose11 g _ f) .
   exact s_hi .
  -
