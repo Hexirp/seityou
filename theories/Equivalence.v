@@ -25,4 +25,4 @@ Proof.
    exact (fun x => idpath) .
   +
    refine (dpair sect _) .
-   exact idpath .
+   exact (fun x => idpath) .
