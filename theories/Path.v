@@ -10,6 +10,8 @@ Set Default Proof Mode "Classic" .
 
 Module Notation .
 
+  Import Basis.Notation .
+
   Delimit Scope path_scope with path .
 
   Open Scope path_scope .
