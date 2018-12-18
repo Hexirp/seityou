@@ -147,19 +147,12 @@ Definition ap01_dep
 
 (** ** Pointwise paths *)
 
-(** 点ごとの関係。 *)
-Definition pointwise
-  {A : Type} {B : A -> Type}
-  (R : forall a, B a -> B a -> Type)
-  (f : forall a, B a) (g : forall a, B a) : Type
-  := forall a, R a (f a) (g a) .
-
 (** 点ごとの道。関数の外延性等値性。
 
     名前は "pointwize paths" を縮めたもの。 *)
 Definition pwpaths
   {A : Type} {B : A -> Type} (f g : forall a, B a) : Type
-  := pointwise (fun a => @paths (B a)) f g .
+  := forall a, f a = g a .
 
 (** 道から、点ごとの道を得る。
 
@@ -169,6 +162,31 @@ Definition pwpaths_paths
   {f g : forall a, B a} (p : paths f g)
   : pwpaths f g
   := ap10_dep p .
+
+(** 点ごとの恒等道。 *)
+Definition idpwpath
+  {A : Type} {B : A -> Type}
+  (f : forall a, B a)
+  : pwpaths f f
+  := fun a => idpath (f a) .
+
+Arguments idpwpath {_ _ _}, [_ _] _ .
+
+(** 点ごとの道の逆。 *)
+Definition pwinverse
+  {A : Type} {B : A -> Type}
+  {f g : forall a, B a}
+  (p : pwpaths f g)
+  : pwpaths g f
+  := fun a => inverse (p a) .
+
+(** 点ごとの道の合成。 *)
+Definition pwconcat
+  {A : Type} {B : A -> Type}
+  (f g h : forall a, B a)
+  (p : pwpaths f g) (q : pwpaths g h)
+  : pwpaths f h
+  := fun a => concat (p a) (q a) .
 
 (** 点ごとの道の両辺に、左から関数を合成する。 *)
 Definition pwpaths_compose01
