@@ -467,13 +467,13 @@ Module Notation .
 
   Notation "'sigma' x .. y , p" := (dsum (fun x => .. (dsum (fun y => p)) ..))
     (at level 200, x binder, right associativity,
-      format "'[' 'sigma' '/ ' x .. y , '/ ' p ']'")
+      format "'[' 'sigma'  '/ ' x .. y ,  '/ ' p ']'")
     : type_scope
     .
 
   Notation "'pi' x .. y , p" := (dprod (fun x => .. (dprod (fun y => p)) ..))
     (at level 200, x binder, right associativity,
-      format "'[' 'pi' '/ ' x .. y , '/ ' p ']'")
+      format "'[' 'pi'  '/ ' x .. y ,  '/ ' p ']'")
     : type_scope
     .
 
