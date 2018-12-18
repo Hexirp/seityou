@@ -487,7 +487,8 @@ Module Notation .
     : type_scope
     .
 
-  Notation "f 'o' g" := (compose f g) (at level 40, right associativity)
+  Notation "f 'o' g" := (compose f g)
+    (at level 40, right associativity)
     : function_scope
     .
 
