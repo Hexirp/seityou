@@ -488,7 +488,12 @@ Module Notation .
     .
 
   Notation "f 'o' g" := (compose f g)
-    (at level 40, right associativity)
+    (at level 40, left associativity)
+    : function_scope
+    .
+
+  Notation "f 'oD' g" := (compose_dep f g)
+    (at level 40, left associativity)
     : function_scope
     .
 

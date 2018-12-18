@@ -10,7 +10,7 @@ Set Default Proof Mode "Classic" .
 
 Module Notation .
 
-  Import Basis.Notation .
+  Export Basis.Notation .
 
   Delimit Scope path_scope with path .
 
@@ -48,6 +48,16 @@ Module Notation .
 End Notation.
 
 Import Notation.
+
+
+(** ** Unit *)
+
+(** 全ての [unit] は [tt] に等しい。 *)
+Definition path_unit : pi x, tt = x .
+Proof.
+ refine (unit_elim _) .
+ exact 1 .
+Defined.
 
 
 (** [p] を反転して [q] を合成する。
