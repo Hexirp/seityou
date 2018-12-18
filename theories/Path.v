@@ -10,29 +10,38 @@ Set Default Proof Mode "Classic" .
 
 Module Notation .
 
-  Import Notation .
-
   Delimit Scope path_scope with path .
 
   Open Scope path_scope .
 
-  Notation "x = y :> T"
-    := (@paths T x y) (at level 70, y at next level, no associativity).
+  Notation "x = y :> T" := (@paths T x y)
+    (at level 70, y at next level, no associativity)
+    : path_scope
+    .
 
-  Notation "x = y"
-    := (x = y :> _) (at level 70, no associativity) .
+  Notation "x = y" := (x = y :> _)
+    (at level 70, no associativity)
+    : path_scope
+    .
 
-  Notation "1"
-    := idpath .
+  Notation "1" := idpath
+    : path_scope
+    .
 
-  Notation "p @ q"
-    := (concat p q) (at level 20) .
+  Notation "p @ q" := (concat p q)
+    (at level 20)
+    : path_scope
+    .
 
-  Notation "p ^"
-    := (inverse p) (at level 3, format "p '^'") .
+  Notation "p ^" := (inverse p)
+    (at level 3, format "p '^'")
+    : path_scope
+    .
 
-  Notation "p # x"
-    := (transport p x) (right associativity, at level 65) .
+  Notation "p # x" := (transport p x)
+    (right associativity, at level 65)
+    : path_scope
+    .
 
 End Notation.
 
