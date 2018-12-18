@@ -53,11 +53,23 @@ Import Notation.
 (** ** Unit *)
 
 (** 全ての [unit] は [tt] に等しい。 *)
-Definition path_unit : pi x, tt = x .
+Definition path_unit : forall x, tt = x .
 Proof.
  refine (unit_elim _) .
  exact 1 .
 Defined.
+
+(** ** Empty *)
+
+(** 全ての [empty] はたがいに等しい。 *)
+Definition path_empty : forall x y : empty, x = y .
+Proof.
+ exact empty_elim .
+Defined.
+
+(** ** Sum *)
+
+(** *)
 
 
 (** [p] を反転して [q] を合成する。
