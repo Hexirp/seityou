@@ -8,6 +8,7 @@ PATH=$COQ_PATH/bin:$PATH
 coqc -nois \
  -R theories/ Seityou \
  theories/Basis.v \
- theories/Homotopy.v \
  theories/Path.v \
- theories/Contraction.v
+ theories/Homotopy.v \
+ theories/Contraction.v \
+ theories/Equivalence.v
