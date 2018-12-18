@@ -3,7 +3,7 @@
     Homotopy Type Theory において一般的な定義をする。 *)
 
 
-Require Export Basis.
+Require Export Path .
 
 
 (** 最初の引数が依存関数である関数合成。
