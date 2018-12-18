@@ -57,7 +57,7 @@ Export Unset Elimination Schemes.
     である。"rect", "corect" に関しては、Coq から引用した名前であり、
     この由来に対しては若干の疑いがある。 *)
 
-(** ** Basic Types
+(** ** Types
 
     標準的な型を定義する。 *)
 
@@ -451,3 +451,44 @@ Definition paths_rev_elim
   (c : forall a' p, P a' p)
   : P a idpath
   := c a idpath .
+
+
+(** ** Notations
+
+    記法を定義する。 *)
+
+Module Notation .
+
+  Delimit Scope type_scope with type .
+  Delimit Scope function_scope with function .
+
+  Open Scope type_scope .
+  Open Scope function_scope .
+
+  Notation "'sigma' x .. y , p" := (dsum (fun x => .. (dsum (fun y => p)) ..))
+    (at level 200, x binder, right associativity,
+      format "'[' 'sigma' '/ ' x .. y , '/ ' p ']'")
+    : type_scope
+    .
+
+  Notation "'pi' x .. y , p" := (dprod (fun x => .. (dprod (fun y => p)) ..))
+    (at level 200, x binder, right associativity,
+      format "'[' 'pi' '/ ' x .. y , '/ ' p ']'")
+    : type_scope
+    .
+
+  Notation "x = y :> T" := (@paths T x y)
+    (at level 70, y at next level, no associativity)
+    : type_scope
+    .
+
+  Notation "x = y" := (x = y :> _)
+    (at level 70, no associativity)
+    : type_scope
+    .
+
+  Notation "f 'o' g" := (compose f g) (at level 40, right associativity)
+    : function_scope
+    .
+
+End Notation .
