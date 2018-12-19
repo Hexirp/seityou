@@ -5,20 +5,13 @@
 
 Require Export Path .
 
+(** 戦術を使う。 *)
+Declare ML Module "ltac_plugin" .
+Set Default Proof Mode "Classic" .
 
-(** 最初の引数が依存関数である関数合成。
+(** 記法を使う。 *)
+Import Path.Notation .
 
-    [compose_dep] の別名。 *)
-Definition compose10
-  {A B C} (f : forall b, C b) (g : A -> B)
-  : forall a, C (g a)
-  := compose_dep f g .
-
-(** 二番目の引数が依存関数である関数合成。 *)
-Definition compose01
-  {A B C} (f : forall a, B a -> C a) (g : forall a, B a)
-  : forall a, C a
-  := fun x : A => f x (g x) .
 
 (** ** Equivalence *)
 
@@ -55,7 +48,7 @@ Definition section
   {A B : Type}
   (s : A -> B) (r : B -> A)
   : Type
-  := pwpaths (compose r s) idmap .
+  := r o s == idmap .
 
 (** [r] は [s] の引き込み (retraction) である。
 
@@ -65,7 +58,7 @@ Definition retraction
   {A B : Type}
   (r : B -> A) (s : A -> B)
   : Type
-  := pwpaths (compose r s) idmap .
+  := r o s == idmap .
 
 (** [f] と [g] は [retr] と [sect] を通じて随伴的である。
 
@@ -97,23 +90,20 @@ Definition is_adjoint
   {f : A -> B} {g : B -> A}
   (retr : retraction f g) (sect : section f g)
   : Type
-  := pwpaths (pwpaths_compose10 retr f) (pwpaths_compose01 f sect) .
+  := wiskerR_pw_fn retr f == wiskerL_pw_fn f sect .
 
 (** [A] と [B] は [f] と [g] を通じて等価 (equivalence) である。 *)
 Definition is_equiv_rel
   {A B : Type}
   (f : A -> B) (g : B -> A)
   : Type
-  :=
-    dsum (fun retr =>
-      dsum (fun sect =>
-        is_adjoint (f := f) (g := g) retr sect ) ) .
+  := sigma retr sect, is_adjoint (f := f) (g := g) retr sect .
 
 (** [f] は等価射 (equivalence) である。 *)
 Definition is_equiv
   {A B : Type} (f : A -> B)
   : Type
-  := dsum (fun equiv_inv => is_equiv_rel f equiv_inv) .
+  := sigma equiv_inv, is_equiv_rel f equiv_inv .
 
 (** [is_equiv A B] から逆射 [B -> A] を取り出す。 *)
 Definition equiv_inv
@@ -149,7 +139,7 @@ Definition eisadj
     この型は "type of equivalences" と呼ばれる。 *)
 Definition equiv
   (A B : Type) : Type
-  := dsum (fun f : A -> B => is_equiv f) .
+  := sigma f, is_equiv (A := A) (B := B) f .
 
 (** [equiv A B] から等価射 [A -> B] を取り出す。 *)
 Definition equiv_fun
@@ -187,7 +177,7 @@ Definition is_contr_center (A : Type) (x : A) : Type
 
 (** [A] は可縮である。 *)
 Definition is_contr (A : Type) : Type
-  := dsum (is_contr_center A) .
+  := sigma x, is_contr_center A x .
 
 (** *** Truncation *)
 
@@ -221,35 +211,35 @@ Inductive trunc_index : Type
 Definition trunc_index_rec
   {P : Type}
   (case_minus_two : P) (case_trunc_succ : P -> P)
-  (x : trunc_index) : P
-  :=
-    let go :=
-      fix go x :=
-        match x with
-        | minus_two => case_minus_two
-        | trunc_succ xp => case_trunc_succ (go xp)
-        end
-    in go x
-  .
+  (x : trunc_index) : P .
+Proof.
+ revert x .
+ refine (fix go (x : trunc_index) {struct x} := _) .
+ refine (match x with minus_two => _ | trunc_succ xp => _ end) .
+ -
+  exact case_minus_two .
+ -
+  exact (case_trunc_succ (go xp)) .
+Defined.
 
 Definition trunc_index_rect
   {P : trunc_index -> Type}
   (case_minus_two : P minus_two)
   (case_trunc_succ : forall xp, P xp -> P (trunc_succ xp))
-  (x : trunc_index) : P x
-  :=
-    let go :=
-      fix go x :=
-        match x with
-        | minus_two => case_minus_two
-        | trunc_succ xp => case_trunc_succ xp (go xp)
-        end
-    in go x
-  .
+  (x : trunc_index) : P x .
+Proof.
+ revert x .
+ refine (fix go (x : trunc_index) {struct x} := _) .
+ refine (match x with minus_two => _ | trunc_succ xp => _ end) .
+ -
+  exact case_minus_two .
+ -
+  exact (case_trunc_succ xp (go xp)) .
+Defined.
 
 (** 全ての道空間が [P] という性質を満たす。 *)
 Definition paths_is (P : Type -> Type) (A : Type) : Type
-  := forall (x y : A), P (paths x y) .
+  := forall (x y : A), P (x = y) .
 
 (** [A] は [n] 次縮小である。 *)
 Definition is_trunc (n : trunc_index) (A : Type) : Type
@@ -278,7 +268,7 @@ Definition is_mere_relation {A : Type} (R : A -> A -> Type) : Type
 (** 道に対する縮小。 *)
 Definition trunc_paths
   (n : trunc_index) (A : Type) (H : is_trunc (trunc_succ n) A)
-  (x y : A) : is_trunc n (paths x y)
+  (x y : A) : is_trunc n (x = y)
   := H x y .
 
 (** ** Others *)
@@ -311,10 +301,10 @@ Definition path_forall_2
 (** 点付きの型。
 
     名前は "pointed type" を縮めたもの。 *)
-Definition pType : Type := dsum (fun A => A) .
+Definition pType : Type := sigma A, A .
 
 (** 相同的繊維。 [f] で [y] に移される値の集まり。 
 
     名前は "homotopical fiber" を縮めたもの。点の相同的な逆像。 *)
 Definition hfiber {A B : Type} (f : A -> B) (y : B) : Type
-  := dsum (fun x => paths (f x) y) .
+  := sigma x, f x = y .
