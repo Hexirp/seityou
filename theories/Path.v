@@ -33,6 +33,9 @@ Import Basis.Notation Basis.Notation.Path .
 (** [f] を [x] に適用する。 [apply] の別名。 *)
 Notation ap00 := apply (only parsing) .
 
+(** [ap00] の依存版。 [apply_dep] の別名。 *)
+Notation ap00_dep := apply_dep (only parsing) .
+
 (** [f] を [p] に適用する。 [ap] の別名。 *)
 Notation ap01 := ap (only parsing) .
 

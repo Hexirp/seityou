@@ -295,7 +295,11 @@ Definition compose_dep
 
 (** 適用。そのほかに [idmap] を関数だけに制限したものと見ることもできる。 *)
 Definition apply {A B} : (A -> B) -> A -> B
-  := fun f x => f x .
+  := idmap .
+
+(** 依存関数の適用。 [apply] と同様に [idmap] を制限したもの。 *)
+Definition apply_dep {A B} : (forall a : A, B a) -> forall a : A, B a
+  := idmap .
 
 (** 矛盾による安全なエラー。
 
