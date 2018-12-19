@@ -2,7 +2,6 @@
 
     Homotopy Type Theory において一般的な定義をする。 *)
 
-
 Require Export Path .
 
 (** 戦術を使う。 *)
@@ -308,3 +307,29 @@ Definition pType : Type := sigma A, A .
     名前は "homotopical fiber" を縮めたもの。点の相同的な逆像。 *)
 Definition hfiber {A B : Type} (f : A -> B) (y : B) : Type
   := sigma x, f x = y .
+
+
+(** ** Notations *)
+
+Module Notation .
+
+  Export Path.Notation .
+
+  (** 記法が使われる文脈を設定する。 *)
+  Delimit Scope equiv_scope with equiv.
+  Delimit Scope trunc_scope with trunc.
+
+  (** 文脈を開く。 *)
+  Open Scope equiv_scope.
+  Open Scope trunc_scope.
+
+  (** 文脈を型と結びつける。 *)
+  Bind Scope equiv_scope with equiv .
+  Bind Scope function_scope with trunc_index .
+
+  (** 型の等価性の記法。 *)
+  Notation "A <~> B" := (equiv A B)
+    (at level 85, no associativity)
+    : type_scope.
+
+End Notation .

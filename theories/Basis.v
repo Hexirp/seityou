@@ -471,6 +471,10 @@ Module Notation .
   Open Scope type_scope .
   Open Scope function_scope .
 
+  (** 文脈を型と結びつける。 *)
+  Bind Scope type_scope with Sortclass .
+  Bind Scope function_scope with Funclass .
+
   (** 依存和は、ある型を渡る和として表現されるため "sigma" と書く。 *)
   Notation "'sigma' x .. y , p" := (dsum (fun x => .. (dsum (fun y => p)) ..))
     (at level 200, x binder, right associativity,
@@ -518,6 +522,9 @@ Module Notation .
 
     (** 文脈を開く。 *)
     Open Scope path_scope .
+
+    (** 文脈を型と結びつける。 *)
+    Bind Scope path_scope with paths .
 
     (** 恒等道の記法。 *)
     Notation "1" := idpath
