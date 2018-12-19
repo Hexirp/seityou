@@ -175,9 +175,14 @@ Proof.
  exact (p (h x)) .
 Defined.
 
+
+(** ** Others
+
+    そのほかの、関数など。 *)
+
 (** [p] を反転して [q] を合成する。
 
-    [forall y, x = y] のようなパターンの時に便利。 *)
+    [forall y, x = y] のような、同じ方向の道のパターンの時に便利。 *)
 Definition coninv
   {A : Type} {x y z : A}
   (p : y = x) (q : y = z) : x = z
@@ -210,4 +215,17 @@ Proof.
  revert y p .
  refine (@paths_elim A x _ _) .
  exact 1 .
+Defined.
+
+(** [coninv] と [concat] を合わせた関数。
+
+    同じ方向の道で、両辺を書き換えたいときに便利。 *)
+Definition conconinv
+  {A : Type} {x y z w : A}
+  (p : paths y x) (q : paths y z) (r : paths z w)
+  : paths x w .
+Proof.
+ refine (coninv p _) .
+ refine (concat q _) .
+ exact r .
 Defined.
