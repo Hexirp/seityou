@@ -151,20 +151,29 @@ Definition concat_pw
   := fun a => concat (p a) (q a) .
 
 (** 点ごとの道の両辺に、左から関数を合成する。 *)
-Definition pwpaths_compose01
+Definition wiskerL_pw_fn
   {A B C : Type}
   (f : B -> C)
   {g h : A -> B} (p : pwpaths g h)
-  : pwpaths (compose f g) (compose f h)
-  := compose01 (fun a => ap (x := g a) (y := h a) f) p .
+  : pwpaths (compose f g) (compose f h) .
+Proof.
+ refine (fun x => _) .
+ change (f (g x) = f (h x)) .
+ refine (ap f _) .
+ exact (p x) .
+Defined.
 
 (** 点ごとの道の両辺に、右から関数を合成する。 *)
-Definition pwpaths_compose10
+Definition wiskerR_pw_fn
   {A B C : Type}
   {f g : B -> C} (p : pwpaths f g)
   (h : A -> B)
-  : pwpaths (compose f h) (compose g h)
-  := compose10 p h .
+  : pwpaths (compose f h) (compose g h) .
+Proof.
+ refine (fun x => _) .
+ change (f (h x) = g (h x)) .
+ exact (p (h x)) .
+Defined.
 
 (** [p] を反転して [q] を合成する。
 
