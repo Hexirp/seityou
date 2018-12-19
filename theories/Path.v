@@ -1,53 +1,15 @@
+(** * Path
+
+    道に関する定義を行う。 *)
+
 Require Export Basis .
 
-
+(** 戦術を使う。 *)
 Declare ML Module "ltac_plugin" .
-
 Set Default Proof Mode "Classic" .
 
-
-(** ** 記法 *)
-
-Module Notation .
-
-  Export Basis.Notation .
-
-  Delimit Scope path_scope with path .
-
-  Open Scope path_scope .
-
-  Notation "x = y :> T" := (@paths T x y)
-    (at level 70, y at next level, no associativity)
-    : path_scope
-    .
-
-  Notation "x = y" := (x = y :> _)
-    (at level 70, no associativity)
-    : path_scope
-    .
-
-  Notation "1" := idpath
-    : path_scope
-    .
-
-  Notation "p @ q" := (concat p q)
-    (at level 20)
-    : path_scope
-    .
-
-  Notation "p ^" := (inverse p)
-    (at level 3, format "p '^'")
-    : path_scope
-    .
-
-  Notation "p # x" := (transport p x)
-    (right associativity, at level 65)
-    : path_scope
-    .
-
-End Notation.
-
-Import Notation.
+(** 記法を使う。 *)
+Import Basis.Notation Basis.Notation.Path .
 
 
 (** ** Application *)

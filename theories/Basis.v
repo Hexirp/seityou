@@ -459,42 +459,86 @@ Definition paths_rev_elim
 
 Module Notation .
 
+  (** 記法が使われる文脈を設定する。 *)
   Delimit Scope type_scope with type .
   Delimit Scope function_scope with function .
 
+  (** 文脈を開く。 *)
   Open Scope type_scope .
   Open Scope function_scope .
 
+  (** 依存和は、ある型を渡る和として表現されるため "sigma" と書く。 *)
   Notation "'sigma' x .. y , p" := (dsum (fun x => .. (dsum (fun y => p)) ..))
     (at level 200, x binder, right associativity,
       format "'[' 'sigma'  '/ ' x .. y ,  '/ ' p ']'")
     : type_scope
     .
 
+  (** 依存積は、ある型を渡る積として表現されるため "pi" と書く。
+      対称性のためであって、普段使いは推奨されない。 *)
   Notation "'pi' x .. y , p" := (dprod (fun x => .. (dprod (fun y => p)) ..))
     (at level 200, x binder, right associativity,
       format "'[' 'pi'  '/ ' x .. y ,  '/ ' p ']'")
     : type_scope
     .
 
+  (** [T] の上の道だと特に書きたいときの道の記法。 *)
   Notation "x = y :> T" := (@paths T x y)
     (at level 70, y at next level, no associativity)
     : type_scope
     .
 
+  (** 普通の道の記法。 *)
   Notation "x = y" := (x = y :> _)
     (at level 70, no associativity)
     : type_scope
     .
 
+  (** 関数合成の記法。 *)
   Notation "f 'o' g" := (compose f g)
     (at level 40, left associativity)
     : function_scope
     .
 
+  (** 依存関数合成の記法。 *)
   Notation "f 'oD' g" := (compose_dep f g)
     (at level 40, left associativity)
     : function_scope
     .
+
+  (** 道に関する関数の記法。その多くは圏論における道の可逆圏に由来する。 *)
+  Module Path .
+
+    (** 道に対する文脈を設定する。 *)
+    Delimit Scope path_scope with path .
+
+    (** 文脈を開く。 *)
+    Open Scope path_scope .
+
+    (** 恒等道の記法。 *)
+    Notation "1" := idpath
+      : path_scope
+      .
+
+    (** 道の合成の記法。 *)
+    Notation "p @ q" := (concat p q)
+      (at level 20)
+      : path_scope
+      .
+
+    (** 道の反転の記法。 *)
+    Notation "p ^" := (inverse p)
+      (at level 3, format "p '^'")
+      : path_scope
+      .
+
+    (** 道の輸送の記法。関数の名前が長いため短く書きたいときに役に立つが、
+        出力が読みづらくなるため入力時のみに使えるようにする。 *)
+    Notation "p # x" := (transport p x)
+      (right associativity, at level 65, only parsing)
+      : path_scope
+      .
+
+  End Path .
 
 End Notation .
