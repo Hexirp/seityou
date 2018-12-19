@@ -12,7 +12,7 @@ Set Default Proof Mode "Classic" .
 Import Basis.Notation Basis.Notation.Path .
 
 
-(** ** Application *)
+(** ** Applications *)
 
 (** [ap] のバリエーションは以下の命令規則に従う。
 
@@ -213,3 +213,17 @@ Proof.
  refine (concat q _) .
  exact r .
 Defined.
+
+
+(** ** Notations *)
+
+Module Notation .
+
+  Export Basis.Notation Basis.Notation.Path .
+
+  Notation "f == g" := (pwpaths f g)
+    (at level 70, no associativity)
+    : type_scope
+    .
+
+End Notation .
