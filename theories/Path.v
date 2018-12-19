@@ -164,16 +164,16 @@ Definition pwpaths_paths
   := ap10_dep p .
 
 (** 点ごとの恒等道。 *)
-Definition idpwpath
+Definition idpath_pw
   {A : Type} {B : A -> Type}
   (f : forall a, B a)
   : pwpaths f f
   := fun a => idpath (f a) .
 
-Arguments idpwpath {_ _ _}, [_ _] _ .
+Arguments idpath_pw {_ _ _}, [_ _] _ .
 
 (** 点ごとの道の逆。 *)
-Definition pwinverse
+Definition inverse_pw
   {A : Type} {B : A -> Type}
   {f g : forall a, B a}
   (p : pwpaths f g)
@@ -181,7 +181,7 @@ Definition pwinverse
   := fun a => inverse (p a) .
 
 (** 点ごとの道の合成。 *)
-Definition pwconcat
+Definition concat_pw
   {A : Type} {B : A -> Type}
   (f g h : forall a, B a)
   (p : pwpaths f g) (q : pwpaths g h)
