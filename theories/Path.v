@@ -30,23 +30,11 @@ Import Basis.Notation Basis.Notation.Path .
 
     このようなことである。 *)
 
-(** [f] を [x] に適用する。 *)
-Definition ap00
-  {A B : Type}
-  (f : A -> B)
-  (x : A)
-  : B
-  := apply f x .
+(** [f] を [x] に適用する。 [apply] の別名。 *)
+Notation ap00 := apply (only parsing) .
 
-(** [f] を [p] に適用する。
-
-    [ap] の別名。 *)
-Definition ap01
-  {A B : Type}
-  (f : A -> B)
-  {x y : A} (p : x = y)
-  : f x = f y
-  := ap f p .
+(** [f] を [p] に適用する。 [ap] の別名。 *)
+Notation ap01 := ap (only parsing) .
 
 (** [p] を [x] に適用する。 *)
 Definition ap10
@@ -96,15 +84,8 @@ Definition ap_dep
   : p # f x = f y
   := paths_elim (P := fun y' p' => p' # f x = f y') idpath p .
 
-(** [ap01] の依存版。
-
-    [ap_dep] の別名。 *)
-Definition ap01_dep
-  {A : Type} {B : A -> Type}
-  (f : forall a, B a)
-  {x y : A} (p : x = y)
-  : p # f x = f y
-  := ap_dep f p .
+(** [ap01] の依存版。 [ap_dep] の別名。 *)
+Notation ap01_dep := ap_dep (only parsing) .
 
 
 (** ** Pointwise paths *)
