@@ -159,6 +159,18 @@ Proof.
  exact (p (h x)) .
 Defined.
 
+(** [wiskerL_pw_fn] の分配則。 *)
+Definition wiskerL_pw_fn_pp
+  {A B C : Type}
+  {f : B -> C} {g h i : A -> B}
+  {p : pwpaths g h} {q : pwpaths h i}
+  : pwpaths
+    (wiskerL_pw_fn f (concat_pw p q))
+    (concat_pw (wiskerL_pw_fn f p) (wiskerL_pw_fn f q)) .
+Proof.
+ refine (fun x => _) .
+ change (ap f (p x @ q x) = ap f (p x) @ ap f (q x)) .
+ 
 
 (** ** Others
 
