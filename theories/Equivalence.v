@@ -84,26 +84,6 @@ Proof.
   exact s_fg .
 Defined.
 
-Lemma conconinv
-  {A : Type} {x y z w : A}
-  (p : paths y x) (q : paths y z) (r : paths z w)
-  : paths x w .
-Proof.
- refine (coninv p _) .
- refine (concat q _) .
- exact r .
-Defined.
-
-(* Lemma pwpaths_conconinv
-  {A B : Type} {x y z w : A}
-  (p : paths y x) (q : paths y z) (r : paths z w)
-  : paths x w .
-Proof.
- refine (coninv p _) .
- refine (concat q _) .
- exact r .
-Defined. *)
-
 Lemma is_adj_compose
   {A B C : Type} {f : A -> B} {g : B -> A} {h : B -> C} {i : C -> B}
   (r_fg : retraction f g) (s_fg : section f g)
@@ -111,26 +91,12 @@ Lemma is_adj_compose
   (fg : is_adjoint r_fg s_fg) (hi : is_adjoint r_hi s_hi)
   : is_adjoint (retr_compose r_fg r_hi) (sect_compose s_fg s_hi) .
 Proof.
- unfold is_adjoint .
- unfold retr_compose, sect_compose .
- unfold is_adjoint in fg, hi .
- refine (fun x => _) .
- refine (
-   conconinv
-     (y := pwpaths_concat ((h oP (r_fg Po i)) Po (h o f)) (r_hi Po (h o f)) x)
-     (z := pwpaths_concat ((h o f) oP (g oP (s_hi Po f))) ((h o f) oP s_fg) x)
-      _
-      _
-      _
-   ) .
- -
-  revert x .
-  change (
-    pwpaths
-      (pwpaths_concat ((h oP (r_fg Po i)) Po (h o f)) (r_hi Po (h o f)))
-      (pwpaths_concat (h oP (r_fg Po i)) r_hi Po (h o f))
-    ) .
-  exact (fun x => idpath) .
+ unfold is_adjoint ; unfold is_adjoint in fg, hi .
+ unfold retraction in r_fg, r_hi .
+ unfold section in s_fg, s_hi .
+ unfold retr_compose .
+ unfold sect_compose .
+ 
 
 Lemma is_equiv_rel_compose
   {A B C : Type} {f : A -> B} {g : B -> A} {h : B -> C} {i : C -> B}
