@@ -213,6 +213,17 @@ Proof.
  exact 1 .
 Defined.
 
+Definition ap_ff
+  {A B C : Type}
+  {f : B -> C} {g : A -> B}
+  {x y : A} {p : x = y}
+  : ap (f o g) p = ap f (ap g p) .
+Proof.
+ revert y p .
+ refine (@paths_elim A x _ _) .
+ exact 1 .
+Defined.
+
 Definition wiskerL
   {A : Type} {x y z : A}
   (p : x = y)
@@ -311,7 +322,7 @@ Definition wiskerL_pw_fn_ff
 Proof.
  refine (fun x => _) .
  change (ap (f o g) (p x) = ap f (ap g (p x))) .
- exact 1 .
+ exact ap_ff .
 Defined.
 
 Definition wiskerL_pw_pw
