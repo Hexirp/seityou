@@ -59,8 +59,9 @@ Proof.
  change (h o (f o g) o i == idmap) .
  refine (concat_pw (g := h o i) _ _) .
  -
-  change (pwpaths (h o (f o g) o i) (h o idmap o i)) .
-  refine (h oP (_ Po i)) .
+  change (h o (f o g) o i == h o idmap o i) .
+  refine (wiskerR_pw_fn _ i) .
+  refine (wiskerL_pw_fn h _) .
   exact r_fg .
  -
   exact r_hi .
