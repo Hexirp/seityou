@@ -269,6 +269,29 @@ Proof.
  exact (p (h x)) .
 Defined.
 
+Definition wiskerL_pw_fn_p
+  {A B C : Type}
+  (f : B -> C)
+  {g h : A -> B} {p q : g == h} (r : p == q)
+  : wiskerL_pw_fn f p == wiskerL_pw_fn f q .
+Proof.
+ refine (fun x => _) .
+ change (ap f (p x) = ap f (q x)) .
+ refine (ap (ap f) _) .
+ exact (r x) .
+Defined.
+
+Definition wiskerR_pw_fn_p
+  {A B C : Type}
+  {f g : B -> C} {p q : pwpaths f g} (r : p == q)
+  (h : A -> B)
+  : wiskerR_pw_fn p h == wiskerR_pw_fn q h .
+Proof.
+ refine (fun x => _) .
+ change (p (h x) = q (h x)) .
+ exact (r (h x)) .
+Defined.
+
 (** [wiskerL_pw_fn] の分配則。 *)
 Definition wiskerL_pw_fn_pp
   {A B C : Type}
@@ -299,19 +322,6 @@ Proof.
  exact 1 .
 Defined.
 
-Definition wiskerR_pw_fn_ff
-  {A B C D : Type}
-  {f g : C -> D} {p : f == g}
-  {h : B -> C} {i : A -> B}
-  : pwpaths
-    (wiskerR_pw_fn p (h o i))
-    (wiskerR_pw_fn (wiskerR_pw_fn p h) i) .
-Proof.
- refine (fun x => _) .
- change (p ((h o i) x) = p (h (i x))) .
- exact 1 .
-Defined.
-
 Definition wiskerL_pw_fn_ff
   {A B C D : Type}
   {f : C -> D} {g : B -> C}
@@ -323,6 +333,19 @@ Proof.
  refine (fun x => _) .
  change (ap (f o g) (p x) = ap f (ap g (p x))) .
  exact ap_ff .
+Defined.
+
+Definition wiskerR_pw_fn_ff
+  {A B C D : Type}
+  {f g : C -> D} {p : f == g}
+  {h : B -> C} {i : A -> B}
+  : pwpaths
+    (wiskerR_pw_fn p (h o i))
+    (wiskerR_pw_fn (wiskerR_pw_fn p h) i) .
+Proof.
+ refine (fun x => _) .
+ change (p ((h o i) x) = p (h (i x))) .
+ exact 1 .
 Defined.
 
 Definition wiskerL_pw_pw
