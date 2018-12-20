@@ -213,6 +213,26 @@ Proof.
  exact 1 .
 Defined.
 
+Definition wiskerL
+  {A : Type} {x y z : A}
+  (p : x = y)
+  {q r : y = z} (s : q = r)
+  : p @ q = p @ r .
+Proof.
+ refine (ap (concat p) _) .
+ exact s .
+Defined.
+
+Definition wiskerR
+  {A : Type} {x y z : A}
+  {p q : x = y} (r : p = q)
+  (s : y = z)
+  : p @ s = q @ s .
+Proof.
+ refine (ap (fun x => concat x s) _) .
+ exact r .
+Defined.
+
 (** 点ごとの道の両辺に、左から関数を合成する。 *)
 Definition wiskerL_pw_fn
   {A B C : Type}
@@ -276,7 +296,21 @@ Definition wiskerL_pw_pw
 Proof.
  refine (fun x => _) .
  change (p x @ q x = p x @ r x) .
- 
+ refine (wiskerL (p x) _) .
+ exact (s x) .
+Defined.
+
+Definition wiskerR_pw_pw
+  {A B : Type} {f g h : A -> B}
+  {p q : f == g} (r : p == q)
+  (s : g == h)
+  : concat_pw p s == concat_pw q s .
+Proof.
+ refine (fun x => _) .
+ change (p x @ s x = q x @ s x) .
+ refine (wiskerR _ (s x)) .
+ exact (r x) .
+Defined.
 
 (** [concat p p] は [idpath] に等しい。 *)
 Definition coninv_pp
