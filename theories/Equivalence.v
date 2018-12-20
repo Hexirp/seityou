@@ -112,6 +112,9 @@ Proof.
    ) .
  -
   exact wiskerR_pw_fn_pp .
+ - h o (f o g) o i o (h o f) == h o idmap o i o (h o f)   h o i o (h o f) == idmap o (h o f)
+   h o f o (g o (i o h) o f) == h o f o (g o idmap o f)   h o f o (g o f) == h o f o idmap
+
 
 Lemma is_equiv_rel_compose
   {A B C : Type} {f : A -> B} {g : B -> A} {h : B -> C} {i : C -> B}
