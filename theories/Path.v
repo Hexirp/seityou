@@ -129,7 +129,7 @@ Definition inverse_pw
 (** 点ごとの道の合成。 *)
 Definition concat_pw
   {A : Type} {B : A -> Type}
-  (f g h : forall a, B a)
+  {f g h : forall a, B a}
   (p : pwpaths f g) (q : pwpaths g h)
   : pwpaths f h
   := fun a => concat (p a) (q a) .
