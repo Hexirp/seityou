@@ -177,8 +177,8 @@ Defined.
 (** [wiskerL_pw_fn] の分配則。 *)
 Definition wiskerL_pw_fn_pp
   {A B C : Type}
-  {f : B -> C} {g h i : A -> B}
-  {p : pwpaths g h} {q : pwpaths h i}
+  {f : B -> C}
+  {g h i : A -> B} {p : pwpaths g h} {q : pwpaths h i}
   : pwpaths
     (wiskerL_pw_fn f (concat_pw p q))
     (concat_pw (wiskerL_pw_fn f p) (wiskerL_pw_fn f q)) .
@@ -192,8 +192,8 @@ Defined.
 (** [wiskerR_pw_fn] の分配則。 *)
 Definition wiskerR_pw_fn_pp
   {A B C : Type}
-  {f g h : B -> C} {i : A -> B}
-  {p : pwpaths f g} {q : pwpaths g h}
+  {f g h : B -> C} {p : pwpaths f g} {q : pwpaths g h}
+  {i : A -> B}
   : pwpaths
     (wiskerR_pw_fn (concat_pw p q) i)
     (concat_pw (wiskerR_pw_fn p i) (wiskerR_pw_fn q i)) .
