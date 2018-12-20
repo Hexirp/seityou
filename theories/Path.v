@@ -288,6 +288,32 @@ Proof.
  exact 1 .
 Defined.
 
+Definition wiskerR_pw_fn_ff
+  {A B C D : Type}
+  {f g : C -> D} {p : f == g}
+  {h : B -> C} {i : A -> B}
+  : pwpaths
+    (wiskerR_pw_fn p (h o i))
+    (wiskerR_pw_fn (wiskerR_pw_fn p h) i) .
+Proof.
+ refine (fun x => _) .
+ change (p ((h o i) x) = p (h (i x))) .
+ exact 1 .
+Defined.
+
+Definition wiskerL_pw_fn_ff
+  {A B C D : Type}
+  {f : C -> D} {g : B -> C}
+  {h i : A -> B} {p : h == i}
+  : pwpaths
+    (wiskerL_pw_fn (f o g) p)
+    (wiskerL_pw_fn f (wiskerL_pw_fn g p)) .
+Proof.
+ refine (fun x => _) .
+ change (ap (f o g) (p x) = ap f (ap g (p x))) .
+ exact 1 .
+Defined.
+
 Definition wiskerL_pw_pw
   {A B : Type} {f g h : A -> B}
   (p : f == g)
