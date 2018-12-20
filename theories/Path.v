@@ -184,8 +184,24 @@ Definition wiskerL_pw_fn_pp
     (concat_pw (wiskerL_pw_fn f p) (wiskerL_pw_fn f q)) .
 Proof.
  refine (fun x => _) .
+ change (ap f (concat_pw p q x) = wiskerL_pw_fn f p x @ wiskerL_pw_fn f q x) .
  change (ap f (p x @ q x) = ap f (p x) @ ap f (q x)) .
  exact ap_pp .
+Defined.
+
+(** [wiskerR_pw_fn] の分配則。 *)
+Definition wiskerR_pw_fn_pp
+  {A B C : Type}
+  {f g h : B -> C} {i : A -> B}
+  {p : pwpaths f g} {q : pwpaths g h}
+  : pwpaths
+    (wiskerR_pw_fn (concat_pw p q) i)
+    (concat_pw (wiskerR_pw_fn p i) (wiskerR_pw_fn q i)) .
+Proof.
+ refine (fun x => _) .
+ change (concat_pw p q (i x) = wiskerR_pw_fn p i x @ wiskerR_pw_fn q i x) .
+ change (p (i x) @ q (i x) = p (i x) @ q (i x)) .
+ exact 1 .
 Defined.
 
 (** ** Others
