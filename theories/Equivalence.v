@@ -96,6 +96,13 @@ Proof.
  unfold section in s_fg, s_hi .
  unfold retr_compose .
  unfold sect_compose .
+ refine (fun x => _) .
+ change (
+   concat_pw (wiskerR_pw_fn (wiskerL_pw_fn h r_fg) i) r_hi ((h o f) x)
+   =
+   ap (h o f) (concat_pw (wiskerR_pw_fn (wiskerL_pw_fn g s_hi) f) s_fg x)
+   ) .
+ 
  refine (
    concat_pw _ (inverse_pw _)
      (g := concat_pw
@@ -112,8 +119,7 @@ Proof.
    ) .
  -
   exact wiskerR_pw_fn_pp .
- - h o (f o g) o i o (h o f) == h o idmap o i o (h o f)   h o i o (h o f) == idmap o (h o f)
-   h o f o (g o (i o h) o f) == h o f o (g o idmap o f)   h o f o (g o f) == h o f o idmap
+ - 
 
 
 Lemma is_equiv_rel_compose
