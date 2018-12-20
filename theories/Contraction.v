@@ -11,16 +11,22 @@ Set Default Proof Mode "Classic" .
 (** 記法を使う。 *)
 Import Homotopy.Notation .
 
+(** [center] と [x : A] の間に道がある。 *)
+Definition center_path
+  {A : Type} (IC : contr A) (x : A) : center IC = x .
+Proof.
+ exact (dsnd IC x) .
+Defined.
 
 (** [A] が [contr] であれば [x y : A] の間に道がある。 *)
 Definition path_contr
   {A : Type} (IC : contr A) (x y : A) : x = y .
 Proof.
- refine (coninv (y := dfst IC) _ _) .
+ refine (coninv (y := center IC) _ _) .
  -
-  exact (dsnd IC x) .
+  exact (center_path IC x) .
  -
-  exact (dsnd IC y) .
+  exact (center_path IC y) .
 Defined.
 
 (** [A] が [IC : contr A] であれば、その二点の間の道 [p : paths x y] は
@@ -30,7 +36,7 @@ Definition K_path_contr
   : path_contr IC x y = p .
 Proof.
  refine (paths_elim (P := fun y' p' => path_contr IC x y' = p') _ p) .
- exact (coninv_pp (dsnd IC x)) .
+ exact (coninv_pp (center_path IC x)) .
 Defined.
 
 (** [A] が [contr] であれば [p q : paths x y] の間に道がある。 *)

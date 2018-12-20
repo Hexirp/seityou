@@ -178,6 +178,10 @@ Definition is_contr_center (A : Type) (x : A) : Type
 Definition is_contr (A : Type) : Type
   := sigma x, is_contr_center A x .
 
+(** [A] が [contr] であるとき、その中心を得る。 *)
+Definition center {A : Type} (IC : is_contr A) : A
+  := dfst IC .
+
 (** *** Truncation *)
 
 (** 縮小 (Truncation) は、高階道空間の文脈において、型の複雑性を測る。
