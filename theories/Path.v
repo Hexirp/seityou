@@ -159,6 +159,21 @@ Proof.
  exact (p (h x)) .
 Defined.
 
+
+(** [ap] の分配則。 *)
+Definition ap_pp
+  {A B : Type}
+  {f : A -> B} {x y z : A}
+  {p : x = y} {q : y = z}
+  : ap f (p @ q) = ap f p @ ap f q .
+Proof.
+ revert z q .
+ refine (@paths_elim A y _ _) .
+ revert y p .
+ refine (@paths_elim A x _ _) .
+ exact 1 .
+Defined.
+
 (** [wiskerL_pw_fn] の分配則。 *)
 Definition wiskerL_pw_fn_pp
   {A B C : Type}
@@ -170,7 +185,8 @@ Definition wiskerL_pw_fn_pp
 Proof.
  refine (fun x => _) .
  change (ap f (p x @ q x) = ap f (p x) @ ap f (q x)) .
- 
+ exact ap_pp .
+Defined.
 
 (** ** Others
 
