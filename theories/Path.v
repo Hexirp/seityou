@@ -372,6 +372,15 @@ Proof.
  exact (r x) .
 Defined.
 
+Definition concat_pw_swap
+  {A : Type} {f g : A -> A}
+  {p : f == idmap} {q : g == idmap}
+  : concat_pw (wiskerL_pw_fn f q) p == concat_pw (wiskerR_pw_fn p g) q .
+Proof.
+ refine (fun x => _) .
+ change (wiskerL_pw_fn f q x @ p x = wiskerR_pw_fn p g x @ q x) .
+Admitted.
+
 (** [concat p p] は [idpath] に等しい。 *)
 Definition coninv_pp
   {A : Type} {x y : A}
