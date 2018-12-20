@@ -96,7 +96,22 @@ Proof.
  unfold section in s_fg, s_hi .
  unfold retr_compose .
  unfold sect_compose .
- 
+ refine (
+   concat_pw _ (inverse_pw _)
+     (g := concat_pw
+       (wiskerL_pw_fn (h o f) (wiskerR_pw_fn (wiskerL_pw_fn g s_hi) f))
+       (wiskerL_pw_fn (h o f) s_fg)
+     )
+   ) .
+ refine (
+   concat_pw _ _
+     (g := concat_pw
+       (wiskerR_pw_fn (wiskerR_pw_fn (wiskerL_pw_fn h r_fg) i) (h o f))
+       (wiskerR_pw_fn r_hi (h o f))
+     )
+   ) .
+ -
+  exact wiskerR_pw_fn_pp .
 
 Lemma is_equiv_rel_compose
   {A B C : Type} {f : A -> B} {g : B -> A} {h : B -> C} {i : C -> B}
