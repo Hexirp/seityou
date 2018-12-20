@@ -2,14 +2,14 @@
 
     等価性に関する定理や定義。 *)
 
-
 Require Export Homotopy.
-Require Import Path.
 
-
+(** 戦術を使う。 *)
 Declare ML Module "ltac_plugin".
-
 Set Default Proof Mode "Classic".
+
+(** 記法を使う。 *)
+Import Homotopy.Notation .
 
 
 Lemma retr_idmap
@@ -50,49 +50,14 @@ Proof.
  exact is_equiv_idmap .
 Defined.
 
-Module Notation .
-
-  Notation "f 'o' g" := (compose f g) (at level 40, right associativity) .
-
-  Notation "f 'oP' p" := (pwpaths_compose01 f p) (at level 40, no associativity) .
-
-  Notation "p 'Po' h" := (pwpaths_compose10 p h) (at level 40, no associativity) .
-
-End Notation .
-
-Import Notation .
-
-Lemma pwpaths_concat
-  {A B : Type} {f g h : A -> B}
-  (p : pwpaths f g) (q : pwpaths g h)
-  : pwpaths f h .
-Proof.
- refine (fun x => _) .
- refine (concat (y := g x) _ _) .
- -
-  exact (p x) .
- -
-  exact (q x) .
-Defined.
-
-Lemma pwpaths_compose11
-  {A B C D : Type} {g h : B -> C}
-  (f : C -> D) (p : pwpaths g h) (i : A -> B)
-  : pwpaths (f o g o i) (f o h o i) .
-Proof.
- refine (f oP _) .
- refine (_ Po i) .
- exact p .
-Defined.
-
 Lemma retr_compose
   {A B C : Type} {f : A -> B} {g : B -> A} {h : B -> C} {i : C -> B}
   (r_fg : retraction f g) (r_hi : retraction h i)
   : retraction (h o f) (g o i) .
 Proof.
- unfold retraction .
- change (pwpaths (h o (f o g) o i) idmap) .
- refine (pwpaths_concat (g := h o i) _ _) .
+ unfold retraction ; unfold retraction in r_fg, r_hi .
+ change (h o (f o g) o i == idmap) .
+ refine (concat_pw (g := h o i) _ _) .
  -
   change (pwpaths (h o (f o g) o i) (h o idmap o i)) .
   refine (h oP (_ Po i)) .
