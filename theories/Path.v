@@ -134,76 +134,6 @@ Definition concat_pw
   : pwpaths f h
   := fun a => concat (p a) (q a) .
 
-(** 点ごとの道の両辺に、左から関数を合成する。 *)
-Definition wiskerL_pw_fn
-  {A B C : Type}
-  (f : B -> C)
-  {g h : A -> B} (p : pwpaths g h)
-  : pwpaths (compose f g) (compose f h) .
-Proof.
- refine (fun x => _) .
- change (f (g x) = f (h x)) .
- refine (ap f _) .
- exact (p x) .
-Defined.
-
-(** 点ごとの道の両辺に、右から関数を合成する。 *)
-Definition wiskerR_pw_fn
-  {A B C : Type}
-  {f g : B -> C} (p : pwpaths f g)
-  (h : A -> B)
-  : pwpaths (compose f h) (compose g h) .
-Proof.
- refine (fun x => _) .
- change (f (h x) = g (h x)) .
- exact (p (h x)) .
-Defined.
-
-
-(** [ap] の分配則。 *)
-Definition ap_pp
-  {A B : Type}
-  {f : A -> B} {x y z : A}
-  {p : x = y} {q : y = z}
-  : ap f (p @ q) = ap f p @ ap f q .
-Proof.
- revert z q .
- refine (@paths_elim A y _ _) .
- revert y p .
- refine (@paths_elim A x _ _) .
- exact 1 .
-Defined.
-
-(** [wiskerL_pw_fn] の分配則。 *)
-Definition wiskerL_pw_fn_pp
-  {A B C : Type}
-  {f : B -> C}
-  {g h i : A -> B} {p : pwpaths g h} {q : pwpaths h i}
-  : pwpaths
-    (wiskerL_pw_fn f (concat_pw p q))
-    (concat_pw (wiskerL_pw_fn f p) (wiskerL_pw_fn f q)) .
-Proof.
- refine (fun x => _) .
- change (ap f (concat_pw p q x) = wiskerL_pw_fn f p x @ wiskerL_pw_fn f q x) .
- change (ap f (p x @ q x) = ap f (p x) @ ap f (q x)) .
- exact ap_pp .
-Defined.
-
-(** [wiskerR_pw_fn] の分配則。 *)
-Definition wiskerR_pw_fn_pp
-  {A B C : Type}
-  {f g h : B -> C} {p : pwpaths f g} {q : pwpaths g h}
-  {i : A -> B}
-  : pwpaths
-    (wiskerR_pw_fn (concat_pw p q) i)
-    (concat_pw (wiskerR_pw_fn p i) (wiskerR_pw_fn q i)) .
-Proof.
- refine (fun x => _) .
- change (concat_pw p q (i x) = wiskerR_pw_fn p i x @ wiskerR_pw_fn q i x) .
- change (p (i x) @ q (i x) = p (i x) @ q (i x)) .
- exact 1 .
-Defined.
-
 (** ** Others
 
     そのほかの、関数など。 *)
@@ -215,16 +145,6 @@ Definition coninv
   {A : Type} {x y z : A}
   (p : y = x) (q : y = z) : x = z
   := p^ @ q .
-
-(** [concat p p] は [idpath] に等しい。 *)
-Definition coninv_pp
-  {A : Type} {x y : A}
-  (p : x = y) : coninv p p = 1 .
-Proof.
- revert y p .
- refine (@paths_elim A x _ _) .
- exact 1 .
-Defined.
 
 (** [concat] の [transport] を使った定義。 *)
 Definition contrans
@@ -271,3 +191,99 @@ Module Notation .
     .
 
 End Notation .
+
+
+(** ** Groupoid Structures *)
+
+Module Groupoid .
+
+Import Notation .
+
+(** [ap] の分配則。 *)
+Definition ap_pp
+  {A B : Type}
+  {f : A -> B} {x y z : A}
+  {p : x = y} {q : y = z}
+  : ap f (p @ q) = ap f p @ ap f q .
+Proof.
+ revert z q .
+ refine (@paths_elim A y _ _) .
+ revert y p .
+ refine (@paths_elim A x _ _) .
+ exact 1 .
+Defined.
+
+(** 点ごとの道の両辺に、左から関数を合成する。 *)
+Definition wiskerL_pw_fn
+  {A B C : Type}
+  (f : B -> C)
+  {g h : A -> B} (p : g == h)
+  : f o g == f o h .
+Proof.
+ refine (fun x => _) .
+ change (f (g x) = f (h x)) .
+ refine (ap f _) .
+ exact (p x) .
+Defined.
+
+(** 点ごとの道の両辺に、右から関数を合成する。 *)
+Definition wiskerR_pw_fn
+  {A B C : Type}
+  {f g : B -> C} (p : pwpaths f g)
+  (h : A -> B)
+  : f o h == g o h .
+Proof.
+ refine (fun x => _) .
+ change (f (h x) = g (h x)) .
+ exact (p (h x)) .
+Defined.
+
+(** [wiskerL_pw_fn] の分配則。 *)
+Definition wiskerL_pw_fn_pp
+  {A B C : Type}
+  {f : B -> C}
+  {g h i : A -> B} {p : g == h} {q : h == i}
+  : pwpaths
+    (wiskerL_pw_fn f (concat_pw p q))
+    (concat_pw (wiskerL_pw_fn f p) (wiskerL_pw_fn f q)) .
+Proof.
+ refine (fun x => _) .
+ change (ap f (concat_pw p q x) = wiskerL_pw_fn f p x @ wiskerL_pw_fn f q x) .
+ change (ap f (p x @ q x) = ap f (p x) @ ap f (q x)) .
+ exact ap_pp .
+Defined.
+
+(** [wiskerR_pw_fn] の分配則。 *)
+Definition wiskerR_pw_fn_pp
+  {A B C : Type}
+  {f g h : B -> C} {p : f == g} {q : g == h}
+  {i : A -> B}
+  : pwpaths
+    (wiskerR_pw_fn (concat_pw p q) i)
+    (concat_pw (wiskerR_pw_fn p i) (wiskerR_pw_fn q i)) .
+Proof.
+ refine (fun x => _) .
+ change (concat_pw p q (i x) = wiskerR_pw_fn p i x @ wiskerR_pw_fn q i x) .
+ change (p (i x) @ q (i x) = p (i x) @ q (i x)) .
+ exact 1 .
+Defined.
+
+Definition wiskerL_pw_pw
+  {A B : Type} {f g h : A -> B}
+  (p : f == g)
+  {q r : g == h} (s : q == r)
+  : concat_pw p q == concat_pw p r .
+Proof.
+ refine (fun x => _) .
+ change (p x @ q x = p x @ r x) .
+ 
+
+(** [concat p p] は [idpath] に等しい。 *)
+Definition coninv_pp
+  {A : Type} {x y : A}
+  (p : x = y) : coninv p p = 1 .
+Proof.
+ revert y p .
+ refine (@paths_elim A x _ _) .
+ exact 1 .
+Defined.
