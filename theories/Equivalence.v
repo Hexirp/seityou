@@ -72,12 +72,13 @@ Lemma sect_compose
   (s_fg : section f g) (s_hi : section h i)
   : section (h o f) (g o i) .
 Proof.
- unfold section .
- change (pwpaths (g o (i o h) o f) idmap) .
- refine (pwpaths_concat (g := g o f) _ _) .
+ unfold section ; unfold section in s_fg, s_hi .
+ change (g o (i o h) o f == idmap) .
+ refine (concat_pw (g := g o f) _ _) .
  -
-  change (pwpaths (g o (i o h) o f) (g o idmap o f)) .
-  refine (g oP (_ Po f)) .
+  change (g o (i o h) o f == g o idmap o f) .
+  refine (wiskerR_pw_fn _ f) .
+  refine (wiskerL_pw_fn g _) .
   exact s_hi .
  -
   exact s_fg .
