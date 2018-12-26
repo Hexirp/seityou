@@ -379,6 +379,12 @@ Definition concat_pw_swap
 Proof.
  refine (fun x => _) .
  change (wiskerL_pw_fn f q x @ p x = wiskerR_pw_fn p g x @ q x) .
+ change (ap f (q x) @ p x = p (g x) @ q x) .
+ refine (
+   paths_elim _ (q x)
+     (P := fun x' qx' => ap f qx' @ p x' = p (g x) @ qx')
+   ) .
+ change (1 @ p (g x) = p (g x) @ 1) .
 Admitted.
 
 (** [concat p p] は [idpath] に等しい。 *)
