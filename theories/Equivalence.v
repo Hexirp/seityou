@@ -64,6 +64,8 @@ Definition equiv
   := sigma f, is_equiv (A := A) (B := B) f .
 
 
+(** ** equiv_idmap *)
+
 Lemma retr_idmap
   {A : Type}
   : @retraction A A idmap idmap .
@@ -101,6 +103,9 @@ Proof.
  refine (dpair idmap _) .
  exact is_equiv_idmap .
 Defined.
+
+
+(** ** equiv_compose *)
 
 Lemma retr_compose
   {A B C : Type} {f : A -> B} {g : B -> A} {h : B -> C} {i : C -> B}
