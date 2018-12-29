@@ -2,13 +2,18 @@
 
     可縮性に関する定理や定義。 *)
 
-Require Export Homotopy.
+Require Export Basis .
+Require Export Path .
+Require Export Homotopy .
 
 (** 戦術を使う。 *)
 Declare ML Module "ltac_plugin" .
 Set Default Proof Mode "Classic" .
 
 (** 記法を使う。 *)
+Import Basis.Notation .
+Import Basis.Notation.Path .
+Import Path.Notation .
 Import Homotopy.Notation .
 
 (** [center] と [x : A] の間に道がある。 *)
@@ -121,7 +126,7 @@ Defined.
     与えられることに注意せよ。 *)
 Definition contr_retract
   {X Y} (IC : contr X) (r : X -> Y) (s : Y -> X)
-  (retr : retraction r s) : contr Y .
+  (retr : forall x, r (s x) = x) : contr Y .
 Proof.
  refine (dpair (r (dfst IC)) _) .
  refine (fun y => _) .
