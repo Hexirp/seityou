@@ -217,4 +217,23 @@ Module Notation .
     : pwpath_scope
     .
 
+  Module Chain .
+
+    Notation "'begin' p" := p
+      (at level 10, only parsing)
+      : pwpath_scope
+      .
+
+    Notation "f =( p ) q" := (concat_pw (f := f) p q)
+      (at level 20, only parsing, right associativity)
+      : pwpath_scope
+      .
+
+    Notation "f 'end'" := (idpath_pw f)
+      (at level 30, only parsing)
+      : pwpath_scope
+      .
+
+  End Chain .
+
 End Notation .
