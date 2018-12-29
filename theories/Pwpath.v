@@ -217,6 +217,16 @@ Module Notation .
     : pwpath_scope
     .
 
+  Notation "f 'wL' p" := (wiskerL_pw_fn f p)
+    (at level 39, right associativity)
+    : pwpath_scope
+    .
+
+  Notation "p 'wR' i" := (wiskerR_pw_fn p i)
+    (at level 38, left associativity)
+    : pwpath_scope
+    .
+
   Module Chain .
 
     Notation "'begin' p" := p
