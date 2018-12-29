@@ -2,6 +2,9 @@
 
     等価性に関する定理や定義。 *)
 
+Require Export Basis .
+Require Export Path .
+Require Export Pwpath .
 Require Export Homotopy.
 
 (** 戦術を使う。 *)
@@ -9,7 +12,9 @@ Declare ML Module "ltac_plugin".
 Set Default Proof Mode "Classic".
 
 (** 記法を使う。 *)
-Import Homotopy.Notation .
+Import Basis.Notation .
+Import Basis.Notation.Path .
+Import Path.Notation .
 
 
 Lemma retr_idmap
