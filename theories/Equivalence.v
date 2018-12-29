@@ -15,6 +15,7 @@ Set Default Proof Mode "Classic".
 Import Basis.Notation .
 Import Basis.Notation.Path .
 Import Path.Notation .
+Import Pwpath.Notation .
 
 
 (** ** Equivalence'
@@ -70,24 +71,21 @@ Lemma retr_idmap
   {A : Type}
   : @retraction A A idmap idmap .
 Proof.
- refine (fun x => _) .
- exact (idpath x) .
+ exact 1 .
 Defined.
 
 Lemma sect_idmap
   {A : Type}
   : @section A A idmap idmap .
 Proof.
- refine (fun x => _) .
- exact (idpath x) .
+ exact 1 .
 Defined.
 
 Lemma is_adj_idmap
   {A : Type}
   : @is_adjoint A A idmap idmap retr_idmap sect_idmap .
 Proof.
- refine (fun x => _) .
- exact (idpath (idpath x)) .
+ exact 1 .
 Defined.
 
 Definition is_equiv_idmap {A : Type} : is_equiv (@idmap A) .
