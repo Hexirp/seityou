@@ -185,7 +185,7 @@ Proof.
    =( _ )
            h o f wL ((g wL s_hi) wR f) @ s_fg
    =( _ )
-           (h o f wL (((g wL s_hi) wR f) @ (s_fg @ 1)))
+           h o f wL ((g wL s_hi) wR f) @ (s_fg @ 1)
    end
    ) .
 
