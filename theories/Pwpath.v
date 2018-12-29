@@ -191,3 +191,30 @@ Proof.
    ) .
  change (1 @ p (g x) = p (g x) @ 1) .
 Admitted.
+
+
+(** ** Notations *)
+
+Module Notation .
+
+  Delimit Scope pwpath_scope with pwpath .
+
+  Open Scope pwpath_scope .
+
+  Bind Scope pwpath_scope with pwpaths .
+
+  Notation "1" := idpath_pw
+    : pwpath_scope
+    .
+
+  Notation "p @ q" := (concat_pw p q)
+    (at level 20)
+    : pwpath_scope
+    .
+
+  Notation "p ^" := (inverse_pw p)
+    (at level 3, format "p '^'")
+    : pwpath_scope
+    .
+
+End Notation .
