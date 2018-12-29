@@ -119,7 +119,7 @@ Proof.
    =( _ )
            h o i
    =( _ )
-           idmap
+           (@idmap C)
    end
    ) .
  -

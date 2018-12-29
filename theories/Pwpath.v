@@ -230,7 +230,7 @@ Module Notation .
   Module Chain .
 
     Notation "'begin' p" := p
-      (at level 41, only parsing)
+      (at level 43, only parsing)
       : pwpath_scope
       .
 
@@ -240,7 +240,7 @@ Module Notation .
       .
 
     Notation "f 'end'" := (idpath_pw f)
-      (at level 43, only parsing)
+      (at level 41, only parsing)
       : pwpath_scope
       .
 
