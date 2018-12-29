@@ -395,3 +395,5 @@ Proof.
  refine (@paths_elim A x _ _) .
  exact 1 .
 Defined.
+
+End Groupoid .
