@@ -239,7 +239,7 @@ Module Notation .
       : pwpath_scope
       .
 
-    Notation "f 'end'" := (idpath_pw f)
+    Notation "f 'end'" := (@idpath_pw _ _ f)
       (at level 41, only parsing)
       : pwpath_scope
       .
