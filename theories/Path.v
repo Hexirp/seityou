@@ -92,7 +92,9 @@ Definition ap_dep
 Notation ap01_dep := ap_dep (only parsing) .
 
 
-(** ** Pointwise paths *)
+(** ** Others
+
+    そのほかの関数など。 *)
 
 (** 点ごとの道。関数の外延性等値性。
 
@@ -100,44 +102,6 @@ Notation ap01_dep := ap_dep (only parsing) .
 Definition pwpaths
   {A : Type} {B : A -> Type} (f g : forall a, B a) : Type
   := forall a, f a = g a .
-
-(** 道から、点ごとの道を得る。
-
-    逆は [funext] であり、証明も反証もできない。 *)
-Definition pwpaths_paths
-  {A : Type} {B : A -> Type}
-  {f g : forall a, B a} (p : paths f g)
-  : pwpaths f g
-  := ap10_dep p .
-
-(** 点ごとの恒等道。 *)
-Definition idpath_pw
-  {A : Type} {B : A -> Type}
-  (f : forall a, B a)
-  : pwpaths f f
-  := fun a => idpath (f a) .
-
-Arguments idpath_pw {_ _ _}, [_ _] _ .
-
-(** 点ごとの道の逆。 *)
-Definition inverse_pw
-  {A : Type} {B : A -> Type}
-  {f g : forall a, B a}
-  (p : pwpaths f g)
-  : pwpaths g f
-  := fun a => inverse (p a) .
-
-(** 点ごとの道の合成。 *)
-Definition concat_pw
-  {A : Type} {B : A -> Type}
-  {f g h : forall a, B a}
-  (p : pwpaths f g) (q : pwpaths g h)
-  : pwpaths f h
-  := fun a => concat (p a) (q a) .
-
-(** ** Others
-
-    そのほかの、関数など。 *)
 
 (** [p] を反転して [q] を合成する。
 
