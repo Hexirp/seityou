@@ -12,7 +12,6 @@ Set Default Proof Mode "Classic" .
 (** 記法を使う。 *)
 Import Basis.Notation .
 Import Basis.Notation.Path .
-Import Path.Notation .
 
 
 (** ** Equivalence *)
@@ -42,25 +41,17 @@ Import Path.Notation .
 
     このライブラリでは、HoTT のライブラリに倣い、随伴等価を採用する。 *)
 
-(** [s] は [r] の断面 (section) である。
+(** [s] を適用した後に [r] を適用すると元に戻る。
 
-    言い換えると [s] は [r] の右逆射である。また [r] は [s] の左逆射、または、
-    引き込み (retraction) である。 *)
-Definition section
+    * [s] は [r] の右逆射である。
+    * [s] は [r] の断面 (section) である。
+    * [r] は [s] の左逆射である。
+    * [r] は [s] の引き込み (retraction) である。 *)
+Definition sect
   {A B : Type}
   (s : A -> B) (r : B -> A)
   : Type
-  := r o s == idmap .
-
-(** [r] は [s] の引き込み (retraction) である。
-
-    言い換えると [r] は [s] の左逆射である。また [s] は [r] の右逆射、または、
-    断面 (section) である。 *)
-Definition retraction
-  {A B : Type}
-  (r : B -> A) (s : A -> B)
-  : Type
-  := r o s == idmap .
+  := forall x, r (s x) = x .
 
 (** [f] と [g] は [retr] と [sect] を通じて随伴的である。
 
@@ -90,7 +81,7 @@ Definition retraction
 Definition is_adjoint
   {A B : Type}
   {f : A -> B} {g : B -> A}
-  (retr : retraction f g) (sect : section f g)
+  (retr : sect g f) (sect : sect f g)
   : Type
   := forall x, retr (f x) = ap f (sect x) .
 
