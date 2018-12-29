@@ -227,6 +227,16 @@ Proof.
  exact r .
 Defined.
 
+(** [concat p p] は [idpath] に等しい。 *)
+Definition coninv_pp
+  {A : Type} {x y : A}
+  (p : x = y) : coninv p p = 1 .
+Proof.
+ revert y p .
+ refine (@paths_elim A x _ _) .
+ exact 1 .
+Defined.
+
 
 (** ** Notations *)
 

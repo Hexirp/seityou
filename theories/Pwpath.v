@@ -156,13 +156,3 @@ Proof.
    ) .
  change (1 @ p (g x) = p (g x) @ 1) .
 Admitted.
-
-(** [concat p p] は [idpath] に等しい。 *)
-Definition coninv_pp
-  {A : Type} {x y : A}
-  (p : x = y) : coninv p p = 1 .
-Proof.
- revert y p .
- refine (@paths_elim A x _ _) .
- exact 1 .
-Defined.
