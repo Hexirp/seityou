@@ -1,6 +1,6 @@
-(** * Path.Groupoid
+(** * Pwpath - Pointwise Path
 
-    道の可逆圏の構造について。 *)
+    点付きの道についての定義、定理を記述する。 *)
 
 Require Export Basis .
 Require Export Path .
