@@ -51,7 +51,7 @@ Definition is_adjoint
   {f : A -> B} {g : B -> A}
   (retr : retraction f g) (sect : section f g)
   : Type
-  := retr wR f == f wL sect .
+  := retr <@ f == f @> sect .
 
 (** [f] は等価射 (equivalence) である。 *)
 Definition is_equiv
@@ -112,18 +112,21 @@ Lemma retr_compose
 Proof.
  unfold retraction ; unfold retraction in r_fg, r_hi .
  change (h o (f o g) o i == idmap) .
- refine (
+ (*
    begin
            h o (f o g) o i
    =( _ )
            h o i
    =( _ )
-           (@idmap C)
+           idmap
    end
-   ) .
+  *)
+  refine (
+    concat_pw (g := h o i) _ _
+    ) .
  -
   change (h o (f o g) o i == h o idmap o i) .
-  refine ((h wL _) wR i) .
+  refine ((h @> _) <@ i) .
   exact r_fg .
  -
   exact r_hi .
@@ -136,7 +139,7 @@ Lemma sect_compose
 Proof.
  unfold section ; unfold section in s_fg, s_hi .
  change (g o (i o h) o f == idmap) .
- refine (
+ (*
    begin
            g o (i o h) o f
    =( _ )
@@ -144,10 +147,13 @@ Proof.
    =( _ )
            (@idmap A)
    end
-   ) .
+  *)
+  refine (
+    concat_pw (g := g o f) _ _
+    ) .
  -
   change (g o (i o h) o f == g o idmap o f) .
-  refine ((g wL _) wR f) .
+  refine ((g @> _) <@ f) .
   exact s_hi .
  -
   exact s_fg .
@@ -164,29 +170,65 @@ Proof.
  unfold retraction in r_fg, r_hi .
  unfold section in s_fg, s_hi .
  unfold retr_compose, sect_compose .
- refine (
+ (*
    begin
-           ((h wL r_fg) wR i) @ (r_hi @ 1) wR h o f
+           ((h @> r_fg) <@ i) @ r_hi <@ h o f
    =( _ )
-           ((h wL r_fg) wR i) @ r_hi wR h o f
+           ((h @> r_fg) <@ i <@ h o f) @ (r_hi <@ h o f)
    =( _ )
-           ((h wL r_fg) wR i wR h o f) @ (r_hi wR h o f)
+           ((h @> r_fg <@ i o h) <@ f) @ ((h @> s_hi) <@ f)
    =( _ )
-           ((h wL r_fg wR i o h) wR f) @ ((h wL s_hi) wR f)
+           (h @> ((r_fg <@ i o h) @ s_hi)) <@ f
    =( _ )
-           (h wL ((r_fg wR i o h) @ s_hi)) wR f
+           (h @> ((f o g @> s_hi) @ r_fg)) <@ f
    =( _ )
-           (h wL ((f o g wL s_hi) @ r_fg)) wR f
+           ((h @> (f o g @> s_hi)) <@ f) @ ((h @> r_fg) <@ f)
    =( _ )
-           ((h wL (f o g wL s_hi)) wR f) @ ((h wL r_fg) wR f)
+           (h o f @> ((g @> s_hi) <@ f)) @ (h o f @> s_fg)
    =( _ )
-           (h o f wL ((g wL s_hi) wR f)) @ (h o f wL s_fg)
-   =( _ )
-           h o f wL ((g wL s_hi) wR f) @ s_fg
-   =( _ )
-           h o f wL ((g wL s_hi) wR f) @ (s_fg @ 1)
+           h o f @> ((g @> s_hi) <@ f) @ s_fg
    end
+ *)
+ refine (
+   concat_pw (g := ((h @> r_fg) <@ i <@ h o f) @ (r_hi <@ h o f)) _ (
+    concat_pw (g := ((h @> r_fg <@ i o h) <@ f) @ ((h @> s_hi) <@ f)) _ (
+     concat_pw (g := (h @> ((r_fg <@ i o h) @ s_hi)) <@ f) _ (
+      concat_pw (g := (h @> ((f o g @> s_hi) @ r_fg)) <@ f) _ (
+       concat_pw (g := ((h @> (f o g @> s_hi)) <@ f) @ ((h @> r_fg) <@ f)) _ (
+        concat_pw (g := (h o f @> ((g @> s_hi) <@ f)) @ (h o f @> s_fg)) _ _
+       )
+      )
+     )
+    )
+   )
    ) .
+ -
+  exact wiskerR_pw_fn_pp .
+ -
+  admit.
+ -
+  refine (
+    concat_pw (g := ((h @> r_fg <@ i o h) @ (h @> s_hi)) <@ f) _ _
+    ) .
+  +
+   exact wiskerR_pw_fn_pp^ .
+  +
+   admit.
+ -
+  admit.
+ -
+  refine (
+    concat_pw (g := ((h @> f o g @> s_hi) @ (h @> r_fg)) <@ f) _ _
+    ) .
+  +
+   admit.
+  +
+   exact wiskerR_pw_fn_pp .
+ -
+  admit.
+ -
+  exact wiskerL_pw_fn_pp^ .
+Admitted.
 
 
 Lemma is_equiv_rel_compose
