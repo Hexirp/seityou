@@ -217,12 +217,12 @@ Module Notation .
     : pwpath_scope
     .
 
-  Notation "f 'wL' p" := (wiskerL_pw_fn f p)
+  Notation "f @> p" := (wiskerL_pw_fn f p)
     (at level 42, right associativity)
     : pwpath_scope
     .
 
-  Notation "p 'wR' i" := (wiskerR_pw_fn p i)
+  Notation "p <@ i" := (wiskerR_pw_fn p i)
     (at level 41, left associativity)
     : pwpath_scope
     .

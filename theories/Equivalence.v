@@ -16,7 +16,6 @@ Import Basis.Notation .
 Import Basis.Notation.Path .
 Import Path.Notation .
 Import Pwpath.Notation .
-Import Pwpath.Notation.Chain .
 
 
 (** ** Equivalence'
