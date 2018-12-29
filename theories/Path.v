@@ -9,7 +9,8 @@ Declare ML Module "ltac_plugin" .
 Set Default Proof Mode "Classic" .
 
 (** 記法を使う。 *)
-Import Basis.Notation Basis.Notation.Path .
+Import Basis.Notation .
+Import Basis.Notation.Path .
 
 
 (** ** Applications *)
@@ -182,8 +183,6 @@ Defined.
 (** ** Notations *)
 
 Module Notation .
-
-  Export Basis.Notation Basis.Notation.Path .
 
   Notation "f == g" := (pwpaths f g)
     (at level 70, no associativity)
