@@ -17,6 +17,53 @@ Import Basis.Notation.Path .
 Import Path.Notation .
 
 
+(** ** Equivalence'
+
+    Equivalence を使いやすい形で再定義する。
+    これらは [change] で元の定義と互いに移り合う。 *)
+
+(** [s] は [r] の断面 (section) である。
+
+    * [s] は [r] の右逆射である。
+    * [r] は [s] の引き込み (retraction) である。
+    * [r] は [s] の左逆射である。 *)
+Definition section
+  {A B : Type}
+  (s : A -> B) (r : B -> A)
+  : Type
+  := r o s == idmap .
+
+(** [r] は [s] の引き込み (retraction) である。
+
+    * [r] は [s] の左逆射である。
+    * [s] は [r] の断面 (section) である。
+    * [s] は [r] の右逆射である。 *)
+Definition retraction
+  {A B : Type}
+  (r : B -> A) (s : A -> B)
+  : Type
+  := r o s == idmap .
+
+(** [f] と [g] は [retr] と [sect] を通じて随伴的である。 *)
+Definition is_adjoint
+  {A B : Type}
+  {f : A -> B} {g : B -> A}
+  (retr : retraction f g) (sect : section f g)
+  : Type
+  := wiskerR_pw_fn retr f == wiskerL_pw_fn f sect .
+
+(** [f] は等価射 (equivalence) である。 *)
+Definition is_equiv
+  {A B : Type} (f : A -> B)
+  : Type
+  := sigma equiv_inv, is_equiv_rel f equiv_inv .
+
+(** [A] と [B] は等価 (equivalence) である。 *)
+Definition equiv
+  (A B : Type) : Type
+  := sigma f, is_equiv (A := A) (B := B) f .
+
+
 Lemma retr_idmap
   {A : Type}
   : @retraction A A idmap idmap .
