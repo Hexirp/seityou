@@ -234,12 +234,12 @@ Module Notation .
       : pwpath_scope
       .
 
-    Notation "f =( p ) q" := (@concat_pw _ _ f _ _ p q)
+    Notation "f =( p ) q" := (concat_pw (f := f) p q)
       (at level 42, only parsing, right associativity)
       : pwpath_scope
       .
 
-    Notation "f 'end'" := (@idpath_pw _ _ f)
+    Notation "f 'end'" := (idpath_pw f)
       (at level 43, only parsing)
       : pwpath_scope
       .
