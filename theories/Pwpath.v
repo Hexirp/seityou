@@ -230,7 +230,7 @@ Module Notation .
   Module Chain .
 
     Notation "p @[ f ] q" := (concat_pw (g := f) p q)
-      (at level 50, right associativity)
+      (at level 50, only parsing, left associativity)
       : pwpath_scope
       .
 
