@@ -218,29 +218,29 @@ Module Notation .
     .
 
   Notation "f 'wL' p" := (wiskerL_pw_fn f p)
-    (at level 39, right associativity)
+    (at level 42, right associativity)
     : pwpath_scope
     .
 
   Notation "p 'wR' i" := (wiskerR_pw_fn p i)
-    (at level 38, left associativity)
+    (at level 41, left associativity)
     : pwpath_scope
     .
 
   Module Chain .
 
     Notation "'begin' p" := p
-      (at level 10, only parsing)
+      (at level 41, only parsing)
       : pwpath_scope
       .
 
     Notation "f =( p ) q" := (concat_pw (f := f) p q)
-      (at level 20, only parsing, right associativity)
+      (at level 42, only parsing, right associativity)
       : pwpath_scope
       .
 
     Notation "f 'end'" := (idpath_pw f)
-      (at level 30, only parsing)
+      (at level 43, only parsing)
       : pwpath_scope
       .
 

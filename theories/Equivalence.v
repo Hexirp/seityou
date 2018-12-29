@@ -115,11 +115,11 @@ Proof.
  change (h o (f o g) o i == idmap) .
  refine (
    begin
-     (h o (f o g) o i)
+           h o (f o g) o i
    =( _ )
-     (h o i)
+           h o i
    =( _ )
-     (@idmap C)
+           idmap
    end
    ) .
  -
