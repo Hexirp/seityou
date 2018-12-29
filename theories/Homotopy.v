@@ -273,7 +273,7 @@ Definition trunc_paths
 (** 関数外延性の公理の型。 *)
 Definition funext : Type
   := forall (A : Type) (B : A -> Type) (f g : forall a, B a),
-    is_equiv (ap10_dep (f := f) (g := g)) .
+    is_equiv (@ap10_dep A B f g) .
 
 (** 全称量化に対する道。
 
