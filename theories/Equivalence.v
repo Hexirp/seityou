@@ -16,6 +16,7 @@ Import Basis.Notation .
 Import Basis.Notation.Path .
 Import Path.Notation .
 Import Pwpath.Notation .
+Import Pwpath.Notation.Chain .
 
 
 (** ** Equivalence'
@@ -112,21 +113,16 @@ Lemma retr_compose
 Proof.
  unfold retraction ; unfold retraction in r_fg, r_hi .
  change (h o (f o g) o i == idmap) .
- (*
-   begin
-           h o (f o g) o i
-   =( _ )
-           h o i
-   =( _ )
-           idmap
-   end
-  *)
   refine (
-    concat_pw (g := h o i) _ _
+      (* h o (f o g) o i *)
+    _
+      @[ h o i ]
+    _
+      (* idmap *)
     ) .
  -
   change (h o (f o g) o i == h o idmap o i) .
-  refine ((h @> _) <@ i) .
+  refine (h @> _ <@ i) .
   exact r_fg .
  -
   exact r_hi .
@@ -139,21 +135,16 @@ Lemma sect_compose
 Proof.
  unfold section ; unfold section in s_fg, s_hi .
  change (g o (i o h) o f == idmap) .
- (*
-   begin
-           g o (i o h) o f
-   =( _ )
-           g o f
-   =( _ )
-           (@idmap A)
-   end
-  *)
   refine (
-    concat_pw (g := g o f) _ _
+      (* g o (i o h) o f *)
+    _
+      @[ g o f ]
+    _
+      (* idmap *)
     ) .
  -
   change (g o (i o h) o f == g o idmap o f) .
-  refine ((g @> _) <@ f) .
+  refine (g @> _ <@ f) .
   exact s_hi .
  -
   exact s_fg .
@@ -170,38 +161,23 @@ Proof.
  unfold retraction in r_fg, r_hi .
  unfold section in s_fg, s_hi .
  unfold retr_compose, sect_compose .
- (*
-   begin
-           ((h @> r_fg) <@ i) @ r_hi <@ h o f
-   =( _ )
-           ((h @> r_fg) <@ i <@ h o f) @ (r_hi <@ h o f)
-   =( _ )
-           ((h @> r_fg <@ i o h) <@ f) @ ((h @> s_hi) <@ f)
-   =( _ )
-           (h @> ((r_fg <@ i o h) @ s_hi)) <@ f
-   =( _ )
-           (h @> ((f o g @> s_hi) @ r_fg)) <@ f
-   =( _ )
-           ((h @> (f o g @> s_hi)) <@ f) @ ((h @> r_fg) <@ f)
-   =( _ )
-           (h o f @> ((g @> s_hi) <@ f)) @ (h o f @> s_fg)
-   =( _ )
-           h o f @> ((g @> s_hi) <@ f) @ s_fg
-   end
- *)
  refine (
-   concat_pw (g := ((h @> r_fg) <@ i <@ h o f) @ (r_hi <@ h o f)) _ (
-    concat_pw (g := ((h @> r_fg <@ i o h) <@ f) @ ((h @> s_hi) <@ f)) _ (
-     concat_pw (g := (h @> ((r_fg <@ i o h) @ s_hi)) <@ f) _ (
-      concat_pw (g := (h @> ((f o g @> s_hi) @ r_fg)) <@ f) _ (
-       concat_pw (g := ((h @> (f o g @> s_hi)) <@ f) @ ((h @> r_fg) <@ f)) _ (
-        concat_pw (g := (h o f @> ((g @> s_hi) <@ f)) @ (h o f @> s_fg)) _ _
-       )
-      )
-     )
-    )
-   )
-   ) .
+     (* (h @> r_fg <@ i) @ r_hi <@ h o f *)
+   _
+     @[ (h @> r_fg <@ i <@ h o f) @ (r_hi <@ h o f) ]
+   _
+     @[ ((h @> r_fg <@ i o h) <@ f) @ ((h @> s_hi) <@ f) ]
+   _
+     @[ (h @> ((r_fg <@ i o h) @ s_hi)) <@ f ]
+   _
+     @[ h @> ((f o g @> s_hi) @ r_fg) <@ f ]
+   _
+     @[ (h @> (f o g @> s_hi) <@ f) @ (h @> r_fg <@ f) ]
+   _
+     @[ (h o f @> (g @> s_hi <@ f)) @ (h o f @> s_fg) ]
+   _
+     (* h o f @> (g @> s_hi <@ f) @ s_fg *)
+   ).
  -
   exact wiskerR_pw_fn_pp .
  -
