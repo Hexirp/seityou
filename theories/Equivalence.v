@@ -124,8 +124,7 @@ Proof.
    ) .
  -
   change (h o (f o g) o i == h o idmap o i) .
-  refine (wiskerR_pw_fn _ i) .
-  refine (wiskerL_pw_fn h _) .
+  refine ((h wL _) wR i) .
   exact r_fg .
  -
   exact r_hi .
@@ -138,11 +137,18 @@ Lemma sect_compose
 Proof.
  unfold section ; unfold section in s_fg, s_hi .
  change (g o (i o h) o f == idmap) .
- refine (concat_pw (g := g o f) _ _) .
+ refine (
+   begin
+           g o (i o h) o f
+   =( _ )
+           g o f
+   =( _ )
+           (@idmap A)
+   end
+   ) .
  -
   change (g o (i o h) o f == g o idmap o f) .
-  refine (wiskerR_pw_fn _ f) .
-  refine (wiskerL_pw_fn g _) .
+  refine ((g wL _) wR f) .
   exact s_hi .
  -
   exact s_fg .
@@ -158,32 +164,30 @@ Proof.
  unfold is_adjoint ; unfold is_adjoint in fg, hi .
  unfold retraction in r_fg, r_hi .
  unfold section in s_fg, s_hi .
- unfold retr_compose .
- unfold sect_compose .
- refine (fun x => _) .
- change (
-   concat_pw (wiskerR_pw_fn (wiskerL_pw_fn h r_fg) i) r_hi ((h o f) x)
-   =
-   ap (h o f) (concat_pw (wiskerR_pw_fn (wiskerL_pw_fn g s_hi) f) s_fg x)
-   ) .
- 
+ unfold retr_compose, sect_compose .
  refine (
-   concat_pw _ (inverse_pw _)
-     (g := concat_pw
-       (wiskerL_pw_fn (h o f) (wiskerR_pw_fn (wiskerL_pw_fn g s_hi) f))
-       (wiskerL_pw_fn (h o f) s_fg)
-     )
+   begin
+           ((h wL r_fg) wR i) @ (r_hi @ 1) wR h o f
+   =( _ )
+           ((h wL r_fg) wR i) @ r_hi wR h o f
+   =( _ )
+           ((h wL r_fg) wR i wR h o f) @ (r_hi wR h o f)
+   =( _ )
+           ((h wL r_fg wR i o h) wR f) @ ((h wL s_hi) wR f)
+   =( _ )
+           (h wL ((r_fg wR i o h) @ s_hi)) wR f
+   =( _ )
+           (h wL ((f o g wL s_hi) @ r_fg)) wR f
+   =( _ )
+           ((h wL (f o g wL s_hi)) wR f) @ ((h wL r_fg) wR f)
+   =( _ )
+           (h o f wL ((g wL s_hi) wR f)) @ (h o f wL s_fg)
+   =( _ )
+           h o f wL ((g wL s_hi) wR f) @ s_fg
+   =( _ )
+           (h o f wL (((g wL s_hi) wR f) @ (s_fg @ 1)))
+   end
    ) .
- refine (
-   concat_pw _ _
-     (g := concat_pw
-       (wiskerR_pw_fn (wiskerR_pw_fn (wiskerL_pw_fn h r_fg) i) (h o f))
-       (wiskerR_pw_fn r_hi (h o f))
-     )
-   ) .
- -
-  exact wiskerR_pw_fn_pp .
- - 
 
 
 Lemma is_equiv_rel_compose
