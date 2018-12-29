@@ -180,6 +180,54 @@ Proof.
 Defined.
 
 
+(** ** Groupoid Structures *)
+
+(** [ap] の分配則。 *)
+Definition ap_pp
+  {A B : Type}
+  {f : A -> B} {x y z : A}
+  {p : x = y} {q : y = z}
+  : ap f (p @ q) = ap f p @ ap f q .
+Proof.
+ revert z q .
+ refine (@paths_elim A y _ _) .
+ revert y p .
+ refine (@paths_elim A x _ _) .
+ exact 1 .
+Defined.
+
+Definition ap_ff
+  {A B C : Type}
+  {f : B -> C} {g : A -> B}
+  {x y : A} {p : x = y}
+  : ap (f o g) p = ap f (ap g p) .
+Proof.
+ revert y p .
+ refine (@paths_elim A x _ _) .
+ exact 1 .
+Defined.
+
+Definition wiskerL
+  {A : Type} {x y z : A}
+  (p : x = y)
+  {q r : y = z} (s : q = r)
+  : p @ q = p @ r .
+Proof.
+ refine (ap (concat p) _) .
+ exact s .
+Defined.
+
+Definition wiskerR
+  {A : Type} {x y z : A}
+  {p q : x = y} (r : p = q)
+  (s : y = z)
+  : p @ s = q @ s .
+Proof.
+ refine (ap (fun x => concat x s) _) .
+ exact r .
+Defined.
+
+
 (** ** Notations *)
 
 Module Notation .
