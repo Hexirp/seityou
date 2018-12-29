@@ -2,6 +2,7 @@
 
     Homotopy Type Theory において一般的な定義をする。 *)
 
+Require Export Basis .
 Require Export Path .
 
 (** 戦術を使う。 *)
@@ -9,6 +10,8 @@ Declare ML Module "ltac_plugin" .
 Set Default Proof Mode "Classic" .
 
 (** 記法を使う。 *)
+Import Basis.Notation .
+Import Basis.Notation.Path .
 Import Path.Notation .
 
 
@@ -89,7 +92,7 @@ Definition is_adjoint
   {f : A -> B} {g : B -> A}
   (retr : retraction f g) (sect : section f g)
   : Type
-  := wiskerR_pw_fn retr f == wiskerL_pw_fn f sect .
+  := forall x, retr (f x) = ap f (sect x) .
 
 (** [A] と [B] は [f] と [g] を通じて等価 (equivalence) である。 *)
 Definition is_equiv_rel
