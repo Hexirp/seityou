@@ -10,6 +10,6 @@ coqc -nois -verbose \
  theories/Basis.v \
  theories/Homotopy.v \
  theories/Path.v \
- theories/Pwpaths.v \
+ theories/Pwpath.v \
  theories/Contraction.v \
  theories/Equivalence.v
