@@ -16,6 +16,7 @@ Import Basis.Notation .
 Import Basis.Notation.Path .
 Import Path.Notation .
 Import Pwpath.Notation .
+Import Pwpath.Notation.Chain .
 
 
 (** ** Equivalence'
@@ -51,7 +52,7 @@ Definition is_adjoint
   {f : A -> B} {g : B -> A}
   (retr : retraction f g) (sect : section f g)
   : Type
-  := wiskerR_pw_fn retr f == wiskerL_pw_fn f sect .
+  := retr wR f == f wL sect .
 
 (** [f] は等価射 (equivalence) である。 *)
 Definition is_equiv
@@ -112,7 +113,15 @@ Lemma retr_compose
 Proof.
  unfold retraction ; unfold retraction in r_fg, r_hi .
  change (h o (f o g) o i == idmap) .
- refine (concat_pw (g := h o i) _ _) .
+ refine (
+   begin
+     h o (f o g) o i
+   =( _ )
+     h o i
+   =( _ )
+     idmap
+   end
+   ) .
  -
   change (h o (f o g) o i == h o idmap o i) .
   refine (wiskerR_pw_fn _ i) .
