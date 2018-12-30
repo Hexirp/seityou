@@ -170,7 +170,14 @@ Proof.
      (P := fun x' qx' => ap f qx' @ p x' = p (g x) @ qx')
    ) .
  change (1 @ p (g x) = p (g x) @ 1) .
-Admitted.
+ refine (
+   concat (y := p (g x)) _ _
+   ) .
+ -
+  exact concat_1p .
+ -
+  exact concat_p1^ .
+Defined.
 
 (** [wiskerL_pw_fn] と [wiskerR_pw_fn] は交換する。 *)
 Definition concat_pw_wLwR
@@ -223,6 +230,7 @@ Definition concat_pw_pw
 Proof.
  refine (fun x => _) .
  change (p x @ s x = q x @ t x) .
+ refine (concat2 _ _) .
 Admitted.
 
 
