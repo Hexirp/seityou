@@ -223,7 +223,7 @@ Defined.
 
 (** 点ごとの道の点ごとの道を、縦に合成する。 *)
 Definition concat_pw_pw
-  {A B C : Type} {f g h : A -> B}
+  {A B : Type} {f g h : A -> B}
   {p q : f == g} (r : p == q)
   {s t : g == h} (u : s == t)
   : concat_pw p s == concat_pw q t .

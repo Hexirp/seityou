@@ -188,7 +188,7 @@ Proof.
  -
   exact wiskerR_pw_fn_pp .
  -
-  admit.
+  refine (concat_pw_pw _ _) .
  -
   refine (
     _ @[ (h @> r_fg <@ i o h) @ (h @> s_hi) <@ f ] _
