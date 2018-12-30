@@ -172,6 +172,22 @@ Proof.
  change (1 @ p (g x) = p (g x) @ 1) .
 Admitted.
 
+(** [wiskerL_pw_fn] と [wiskerR_pw_fn] は交換する。 *)
+Definition concat_pw_wLwR
+  {A B C D : Type}
+  {f : C -> D}
+  {g h : B -> C} {p : g == h}
+  {i : A -> B}
+  : pwpaths
+    (wiskerR_pw_fn (wiskerL_pw_fn f p) i)
+    (wiskerL_pw_fn f (wiskerR_pw_fn p i)) .
+Proof.
+ refine (fun x => _) .
+ change (wiskerL_pw_fn f p (i x) = ap f (wiskerR_pw_fn p i x)) .
+ change (ap f (p (i x)) = ap f (p (i x))) .
+ exact 1 .
+Defined.
+
 (** 点ごとの道の点ごとの道の両辺に、左から点ごとの道を合成する。 *)
 Definition wiskerL_pw_pw
   {A B : Type} {f g h : A -> B}
@@ -197,6 +213,15 @@ Proof.
  refine (wiskerR _ (s x)) .
  exact (r x) .
 Defined.
+
+(** 点ごとの道の点ごとの道を、縦に合成する。 *)
+Definition concat_pw_pw
+  {A B C : Type}
+  {f g : A -> B} {p q : f == g} {r : p == q}
+  {h i : B -> C} {s t : h == i} {u : s == t}
+  : concat_pw p s == concat_pw q t .
+Proof.
+Admitted.
 
 
 (** ** Notations *)
