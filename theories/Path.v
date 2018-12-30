@@ -194,6 +194,42 @@ Proof.
  exact r .
 Defined.
 
+(** [concat p 1] は [p] に等しい。 *)
+Definition concat_p1
+  {A : Type}
+  {x y : A} {p : x = y}
+  : p @ 1 = p .
+Proof.
+ revert y p .
+ refine (@paths_elim A x _ _) .
+ exact 1 .
+Defined.
+
+(** [concat 1 p] は [p] に等しい。 *)
+Definition concat_1p
+  {A : Type}
+  {x y : A} {p : x = y}
+  : 1 @ p = p .
+Proof.
+ revert y p .
+ refine (@paths_elim A x _ _) .
+ exact 1 .
+Defined.
+
+(** 道の道を縦に合成する。 *)
+Definition concat2
+  {A : Type} {x y z : A}
+  {p q : x = y} {r : p = q}
+  {s t : y = z} {u : s = t}
+  : p @ s = q @ t .
+Proof.
+ revert t u .
+ refine (@paths_elim_nodep (y = z) s _ _) .
+ revert q r .
+ refine (@paths_elim_nodep (x = y) p _ _) .
+ exact 1 .
+Defined.
+
 (** [coninv p p] は [idpath] に等しい。 *)
 Definition coninv_pp
   {A : Type} {x y : A}
