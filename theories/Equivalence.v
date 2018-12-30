@@ -196,6 +196,13 @@ Proof.
    *
     refine (wiskerR_pw_fn_p _ f) .
     exact (wiskerR_pw_fn_ff (p := h @> r_fg))^ .
+  +
+   refine ( _ @[ r_hi <@ h <@ f ] _ ) .
+   *
+    exact (wiskerR_pw_fn_ff (p := r_hi)) .
+   *
+    refine (wiskerR_pw_fn_p _ f) .
+    exact hi .
  -
   refine (
     _ @[ (h @> r_fg <@ i o h) @ (h @> s_hi) <@ f ] _
@@ -207,13 +214,13 @@ Proof.
    refine ( _ @[ (h @> (r_fg <@ i o h)) @ (h @> s_hi) ] _ ).
    *
     refine (wiskerR_pw_pw _ (h @> s_hi)) .
-    admit.
+    exact (concat_pw_wLwR (f := h) (p := r_fg) (i := i o h)) .
    *
     exact wiskerL_pw_fn_pp^ .
  -
   refine (wiskerR_pw_fn_p _ f) .
   refine (wiskerL_pw_fn_p h _) .
-  exact concat_pw_swap^ .
+  exact concat_pw_wLpp^ .
  -
   refine (
     _ @[ (h @> f o g @> s_hi) @ (h @> r_fg) <@ f ] _
@@ -224,10 +231,34 @@ Proof.
   +
    exact wiskerR_pw_fn_pp .
  -
-  admit.
+  refine (concat_pw_pw _ _) .
+  +
+   refine ( _ @[ h @> f @> g @> s_hi <@ f ] _ ).
+   *
+    refine (wiskerR_pw_fn_p _ f) .
+    refine (wiskerL_pw_fn_p h _) .
+    exact (wiskerL_pw_fn_ff (p := s_hi)) .
+   *
+    refine ( _ @[ h o f @> g @> s_hi <@ f ] _ ) .
+    --
+     refine (wiskerR_pw_fn_p _ f) .
+     exact (wiskerL_pw_fn_ff (f := h) (g := f) (p := g @> s_hi))^ .
+    --
+     exact concat_pw_wLwR .
+  +
+   refine ( _ @[ h @> (r_fg <@ f) ] _ ) .
+   *
+    exact (concat_pw_wLwR (f := h) (p := r_fg) (i := f)) .
+   *
+    refine ( _ @[ h @> f @> s_fg ] _ ) .
+    --
+     refine (wiskerL_pw_fn_p h _) .
+     exact fg .
+    --
+     exact (wiskerL_pw_fn_ff (f := h) (g := f) (p := s_fg))^ .
  -
   exact wiskerL_pw_fn_pp^ .
-Admitted.
+Defined.
 
 
 Lemma is_equiv_rel_compose
