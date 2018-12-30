@@ -160,6 +160,7 @@ Proof.
  exact 1 .
 Defined.
 
+(** [ap] の分配則その２。 *)
 Definition ap_ff
   {A B C : Type}
   {f : B -> C} {g : A -> B}
@@ -171,6 +172,7 @@ Proof.
  exact 1 .
 Defined.
 
+(** 道の両辺に、左から道を合成する。 *)
 Definition wiskerL
   {A : Type} {x y z : A}
   (p : x = y)
@@ -181,6 +183,7 @@ Proof.
  exact s .
 Defined.
 
+(** 道の両辺に、右から道を合成する。 *)
 Definition wiskerR
   {A : Type} {x y z : A}
   {p q : x = y} (r : p = q)
@@ -191,7 +194,7 @@ Proof.
  exact r .
 Defined.
 
-(** [concat p p] は [idpath] に等しい。 *)
+(** [coninv p p] は [idpath] に等しい。 *)
 Definition coninv_pp
   {A : Type} {x y : A}
   (p : x = y) : coninv p p = 1 .
