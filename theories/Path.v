@@ -219,8 +219,8 @@ Defined.
 (** 道の道を縦に合成する。 *)
 Definition concat2
   {A : Type} {x y z : A}
-  {p q : x = y} {r : p = q}
-  {s t : y = z} {u : s = t}
+  {p q : x = y} (r : p = q)
+  {s t : y = z} (u : s = t)
   : p @ s = q @ t .
 Proof.
  revert t u .
