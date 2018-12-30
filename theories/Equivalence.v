@@ -191,20 +191,29 @@ Proof.
   admit.
  -
   refine (
-    concat_pw (g := ((h @> r_fg <@ i o h) @ (h @> s_hi)) <@ f) _ _
+    _ @[ (h @> r_fg <@ i o h) @ (h @> s_hi) <@ f ] _
     ) .
   +
    exact wiskerR_pw_fn_pp^ .
   +
-   admit.
+   refine (wiskerR_pw_fn_p _ f) .
+   refine ( _ @[ (h @> (r_fg <@ i o h)) @ (h @> s_hi) ] _ ).
+   *
+    refine (wiskerR_pw_pw _ (h @> s_hi)) .
+    admit.
+   *
+    exact wiskerL_pw_fn_pp^ .
  -
-  admit.
+  refine (wiskerR_pw_fn_p _ f) .
+  refine (wiskerL_pw_fn_p h _) .
+  exact concat_pw_swap^ .
  -
   refine (
-    concat_pw (g := ((h @> f o g @> s_hi) @ (h @> r_fg)) <@ f) _ _
+    _ @[ (h @> f o g @> s_hi) @ (h @> r_fg) <@ f ] _
     ) .
   +
-   admit.
+   refine (wiskerR_pw_fn_p _ f) .
+   exact wiskerL_pw_fn_pp .
   +
    exact wiskerR_pw_fn_pp .
  -
