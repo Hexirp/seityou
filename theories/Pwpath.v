@@ -231,7 +231,11 @@ Proof.
  refine (fun x => _) .
  change (p x @ s x = q x @ t x) .
  refine (concat2 _ _) .
-Admitted.
+ -
+  exact (r x) .
+ -
+  exact (u x) .
+Defined.
 
 
 (** ** Notations *)
