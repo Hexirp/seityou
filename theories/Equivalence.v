@@ -214,7 +214,7 @@ Proof.
    refine ( _ @[ (h @> (r_fg <@ i o h)) @ (h @> s_hi) ] _ ).
    *
     refine (wiskerR_pw_pw _ (h @> s_hi)) .
-    exact (concat_pw_wLwR (f := h) (p := r_fg) (i := i o h)) .
+    exact (wiskerLR_pw_fn_comm (f := h) (p := r_fg) (i := i o h)) .
    *
     exact wiskerL_pw_fn_pp^ .
  -
@@ -244,11 +244,11 @@ Proof.
      refine (wiskerR_pw_fn_p _ f) .
      exact (wiskerL_pw_fn_ff (f := h) (g := f) (p := g @> s_hi))^ .
     --
-     exact concat_pw_wLwR .
+     exact wiskerLR_pw_fn_comm .
   +
    refine ( _ @[ h @> (r_fg <@ f) ] _ ) .
    *
-    exact (concat_pw_wLwR (f := h) (p := r_fg) (i := f)) .
+    exact (wiskerLR_pw_fn_comm (f := h) (p := r_fg) (i := f)) .
    *
     refine ( _ @[ h @> f @> s_fg ] _ ) .
     --

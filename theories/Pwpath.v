@@ -180,7 +180,7 @@ Proof.
 Defined.
 
 (** [wiskerL_pw_fn] と [wiskerR_pw_fn] は交換する。 *)
-Definition concat_pw_wLwR
+Definition wiskerLR_pw_fn_comm
   {A B C D : Type}
   {f : C -> D}
   {g h : B -> C} {p : g == h}
