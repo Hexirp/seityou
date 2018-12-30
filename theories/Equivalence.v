@@ -184,11 +184,15 @@ Proof.
      @[ (h o f @> (g @> s_hi <@ f)) @ (h o f @> s_fg) ]
    _
      (* h o f @> (g @> s_hi <@ f) @ s_fg *)
-   ).
+   ) .
  -
   exact wiskerR_pw_fn_pp .
  -
   refine (concat_pw_pw _ _) .
+  +
+   refine ( _ @[ h @> r_fg <@ i <@ h <@ f ] _ ) .
+   *
+    exact (wiskerR_pw_fn_ff) .
  -
   refine (
     _ @[ (h @> r_fg <@ i o h) @ (h @> s_hi) <@ f ] _
