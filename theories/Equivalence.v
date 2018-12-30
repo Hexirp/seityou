@@ -192,7 +192,10 @@ Proof.
   +
    refine ( _ @[ h @> r_fg <@ i <@ h <@ f ] _ ) .
    *
-    exact (wiskerR_pw_fn_ff) .
+    exact (wiskerR_pw_fn_ff (p := h @> r_fg <@ i)) .
+   *
+    refine (wiskerR_pw_fn_p _ f) .
+    exact (wiskerR_pw_fn_ff (p := h @> r_fg))^ .
  -
   refine (
     _ @[ (h @> r_fg <@ i o h) @ (h @> s_hi) <@ f ] _
