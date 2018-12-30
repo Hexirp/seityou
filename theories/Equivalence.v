@@ -54,6 +54,13 @@ Definition is_adjoint
   : Type
   := retr <@ f == f @> sect .
 
+(** [A] と [B] は [f] と [g] を通じて等価 (equivalence) である。 *)
+Definition is_equiv_rel
+  {A B : Type}
+  (f : A -> B) (g : B -> A)
+  : Type
+  := sigma retr sect, is_adjoint (f := f) (g := g) retr sect .
+
 (** [f] は等価射 (equivalence) である。 *)
 Definition is_equiv
   {A B : Type} (f : A -> B)
