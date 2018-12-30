@@ -127,6 +127,7 @@ Proof.
  exact 1 .
 Defined.
 
+(** [wiskerL_pw_fn] の分配則その２。 *)
 Definition wiskerL_pw_fn_ff
   {A B C D : Type}
   {f : C -> D} {g : B -> C}
@@ -140,6 +141,7 @@ Proof.
  exact ap_ff .
 Defined.
 
+(** [wiskerR_pw_fn] の分配則その２。 *)
 Definition wiskerR_pw_fn_ff
   {A B C D : Type}
   {f g : C -> D} {p : f == g}
@@ -153,31 +155,9 @@ Proof.
  exact 1 .
 Defined.
 
-Definition wiskerL_pw_pw
-  {A B : Type} {f g h : A -> B}
-  (p : f == g)
-  {q r : g == h} (s : q == r)
-  : concat_pw p q == concat_pw p r .
-Proof.
- refine (fun x => _) .
- change (p x @ q x = p x @ r x) .
- refine (wiskerL (p x) _) .
- exact (s x) .
-Defined.
-
-Definition wiskerR_pw_pw
-  {A B : Type} {f g h : A -> B}
-  {p q : f == g} (r : p == q)
-  (s : g == h)
-  : concat_pw p s == concat_pw q s .
-Proof.
- refine (fun x => _) .
- change (p x @ s x = q x @ s x) .
- refine (wiskerR _ (s x)) .
- exact (r x) .
-Defined.
-
-Definition concat_pw_swap
+(** 二つの、関手を恒等関手に移す自然変換があるのならば、
+    それらをどのような順番で適用しても等しい。 *)
+Definition concat_pw_wLpp
   {A : Type} {f g : A -> A}
   {p : f == idmap} {q : g == idmap}
   : concat_pw (wiskerL_pw_fn f q) p == concat_pw (wiskerR_pw_fn p g) q .
@@ -191,6 +171,32 @@ Proof.
    ) .
  change (1 @ p (g x) = p (g x) @ 1) .
 Admitted.
+
+(** 点ごとの道の点ごとの道の両辺に、左から点ごとの道を合成する。 *)
+Definition wiskerL_pw_pw
+  {A B : Type} {f g h : A -> B}
+  (p : f == g)
+  {q r : g == h} (s : q == r)
+  : concat_pw p q == concat_pw p r .
+Proof.
+ refine (fun x => _) .
+ change (p x @ q x = p x @ r x) .
+ refine (wiskerL (p x) _) .
+ exact (s x) .
+Defined.
+
+(** 点ごとの道の点ごとの道の両辺に、右から点ごとの道を合成する。 *)
+Definition wiskerR_pw_pw
+  {A B : Type} {f g h : A -> B}
+  {p q : f == g} (r : p == q)
+  (s : g == h)
+  : concat_pw p s == concat_pw q s .
+Proof.
+ refine (fun x => _) .
+ change (p x @ s x = q x @ s x) .
+ refine (wiskerR _ (s x)) .
+ exact (r x) .
+Defined.
 
 
 (** ** Notations *)
