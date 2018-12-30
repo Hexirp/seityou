@@ -260,17 +260,49 @@ Proof.
   exact wiskerL_pw_fn_pp^ .
 Defined.
 
-
 Lemma is_equiv_rel_compose
   {A B C : Type} {f : A -> B} {g : B -> A} {h : B -> C} {i : C -> B}
   (fg : is_equiv_rel f g) (hi : is_equiv_rel h i)
-  : is_equiv_rel (compose h f) (compose g i) .
+  : is_equiv_rel (h o f) (g o i) .
 Proof.
- 
+ revert fg hi .
+ refine (dsum_elim_nodep _) .
+ refine (fun r_fg => _) .
+ refine (dsum_elim_nodep _) .
+ refine (fun s_fg fg => _) .
+ refine (dsum_elim_nodep _) .
+ refine (fun r_hi => _) .
+ refine (dsum_elim_nodep _) .
+ refine (fun s_hi hi => _) .
+ refine (dpair (retr_compose r_fg r_hi) _) .
+ refine (dpair (sect_compose s_fg s_hi) _) .
+ exact (is_adj_compose r_fg s_fg r_hi s_hi fg hi) .
+Defined.
 
 Definition is_equiv_compose
-  {A B C : Type} {f : A -> B} {g : B -> C}
-  (f_iv : is_equiv f) (g_iv : is_equiv g)
-  : is_equiv (compose g f) .
+  {A B C : Type} {f : A -> B} {h : B -> C}
+  (f_iv : is_equiv f) (h_iv : is_equiv h)
+  : is_equiv (h o f) .
 Proof.
- refine (dpair (compose (equiv_inv f_iv) (equiv_inv g_iv)) _) .
+ revert f_iv h_iv .
+ refine (dsum_elim_nodep _) .
+ refine (fun g fg => _) .
+ refine (dsum_elim_nodep _) .
+ refine (fun i hi => _) .
+ refine (dpair (g o i) _) .
+ exact (is_equiv_rel_compose fg hi) .
+Defined.
+
+Definition equiv_compose
+  {A B C : Type}
+  (AB : equiv A B) (BC : equiv B C)
+  : equiv A C .
+Proof.
+ revert AB BC .
+ refine (dsum_elim_nodep _) .
+ refine (fun f f_iv => _) .
+ refine (dsum_elim_nodep _) .
+ refine (fun h h_iv => _) .
+ refine (dpair (h o f) _) .
+ exact (is_equiv_compose f_iv h_iv) .
+Defined.
