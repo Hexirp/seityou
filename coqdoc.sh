@@ -5,7 +5,7 @@ COQ_PATH=/c/coq
 
 PATH=$COQ_PATH/bin:$PATH
 
-coqdoc \
+coqdoc -d docs \
  -R theories/ Seityou \
  theories/Basis.v \
  theories/Path.v \
