@@ -73,7 +73,9 @@ Definition equiv
   := sigma f, is_equiv (A := A) (B := B) f .
 
 
-(** ** equiv_idmap *)
+(** ** Reflexivity
+
+    [equiv] は反射的である。 *)
 
 Lemma retr_idmap
   {A : Type}
@@ -96,6 +98,7 @@ Proof.
  exact 1 .
 Defined.
 
+(** [idmap] は [is_equiv] である。 *)
 Definition is_equiv_idmap {A : Type} : is_equiv (@idmap A) .
 Proof.
  refine (dpair idmap _) .
@@ -104,6 +107,7 @@ Proof.
  exact is_adj_idmap .
 Defined.
 
+(** 全ての [A : Type] に対して [equiv A A] である。 *)
 Definition equiv_idmap {A : Type} : equiv A A .
 Proof.
  refine (dpair idmap _) .
@@ -111,7 +115,12 @@ Proof.
 Defined.
 
 
-(** ** equiv_compose *)
+(** ** Transitivity
+
+    [equiv] は推移的である。 *)
+
+(** Note: ここから下へ三つある補題は、複雑なため [ _ @[ _ ] _ ] という
+    記法を使っている。理解するために図式を書いてみることをお勧めする。 *)
 
 Lemma retr_compose
   {A B C : Type} {f : A -> B} {g : B -> A} {h : B -> C} {i : C -> B}
@@ -279,6 +288,7 @@ Proof.
  exact (is_adj_compose r_fg s_fg r_hi s_hi fg hi) .
 Defined.
 
+(** [f] と [h] が等価射であるならば、それを合成した [h o f] も等価射である。 *)
 Definition is_equiv_compose
   {A B C : Type} {f : A -> B} {h : B -> C}
   (f_iv : is_equiv f) (h_iv : is_equiv h)
@@ -293,6 +303,7 @@ Proof.
  exact (is_equiv_rel_compose fg hi) .
 Defined.
 
+(** [equiv] の合成。 *)
 Definition equiv_compose
   {A B C : Type}
   (AB : equiv A B) (BC : equiv B C)
