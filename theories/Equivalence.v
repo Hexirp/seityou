@@ -18,6 +18,19 @@ Import Path.Notation .
 Import Pwpath.Notation .
 Import Pwpath.Notation.Chain .
 
+(** Note: このモジュールでは式が複雑なため [ _ @[ _ ] _ ] という記法を
+    使っている。理解するために絵算を書いてみることをお勧めする。その際に
+    使う見方は以下のとおりである。
+
+    * [A : Type] - 圏
+    * [x = y : Type] - [x] から [y] への射
+    * [f : A -> B] - [A] から [B] への関手
+    * [f == g] - [f] から [g] への自然変換
+    * [f @> η] - "Fη" 、左から関手を付ける
+    * [ε <@ f] - "εF" 、右から関手を付ける
+
+    *)
+
 
 (** ** Equivalence'
 
@@ -118,9 +131,6 @@ Defined.
 (** ** Transitivity
 
     [equiv] は推移的である。 *)
-
-(** Note: ここから下へ三つある補題は、複雑なため [ _ @[ _ ] _ ] という
-    記法を使っている。理解するために図式を書いてみることをお勧めする。 *)
 
 Lemma retr_compose
   {A B C : Type} {f : A -> B} {g : B -> A} {h : B -> C} {i : C -> B}
