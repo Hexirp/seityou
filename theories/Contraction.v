@@ -13,8 +13,7 @@ Set Default Proof Mode "Classic" .
 (** 記法を使う。 *)
 Import Basis.Notation .
 Import Basis.Notation.Path .
-Import Path.Notation .
-Import Homotopy.Notation .
+
 
 (** [center] と [x : A] の間に道がある。 *)
 Definition center_path

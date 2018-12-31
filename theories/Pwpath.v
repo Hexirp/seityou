@@ -238,42 +238,65 @@ Proof.
 Defined.
 
 
-(** ** Notations *)
+(** ** Notations
+
+    記法を定義する。 *)
 
 Module Notation .
 
+  (** 記法が使われる文脈を設定する。 *)
   Delimit Scope pwpath_scope with pwpath .
 
+  (** 文脈を開く。 *)
   Open Scope pwpath_scope .
 
+  (** 文脈を型と結びつける。 *)
   Bind Scope pwpath_scope with pwpaths .
 
+  (** [paths] の [idpath] に準じたもの。 *)
   Notation "1" := idpath_pw
     : pwpath_scope
     .
 
+  (** [paths] の　[concat] に準じたもの。 *)
   Notation "p @ q" := (concat_pw p q)
     (at level 20)
     : pwpath_scope
     .
 
+  (** [paths] の [inverse] に準じたもの。 *)
   Notation "p ^" := (inverse_pw p)
     (at level 3, format "p '^'")
     : pwpath_scope
     .
 
+  (** [wiskerL_pw_fn] の記法。 *)
   Notation "f @> p" := (wiskerL_pw_fn f p)
     (at level 41, right associativity)
     : pwpath_scope
     .
 
+  (** [wiskerR_pw_fn] の記法。 *)
   Notation "p <@ i" := (wiskerR_pw_fn p i)
     (at level 42, left associativity)
     : pwpath_scope
     .
 
+  (** 等式を鎖状につなげるための記法。
+
+      <<
+        _
+          @[ x ]
+        _
+          @[ y ]
+        _
+      >>
+
+      *)
+
   Module Chain .
 
+    (** [p @ q] の、中間の型を明示した記法。 *)
     Notation "p @[ f ] q" := (concat_pw (g := f) p q)
       (at level 50, only parsing, left associativity)
       : pwpath_scope

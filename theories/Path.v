@@ -241,10 +241,13 @@ Proof.
 Defined.
 
 
-(** ** Notations *)
+(** ** Notations
+
+    記法を定義する。 *)
 
 Module Notation .
 
+  (** [pwpaths] の記法。 *)
   Notation "f == g" := (pwpaths f g)
     (at level 70, no associativity)
     : type_scope

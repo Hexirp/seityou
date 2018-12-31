@@ -307,11 +307,11 @@ Definition hfiber {A B : Type} (f : A -> B) (y : B) : Type
   := sigma x, f x = y .
 
 
-(** ** Notations *)
+(** ** Notations
+
+    記法を定義する。 *)
 
 Module Notation .
-
-  Export Path.Notation .
 
   (** 記法が使われる文脈を設定する。 *)
   Delimit Scope equiv_scope with equiv.
