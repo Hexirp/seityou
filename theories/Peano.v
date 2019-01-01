@@ -4,10 +4,12 @@
 
 Require Export Basis.
 
-
+(** 戦術を使う。 *)
 Declare ML Module "ltac_plugin".
-
 Set Default Proof Mode "Classic".
+
+(** 記法を使う。 *)
+Import Basis.Notation .
 
 
 (** 自然数。
