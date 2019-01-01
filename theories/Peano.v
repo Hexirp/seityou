@@ -73,4 +73,10 @@ Defined.
 
 Definition add : nat -> nat -> nat .
 Proof.
-Admitted.
+ refine (fun x => _) .
+ refine (nat_rec _ _) .
+ -
+  exact x .
+ -
+  exact S .
+Defined.
