@@ -23,36 +23,6 @@ Inductive nat : Type
   | S : nat -> nat
   .
 
-Definition nat_rec
-  {P : Type}
-  (case_O : P)
-  (case_S : P -> P)
-  (x : nat) : P .
-Proof.
- revert x .
- refine (fix go (x : nat) {struct x} : P := _) .
- refine (match x with O => _ | S xp => _ end) .
- -
-  exact case_O .
- -
-  exact (case_S (go xp)) .
-Defined.
-
-Definition nat_rect
-  {P : nat -> Type}
-  (case_O : P O)
-  (case_S : forall n, P n -> P (S n))
-  (x : nat) : P x .
-Proof.
- revert x .
- refine (fix go (x : nat) {struct x} : P x := _) .
- refine (match x with O => _ | S xp => _ end) .
- -
-  exact case_O .
- -
-  exact (case_S xp (go xp)) .
-Defined.
-
 Definition nat_match
   {P : nat -> Type}
   (case_O : P O)
@@ -64,6 +34,38 @@ Proof.
   exact case_O .
  -
   exact (case_S xp) .
+Defined.
+
+Definition nat_rec
+  {P : Type}
+  (case_O : P)
+  (case_S : P -> P)
+  (x : nat) : P .
+Proof.
+ revert x .
+ refine (fix go (x : nat) {struct x} : P := _) .
+ refine (nat_match _ _ x) .
+ -
+  exact case_O .
+ -
+  refine (fun xp => _) .
+  exact (case_S (go xp)) .
+Defined.
+
+Definition nat_rect
+  {P : nat -> Type}
+  (case_O : P O)
+  (case_S : forall n, P n -> P (S n))
+  (x : nat) : P x .
+Proof.
+ revert x .
+ refine (fix go (x : nat) {struct x} : P x := _) .
+ refine (nat_match _ _ x) .
+ -
+  exact case_O .
+ -
+  refine (fun xp => _) .
+  exact (case_S xp (go xp)) .
 Defined.
 
 
