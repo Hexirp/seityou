@@ -52,3 +52,23 @@ Proof.
  -
   exact (case_S xp (go xp)) .
 Defined.
+
+Definition nat_match
+  {P : nat -> Type}
+  (case_O : P O)
+  (case_S : forall n, P (S n))
+  (x : nat) : P x .
+Proof.
+ refine (match x with O => _ | S xp => _ end) .
+ -
+  exact case_O .
+ -
+  exact (case_S xp) .
+Defined.
+
+
+(** ** Functions *)
+
+Definition add : nat -> nat -> nat .
+Proof.
+Admitted.
