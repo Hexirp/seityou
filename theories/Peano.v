@@ -71,6 +71,17 @@ Defined.
 
 (** ** Functions *)
 
+Notation succ := S (only parsing) .
+
+Definition pred : nat -> nat .
+Proof.
+ refine (nat_match _ _) .
+ -
+  exact O .
+ -
+  exact idmap .
+Defined.
+
 Definition add : nat -> nat -> nat .
 Proof.
  refine (fun x => _) .
