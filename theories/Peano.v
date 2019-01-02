@@ -91,3 +91,13 @@ Proof.
  -
   exact S .
 Defined.
+
+Definition mul : nat -> nat -> nat .
+Proof.
+ refine (fun x => _) .
+ refine (nat_rec _ _) .
+ -
+  exact O .
+ -
+  exact (add x) .
+Defined.
