@@ -71,8 +71,10 @@ Defined.
 
 (** ** Functions *)
 
+(** 後者関数の別名。 *)
 Notation succ := S (only parsing) .
 
+(** 前者関数。 [pred O = O] 。 *)
 Definition pred : nat -> nat .
 Proof.
  refine (nat_match _ _) .
@@ -82,6 +84,7 @@ Proof.
   exact idmap .
 Defined.
 
+(** 加法。 *)
 Definition add : nat -> nat -> nat .
 Proof.
  refine (fun x => _) .
@@ -92,6 +95,7 @@ Proof.
   exact S .
 Defined.
 
+(** 乗法。 *)
 Definition mul : nat -> nat -> nat .
 Proof.
  refine (fun x => _) .
