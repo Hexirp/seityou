@@ -105,3 +105,14 @@ Proof.
  -
   exact (add x) .
 Defined.
+
+(** 減法。 *)
+Definition sub : nat -> nat -> nat .
+Proof.
+ refine (fun x => _) .
+ refine (nat_rec _ _) .
+ -
+  exact x .
+ -
+  exact pred .
+Defined.
