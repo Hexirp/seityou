@@ -2,7 +2,7 @@
 
     ペアノの公理に従った自然数についての定義を行う。 *)
 
-Require Export Basis.
+Require Export Basis .
 
 (** 戦術を使う。 *)
 Declare ML Module "ltac_plugin".
@@ -122,6 +122,7 @@ Defined.
 
     自然数の記法を定義する。 *)
 
+(** 記法の設定を閉じ込めるモジュール。 *)
 Module Notation .
 
   (** 記法が使われる文脈を設定する。 *)
@@ -132,5 +133,23 @@ Module Notation .
 
   (** 文脈を型と結びつける。 *)
   Bind Scope nat_scope with nat.
+
+  (** 加法の記法。 *)
+  Notation "x + y" := (add x y)
+    (at level 50, left associativity)
+    : nat_scope
+    .
+
+  (** 乗法の記法。 *)
+  Notation "x * y" := (mul x y)
+    (at level 40, left associativity)
+    : nat_scope
+    .
+
+  (** 減法の記法。 *)
+  Notation "x - y" := (sub x y)
+    (at level 50, left associativity)
+    : nat_scope
+    .
 
 End Notation .
