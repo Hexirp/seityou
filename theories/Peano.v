@@ -124,6 +124,15 @@ Defined.
 
 From Coq Require Init.Datatypes .
 
+Definition nat_std : nat -> Datatypes.nat .
+Proof.
+ refine (nat_rec _ _) .
+ -
+  exact Datatypes.O .
+ -
+  exact Datatypes.S .
+Defined.
+
 Module Notation .
 
   (** 記法が使われる文脈を設定する。 *)
