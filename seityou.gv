@@ -1,15 +1,4 @@
-digraph G {
-
-  subgraph cluster_std {
-
-    Notations -> Logic;
-
-    Notations -> Datatypes;
-    Logic -> Datatypes;
-
-    label = "Coq.Init";
-
-  }
+digraph deps {
 
   Basis -> Path;
 
@@ -28,6 +17,5 @@ digraph G {
   Homotopy -> Equivalence;
 
   Basis -> Peano;
-  Datatypes -> Peano;
 
 }
