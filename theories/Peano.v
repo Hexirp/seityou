@@ -124,9 +124,9 @@ Defined.
 
 From Coq Require Init.Datatypes .
 
-Definition nat_std : nat -> Datatypes.nat .
+Definition nat_from_std : Datatypes.nat -> nat .
 Proof.
- refine (nat_rec _ _) .
+ refine (Datatypes.nat_rec _ _) .
  -
   exact Datatypes.O .
  -
