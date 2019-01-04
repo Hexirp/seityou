@@ -122,9 +122,13 @@ Defined.
 
     自然数の記法を定義する。 *)
 
-From Coq Require Init. .
+From Coq Require Init.Datatypes .
 
-Check O .
+Import Init.Datatypes .
+
+Open Scope nat_scope .
+
+Check 1 .
 
 Module Notation .
 
