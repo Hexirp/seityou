@@ -106,7 +106,7 @@ Proof.
   exact (add x) .
 Defined.
 
-(** 減法。 *)
+(** 減法。結果が負の値になるときは、ゼロへ丸められる。 *)
 Definition sub : nat -> nat -> nat .
 Proof.
  refine (fun x => _) .
