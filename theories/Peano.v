@@ -125,12 +125,13 @@ Defined.
 From Coq Require Init.Datatypes .
 
 Definition nat_from_std : Datatypes.nat -> nat .
-Proof. SearchAbout Datatypes.nat .
- refine (Datatypes.nat_rec (fun _ => nat) _ _) .
+Proof.
+ refine (fix go (x : Datatypes.nat) {struct x} : nat := _) .
+ refine (match x with Datatypes.O => _ | Datatypes.S xp => _ end) .
  -
   exact O .
  -
-  exact (fun _ => S) .
+  exact (S (go xp)) .
 Defined.
 
 Module Notation .
