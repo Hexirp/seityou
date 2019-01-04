@@ -140,3 +140,5 @@ Module Notation .
   Bind Scope nat_scope with nat.
 
 End Notation .
+
+Check 1 .
