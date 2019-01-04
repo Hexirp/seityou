@@ -1,20 +1,33 @@
 digraph G {
-    Basis -> Path;
-    
-    Path -> Homotopy;
-    Basis -> Homotopy;
-    
-    Basis -> Pwpath;
-    Path -> Pwpath;
-    
-    Basis -> Contraction;
-    Path -> Contraction;
-    
-    Basis -> Equivalence;
-    Path -> Equivalence;
-    Pwpath -> Equivalence;
-    Homotopy -> Equivalence;
 
-    Basis -> Peano;
-    Datatypes -> Peano;
+  subgraph std {
+
+    Notations -> Logic;
+
+    Notations -> Datatypes;
+    Logic -> Datatypes;
+
+    label = "Coq.Init";
+
+  }
+
+  Basis -> Path;
+
+  Path -> Homotopy;
+  Basis -> Homotopy;
+
+  Basis -> Pwpath;
+  Path -> Pwpath;
+
+  Basis -> Contraction;
+  Path -> Contraction;
+
+  Basis -> Equivalence;
+  Path -> Equivalence;
+  Pwpath -> Equivalence;
+  Homotopy -> Equivalence;
+
+  Basis -> Peano;
+  Datatypes -> Peano;
+
 }
