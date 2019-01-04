@@ -145,6 +145,8 @@ Module Notation .
   (** 文脈を型と結びつける。 *)
   Bind Scope nat_scope with nat.
 
-  Check 1 .
+  Coercion nat_from_std : Datatypes.nat >-> nat .
+
+  Check 1 : nat .
 
 End Notation .
