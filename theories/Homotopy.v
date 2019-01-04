@@ -202,38 +202,38 @@ Definition center {A : Type} (IC : is_contr A) : A
 Inductive trunc_index : Type
   :=
   | minus_two : trunc_index
-  | trunc_succ : trunc_index -> trunc_index
+  | trunc_S : trunc_index -> trunc_index
   .
 
 Definition trunc_index_case_nodep
   {P : Type}
   (case_minus_two : P)
-  (case_trunc_succ : trunc_index -> P)
+  (case_trunc_S : trunc_index -> P)
   (x : trunc_index) : P .
 Proof.
- refine (match x with minus_two => _ | trunc_succ xp => _ end) .
+ refine (match x with minus_two => _ | trunc_S xp => _ end) .
  -
   exact case_minus_two .
  -
-  exact (case_trunc_succ xp) .
+  exact (case_trunc_S xp) .
 Defined.
 
 Definition trunc_index_case
   {P : trunc_index -> Type}
   (case_minus_two : P minus_two)
-  (case_trunc_succ : forall xp, P (trunc_succ xp))
+  (case_trunc_S : forall xp, P (trunc_S xp))
   (x : trunc_index) : P x .
 Proof.
- refine (match x with minus_two => _ | trunc_succ xp => _ end) .
+ refine (match x with minus_two => _ | trunc_S xp => _ end) .
  -
   exact case_minus_two .
  -
-  exact (case_trunc_succ xp) .
+  exact (case_trunc_S xp) .
 Defined.
 
 Definition trunc_index_rec
   {P : Type}
-  (case_minus_two : P) (case_trunc_succ : P -> P)
+  (case_minus_two : P) (case_trunc_S : P -> P)
   (x : trunc_index) : P .
 Proof.
  revert x .
@@ -243,13 +243,13 @@ Proof.
   exact case_minus_two .
  -
   refine (fun xp => _) .
-  exact (case_trunc_succ (go xp)) .
+  exact (case_trunc_S (go xp)) .
 Defined.
 
 Definition trunc_index_rect
   {P : trunc_index -> Type}
   (case_minus_two : P minus_two)
-  (case_trunc_succ : forall xp, P xp -> P (trunc_succ xp))
+  (case_trunc_S : forall xp, P xp -> P (trunc_S xp))
   (x : trunc_index) : P x .
 Proof.
  revert x .
@@ -259,7 +259,7 @@ Proof.
   exact case_minus_two .
  -
   refine (fun xp => _) .
-  exact (case_trunc_succ xp (go xp)) .
+  exact (case_trunc_S xp (go xp)) .
 Defined.
 
 (** 全ての道空間が [P] という性質を満たす。 *)
@@ -278,11 +278,11 @@ Definition contr (A : Type) : Type
 
 (** [A] は -1 次切捨（命題）である。 *)
 Definition is_hprop (A : Type) : Type
-  := is_trunc (trunc_succ minus_two) A .
+  := is_trunc (trunc_S minus_two) A .
 
 (** [A] は 0 次切捨（集合）である。 *)
 Definition is_hset (A : Type) : Type
-  := is_trunc (trunc_succ (trunc_succ minus_two)) A .
+  := is_trunc (trunc_S (trunc_S minus_two)) A .
 
 (** [R] は -1 次切捨である値を持つ関係である。
 
@@ -292,7 +292,7 @@ Definition is_mere_relation {A : Type} (R : A -> A -> Type) : Type
 
 (** 道に対する切捨。 *)
 Definition trunc_paths
-  (n : trunc_index) (A : Type) (H : is_trunc (trunc_succ n) A)
+  (n : trunc_index) (A : Type) (H : is_trunc (trunc_S n) A)
   (x y : A) : is_trunc n (x = y)
   := H x y .
 
