@@ -85,6 +85,12 @@ Definition equiv
   (A B : Type) : Type
   := sigma f, is_equiv (A := A) (B := B) f .
 
+(** それぞれ [Homotopy] の同名定義と互換である (convertible) 。 *)
+Check idpath : @is_adjoint = @Homotopy.is_adjoint .
+Check idpath : @is_equiv_rel = @Homotopy.is_equiv_rel .
+Check idpath : @is_equiv = @Homotopy.is_equiv .
+Check idpath : @equiv = @Homotopy.equiv .
+
 
 (** ** Reflexivity
 
