@@ -124,6 +124,8 @@ Defined.
 
 From Coq Require Init.Datatypes .
 
+Import Init.Datatypes .
+
 Check 1 .
 
 Module Notation .
