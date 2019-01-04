@@ -1,6 +1,6 @@
 digraph G {
 
-  subgraph std {
+  subgraph cluster_std {
 
     Notations -> Logic;
 
