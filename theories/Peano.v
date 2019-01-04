@@ -124,10 +124,6 @@ Defined.
 
 From Coq Require Init.Datatypes .
 
-Open Scope nat_scope .
-
-Check 1 .
-
 Module Notation .
 
   (** 記法が使われる文脈を設定する。 *)
@@ -139,6 +135,6 @@ Module Notation .
   (** 文脈を型と結びつける。 *)
   Bind Scope nat_scope with nat.
 
-End Notation .
+  Check 1 .
 
-Check 1 .
+End Notation .
