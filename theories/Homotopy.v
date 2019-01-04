@@ -205,6 +205,19 @@ Inductive trunc_index : Type
   | trunc_succ : trunc_index -> trunc_index
   .
 
+Definition trunc_index_case_nodep
+  {P : Type}
+  (case_minus_two : P)
+  (case_trunc_succ : trunc_index -> P)
+  (x : trunc_index) : P .
+Proof.
+ refine (match x with minus_two => _ | trunc_succ xp => _ end) .
+ -
+  exact case_minus_two .
+ -
+  exact (case_trunc_succ xp) .
+Defined.
+
 Definition trunc_index_case
   {P : trunc_index -> Type}
   (case_minus_two : P minus_two)
@@ -225,7 +238,7 @@ Definition trunc_index_rec
 Proof.
  revert x .
  refine (fix go (x : trunc_index) {struct x} := _) .
- refine (trunc_index_case _ _ x) .
+ refine (trunc_index_case_nodep _ _ x) .
  -
   exact case_minus_two .
  -
