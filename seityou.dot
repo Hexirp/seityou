@@ -16,4 +16,5 @@ digraph G {
     Homotopy -> Equivalence;
 
     Basis -> Peano;
+    Datatypes -> Peano;
 }
