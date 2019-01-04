@@ -2,7 +2,7 @@
 
     ペアノの公理に従った自然数についての定義を行う。 *)
 
-Require Export Basis .
+Require Import Basis .
 
 (** 戦術を使う。 *)
 Declare ML Module "ltac_plugin".

@@ -1,4 +1,4 @@
-Require Export Homotopy.
+Require Import Homotopy.
 
 
 Declare ML Module "ltac_plugin".

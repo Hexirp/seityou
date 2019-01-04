@@ -2,8 +2,8 @@
 
     点付きの道についての定義、定理を記述する。 *)
 
-Require Export Basis .
-Require Export Path .
+Require Import Basis .
+Require Import Path .
 
 (** 戦術を使う。 *)
 Declare ML Module "ltac_plugin" .

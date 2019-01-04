@@ -28,7 +28,7 @@
     参考文献:
     - https://coq.inria.fr/refman/user-extensions/proof-schemes.html#coq:flag.elimination-schemes
     - https://github.com/HoTT/HoTT/blob/fd5b9b9002e40cc94d6434039698a423bf3068ad/theories/Basics/Overture.v#L15 *)
-Export Unset Elimination Schemes .
+Import Unset Elimination Schemes .
 
 (** 除去子の名前のルール。
 

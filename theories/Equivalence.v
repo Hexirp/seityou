@@ -2,10 +2,10 @@
 
     等価性に関する定理や定義。 *)
 
-Require Export Basis .
-Require Export Path .
-Require Export Pwpath .
-Require Export Homotopy.
+Require Import Basis .
+Require Import Path .
+Require Import Pwpath .
+Require Import Homotopy.
 
 (** 戦術を使う。 *)
 Declare ML Module "ltac_plugin".

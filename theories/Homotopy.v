@@ -2,8 +2,8 @@
 
     Homotopy Type Theory において一般的な定義をする。 *)
 
-Require Export Basis .
-Require Export Path .
+Require Import Basis .
+Require Import Path .
 
 (** 戦術を使う。 *)
 Declare ML Module "ltac_plugin" .
