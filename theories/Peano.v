@@ -4,6 +4,9 @@
 
 Require Export Basis.
 
+(** 記法の関係で標準ライブラリの自然数が必要。 *)
+From Coq Require Init.Datatypes .
+
 (** 戦術を使う。 *)
 Declare ML Module "ltac_plugin".
 Set Default Proof Mode "Classic".
@@ -121,9 +124,6 @@ Defined.
 (** ** Notations
 
     自然数の記法を定義する。 *)
-
-(** 標準ライブラリの自然数が必要。 *)
-From Coq Require Init.Datatypes .
 
 (** 標準ライブラリの自然数から、このライブラリの自然数へ変換する。 *)
 Definition nat_from_std_nat : Datatypes.nat -> nat .
