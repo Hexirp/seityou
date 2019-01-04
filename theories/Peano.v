@@ -124,7 +124,7 @@ Defined.
 
 From Coq Require Init.Datatypes .
 
-Definition nat_from_std : Datatypes.nat -> nat .
+Definition nat_from_std_nat : Datatypes.nat -> nat .
 Proof.
  refine (fix go (x : Datatypes.nat) {struct x} : nat := _) .
  refine (match x with Datatypes.O => _ | Datatypes.S xp => _ end) .
@@ -145,8 +145,6 @@ Module Notation .
   (** 文脈を型と結びつける。 *)
   Bind Scope nat_scope with nat.
 
-  Coercion nat_from_std : Datatypes.nat >-> nat .
-
-  Check 1 : nat .
+  Coercion nat_from_std_nat : Datatypes.nat >-> nat .
 
 End Notation .
