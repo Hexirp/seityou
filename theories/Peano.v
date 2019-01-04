@@ -23,7 +23,7 @@ Inductive nat : Type
   | S : nat -> nat
   .
 
-Definition nat_match
+Definition nat_case
   {P : nat -> Type}
   (case_O : P O)
   (case_S : forall n, P (S n))
@@ -44,7 +44,7 @@ Definition nat_rec
 Proof.
  revert x .
  refine (fix go (x : nat) {struct x} : P := _) .
- refine (nat_match _ _ x) .
+ refine (nat_case _ _ x) .
  -
   exact case_O .
  -
@@ -60,7 +60,7 @@ Definition nat_rect
 Proof.
  revert x .
  refine (fix go (x : nat) {struct x} : P x := _) .
- refine (nat_match _ _ x) .
+ refine (nat_case _ _ x) .
  -
   exact case_O .
  -
@@ -77,7 +77,7 @@ Notation succ := S (only parsing) .
 (** 前者関数。 [pred O = O] 。 *)
 Definition pred : nat -> nat .
 Proof.
- refine (nat_match _ _) .
+ refine (nat_case _ _) .
  -
   exact O .
  -
