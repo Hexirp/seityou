@@ -133,6 +133,6 @@ Module Notation .
   (** 文脈を型と結びつける。 *)
   Bind Scope nat_scope with nat.
 
-  Check 1 .
+  From Coq Require Init.Datatypes .
 
 End Notation .
