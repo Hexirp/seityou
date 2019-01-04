@@ -116,3 +116,21 @@ Proof.
  -
   exact pred .
 Defined.
+
+
+(** ** Notations
+
+    自然数の記法を定義する。 *)
+
+Module Notation .
+
+  (** 記法が使われる文脈を設定する。 *)
+  Delimit Scope nat_scope with nat.
+
+  (** 文脈を開く。 *)
+  Open Scope nat_scope .
+
+  (** 文脈を型と結びつける。 *)
+  Bind Scope nat_scope with nat.
+
+End Notation .
