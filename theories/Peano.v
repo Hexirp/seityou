@@ -122,8 +122,6 @@ Defined.
 
     自然数の記法を定義する。 *)
 
-Check 1 .
-
 Module Notation .
 
   (** 記法が使われる文脈を設定する。 *)
@@ -134,5 +132,7 @@ Module Notation .
 
   (** 文脈を型と結びつける。 *)
   Bind Scope nat_scope with nat.
+
+  Check 1 .
 
 End Notation .
