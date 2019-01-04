@@ -148,6 +148,24 @@ Module Notation .
   (** 文脈を型と結びつける。 *)
   Bind Scope nat_scope with nat.
 
+  (** 加法の記法。 *)
+  Notation "x + y" := (add x y)
+    (at level 50, left associativity)
+    : nat_scope
+    .
+
+  (** 乗法の記法。 *)
+  Notation "x * y" := (mul x y)
+    (at level 40, left associativity)
+    : nat_scope
+    .
+
+  (** 減法の記法。 *)
+  Notation "x - y" := (sub x y)
+    (at level 50, left associativity)
+    : nat_scope
+    .
+
   (** 標準ライブラリの自然数から、このライブラリの自然数への暗黙的な変換。
 
       [1] というアラビア数字で書くことが出来るのは、標準ライブラリの
