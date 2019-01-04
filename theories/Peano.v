@@ -2,10 +2,7 @@
 
     ペアノの公理に従った自然数についての定義を行う。 *)
 
-Require Export Basis.
-
-(** 記法の関係で標準ライブラリの自然数が必要。 *)
-From Coq Require Init.Datatypes .
+Require Export Basis .
 
 (** 戦術を使う。 *)
 Declare ML Module "ltac_plugin".
@@ -125,17 +122,6 @@ Defined.
 
     自然数の記法を定義する。 *)
 
-(** 標準ライブラリの自然数から、このライブラリの自然数へ変換する。 *)
-Definition nat_from_std_nat : Datatypes.nat -> nat .
-Proof.
- refine (fix go (x : Datatypes.nat) {struct x} : nat := _) .
- refine (match x with Datatypes.O => _ | Datatypes.S xp => _ end) .
- -
-  exact O .
- -
-  exact (S (go xp)) .
-Defined.
-
 (** 記法の設定を閉じ込めるモジュール。 *)
 Module Notation .
 
@@ -165,12 +151,5 @@ Module Notation .
     (at level 50, left associativity)
     : nat_scope
     .
-
-  (** 標準ライブラリの自然数から、このライブラリの自然数への暗黙的な変換。
-
-      [1] というアラビア数字で書くことが出来るのは、標準ライブラリの
-      自然数だけであるため、アラビア数字でこのライブラリの自然数が
-      書けるように変換させる。 *)
-  Coercion nat_from_std_nat : Datatypes.nat >-> nat .
 
 End Notation .
