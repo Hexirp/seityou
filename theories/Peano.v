@@ -124,6 +124,8 @@ Defined.
 
 From Coq Require Init.Datatypes .
 
+Check 1 .
+
 Module Notation .
 
   (** 記法が使われる文脈を設定する。 *)
