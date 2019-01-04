@@ -21,7 +21,7 @@ Import Basis.Notation.Path .
     [apNK_dep] となる。関数がLつの値を取るとき、値のN次道はLつあり、名前は
     [apNK_L] となる。
 
-    K次道は値、値の道、値の道の道といったものを表す。これは縮小 (Truncation)
+    K次道は値、値の道、値の道の道といったものを表す。これは切捨 (Truncation)
     にも関わる表記法である。型 [A] に対して、そのK次道は、
 
     * 0-path: A

@@ -146,8 +146,8 @@ Definition equiv_fun_is_equiv
 
 (** ** Truncation *)
 
-(** 縮小 (Truncation) は、型の複雑性を測定する。このライブラリでは、ある型が
-    ｎ次縮小 (n-truncated) であるという証拠を [is_trunc n] として形式化する。
+(** 切捨 (Truncation) は、型の複雑性を測定する。このライブラリでは、ある型が
+    ｎ次切捨 (n-truncated) であるという証拠を [is_trunc n] として形式化する。
     これは HoTT ライブラリに倣ったものである。
 
     [is_trunc n (@paths A a b)] よりも [is_trunc (S n) A] の方を、
@@ -178,24 +178,24 @@ Definition center {A : Type} (IC : is_contr A) : A
 
 (** *** Truncation *)
 
-(** 縮小 (Truncation) は、高階道空間の文脈において、型の複雑性を測る。
-    (-2) 次縮小である型は、可縮である型のことであり、その相同 (Homotopy) は
-    完全に自明である。また (n+1) 次縮小である型は、それらの道空間が n 次縮小
+(** 切捨 (Truncation) は、高階道空間の文脈において、型の複雑性を測る。
+    (-2) 次切捨である型は、可縮である型のことであり、その相同 (Homotopy) は
+    完全に自明である。また (n+1) 次切捨である型は、それらの道空間が n 次切捨
     である。
 
-    ゆえに (-1) 次縮小であるということは「任意の二つの点の間の道の空間は可縮
+    ゆえに (-1) 次切捨であるということは「任意の二つの点の間の道の空間は可縮
     である」ということを意味する。そのような空間は部分単一 (sub-singleton)
     である、つまり、任意の二つの点は相同的に単一 (unique) である道で結ばれて
-    いる。別の言葉でいえば (-1) 次縮小である空間は、真理値（私たちは「命題」と
+    いる。別の言葉でいえば (-1) 次切捨である空間は、真理値（私たちは「命題」と
     呼ぶ）である。
 
-    次に 0 次縮小であるということは「任意の二つの点の間の道の空間は部分単一
+    次に 0 次切捨であるということは「任意の二つの点の間の道の空間は部分単一
     である」ということを意味する。ゆえに、二つの点は、その間に道を持たないか、
     単一の道を持つかである。そのような空間は沢山の点を持ち得るが、それは
     全ての道が自明であるという意味で、離散的である。私たちは、その空間群を
     「集合」と呼ぶ。 *)
 
-(** 縮小度。つまり n 次縮小と書いたときの "n" を表す型。
+(** 切捨度。つまり n 次切捨と書いたときの "n" を表す型。
 
     自然数のペアノの公理による定義と同じ構造を持っているが、
     -2 が最小の値である。 *)
@@ -266,31 +266,31 @@ Defined.
 Definition paths_is (P : Type -> Type) (A : Type) : Type
   := forall (x y : A), P (x = y) .
 
-(** [A] は [n] 次縮小である。 *)
+(** [A] は [n] 次切捨である。 *)
 Definition is_trunc (n : trunc_index) (A : Type) : Type
   := trunc_index_rec is_contr paths_is n A .
 
 (** *** Others *)
 
-(** [A] は -2 次縮小（可縮）である。 *)
+(** [A] は -2 次切捨（可縮）である。 *)
 Definition contr (A : Type) : Type
   := is_trunc minus_two A .
 
-(** [A] は -1 次縮小（命題）である。 *)
+(** [A] は -1 次切捨（命題）である。 *)
 Definition is_hprop (A : Type) : Type
   := is_trunc (trunc_succ minus_two) A .
 
-(** [A] は 0 次縮小（集合）である。 *)
+(** [A] は 0 次切捨（集合）である。 *)
 Definition is_hset (A : Type) : Type
   := is_trunc (trunc_succ (trunc_succ minus_two)) A .
 
-(** [R] は -1 次縮小である値を持つ関係である。
+(** [R] は -1 次切捨である値を持つ関係である。
 
     即ち、単に関係であることであり、複数の値を持たない。 *)
 Definition is_mere_relation {A : Type} (R : A -> A -> Type) : Type
   := forall x y, is_hprop (R x y) .
 
-(** 道に対する縮小。 *)
+(** 道に対する切捨。 *)
 Definition trunc_paths
   (n : trunc_index) (A : Type) (H : is_trunc (trunc_succ n) A)
   (x y : A) : is_trunc n (x = y)
