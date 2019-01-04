@@ -122,8 +122,10 @@ Defined.
 
     自然数の記法を定義する。 *)
 
+(** 標準ライブラリの自然数が必要。 *)
 From Coq Require Init.Datatypes .
 
+(** 標準ライブラリの自然数から、このライブラリの自然数へ変換する。 *)
 Definition nat_from_std_nat : Datatypes.nat -> nat .
 Proof.
  refine (fix go (x : Datatypes.nat) {struct x} : nat := _) .
@@ -134,6 +136,7 @@ Proof.
   exact (S (go xp)) .
 Defined.
 
+(** 記法の設定を閉じ込めるモジュール。 *)
 Module Notation .
 
   (** 記法が使われる文脈を設定する。 *)
@@ -145,6 +148,11 @@ Module Notation .
   (** 文脈を型と結びつける。 *)
   Bind Scope nat_scope with nat.
 
+  (** 標準ライブラリの自然数から、このライブラリの自然数への暗黙的な変換。
+
+      [1] というアラビア数字で書くことが出来るのは、標準ライブラリの
+      自然数だけであるため、アラビア数字でこのライブラリの自然数が
+      書けるように変換させる。 *)
   Coercion nat_from_std_nat : Datatypes.nat >-> nat .
 
 End Notation .
