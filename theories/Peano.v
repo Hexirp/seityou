@@ -124,8 +124,6 @@ Defined.
 
 From Coq Require Init.Datatypes .
 
-Import Init.Datatypes .
-
 Open Scope nat_scope .
 
 Check 1 .
