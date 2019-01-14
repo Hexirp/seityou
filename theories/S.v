@@ -66,3 +66,20 @@ Proof.
   refine (Hp xp _) .
   exact xpR .
 Defined.
+
+Definition acc_rect
+  (A : Type) (R : A -> A -> Type) (P : forall x : A, acc A R x -> Type)
+  (case_mk_acc
+          : forall (x : A) (Hp : forall xp : A, R xp x -> acc A R xp),
+              (forall (xp : A) (xpR : R xp x), P xp (Hp xp xpR)) -> P x (mk_acc A R x Hp))
+  (x : A) (H : acc A R x) : P x H .
+Proof.
+ revert x H .
+ refine (fix go (x : A) (H : acc A R x) {struct H} : P x H := _) .
+ refine (acc_case A R x (P x) _ H) .
+ -
+  refine (fun Hp => _) .
+  refine (case_mk_acc x Hp _) .
+  refine (fun xp xpR => _) .
+  exact (go xp (Hp xp xpR)) .
+Defined.
