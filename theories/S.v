@@ -1,6 +1,10 @@
 Require Import Basis .
 
 
+Declare ML Module "ltac_plugin".
+Set Default Proof Mode "Classic".
+
+
 Inductive list (A : Type) : Type
   :=
   | nil : list A
@@ -45,4 +49,14 @@ Definition acc_rec
   (case_mk_acc : forall x : A, (forall xp : A, R xp x -> P xp) -> P x)
   (x : A) (H : acc A R x) : P x .
 Proof.
-Admitted.
+ revert x H .
+ refine (fix go (x : A) (H : acc A R x) {struct H} : P x := _) .
+ refine (acc_case A R x (fun _ => P x) _ H) .
+ -
+  refine (fun Hp => _) .
+  refine (case_mk_acc x _) .
+  refine (fun xp xpR => _) .
+  refine (go xp _) .
+  refine (Hp xp _) .
+  exact xpR .
+Defined.
