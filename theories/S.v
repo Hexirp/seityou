@@ -38,6 +38,12 @@ Inductive acc (A : Type) (R : A -> A -> Type) (x : A) : Type
   | mk_acc : (forall xp : A, R xp x -> acc A R xp) -> acc A R x
   .
 
+Definition acc_case_nodep
+  (A : Type) (R : A -> A -> Type) (x : A) (P : Type)
+  (case_mk_acc : (forall xp : A, R xp x -> acc A R xp) -> P)
+  (H : acc A R x) : P
+  := match H with mk_acc _ _ _ Hp => case_mk_acc Hp end .
+
 Definition acc_case
   (A : Type) (R : A -> A -> Type) (x : A) (P : acc A R x -> Type)
   (case_mk_acc : forall Hp : forall xp : A, R xp x -> acc A R xp, P (mk_acc A R x Hp))
@@ -51,7 +57,7 @@ Definition acc_rec
 Proof.
  revert x H .
  refine (fix go (x : A) (H : acc A R x) {struct H} : P x := _) .
- refine (acc_case A R x (fun _ => P x) _ H) .
+ refine (acc_case_nodep A R x (P x) _ H) .
  -
   refine (fun Hp => _) .
   refine (case_mk_acc x _) .
