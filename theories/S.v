@@ -81,3 +81,13 @@ Proof.
   refine (fun xp xpR => _) .
   exact (go xp (Hp xp xpR)) .
 Defined.
+
+
+Inductive sorted_list' (A : Type) (R : A -> A -> Type) : Type
+  :=
+  | s_nil : sorted_list' A R
+  | s_cons : forall (x : A) (xs : sorted_list' A R) (f : sorted_list' A R -> list A),
+          paths (f (s_nil A R)) (nil A) ->
+          (forall x xs f p q h, paths (f (s_cons A R x xs f p q h)) (cons A x xs)) ->
+                  sorted_list'
+  .
