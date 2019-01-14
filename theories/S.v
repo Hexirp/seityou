@@ -62,9 +62,7 @@ Proof.
   refine (fun Hp => _) .
   refine (case_mk_acc x _) .
   refine (fun xp xpR => _) .
-  refine (go xp _) .
-  refine (Hp xp _) .
-  exact xpR .
+  exact (go xp (Hp xp xpR)) .
 Defined.
 
 Definition acc_rect
