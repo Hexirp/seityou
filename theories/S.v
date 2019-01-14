@@ -83,11 +83,36 @@ Proof.
 Defined.
 
 
-Inductive sorted_list' (A : Type) (R : A -> A -> Type) : Type
-  :=
-  | s_nil : sorted_list' A R
-  | s_cons : forall (x : A) (xs : sorted_list' A R) (f : sorted_list' A R -> list A),
-          paths (f (s_nil A R)) (nil A) ->
-          (forall x xs f p q h, paths (f (s_cons A R x xs f p q h)) (cons A x xs)) ->
-                  sorted_list'
-  .
+Module SortedList .
+
+  Axiom sorted_list : forall A : Type, (A -> A -> Type) -> Type .
+  Axiom forall_le : forall (A : Type) (R : A -> A -> Type), A -> sorted_list A R -> Type .
+
+  Axiom s_nil : forall (A : Type) (R : A -> A -> Type), sorted_list A R .
+  Axiom s_cons
+          : forall (A : Type) (R : A -> A -> Type) (x : A) (xs : sorted_list A R),
+                  forall_le A R x xs -> sorted_list A R .
+
+  Axiom f_nil : forall (A : Type) (R : A -> A -> Type) (x : A), forall_le A R x (s_nil A R) .
+  Axiom f_cons
+          : forall (A : Type) (R : A -> A -> Type) (x : A)
+                          (y : A) (ys : sorted_list A R) (h : forall_le A R y ys),
+                  R x y -> forall_le A R x ys -> forall_le A R x (s_cons A R y ys h) .
+
+  Definition sorted_list_case
+    (A : Type) (R : A -> A -> Type) (P : sorted_list A R -> Type)
+    (case_s_nil : P (s_nil A R))
+    (case_s_cons : forall x xs h, P (s_cons A R x xs h))
+    (x : sorted_list A R) : P x .
+  Proof.
+  Admitted.
+
+  Definition forall_le_case
+    (A : Type) (R : A -> A -> Type) (x : A) (P : forall y, forall_le A R x y -> Type)
+    (case_f_nil : P (s_nil A R) (f_nil A R x))
+    (case_s_cons : forall y ys h r rs, P (s_cons A R y ys h) (f_cons A R x y ys h r rs))
+    (y : sorted_list A R) (r : forall_le A R x y) : P y r .
+  Proof.
+  Admitted.
+
+End SortedList .
