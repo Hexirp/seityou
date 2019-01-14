@@ -1,11 +1,28 @@
 Require Import Basis .
 
-Inductive sorted_list {A : Type} (R : A -> A -> Type) (x : A) : Type
+Inductive list (A : Type) : Type
   :=
-  | s_nil : sorted_list R x
-  | s_cons : forall (y : A) (xs : sorted_list R y), forall_le R x y xs -> sorted_list R x
-with forall_le {A : Type} (R : A -> A -> Type) (x : A) : forall y : A, sorted_list y -> Type
+  | nil : list A
+  | cons : A -> list A -> list A
+  .
+
+Inductive forall_elements (A : Type) (P : A -> Type) : list A -> Type
   :=
-  | f_nil : forall y : A, R x y -> forall_le R x y (s_nil R y)
-  | f_cons : forall (y z : A) (xs : sorted_list R z), forall_le R y z 
+  | fe_nil : forall_elements A P (nil A)
+  | fe_cons
+          : forall (x : A) (xs : list A),
+              P x -> forall_elements A P xs -> forall_elements A P (cons A x xs)
+  .
+
+Inductive is_sorted (A : Type) (R : A -> A -> Type) : list A -> Type
+  :=
+  | iss_nil : is_sorted A R (nil A)
+  | iss_cons
+          : forall (x : A) (xs : list A),
+              forall_elements A (R x) xs -> is_sorted A R xs -> is_sorted A R (cons A x xs)
+  .
+
+Inductive sorted_list (A : Type) (R : A -> A -> Type) : Type
+  :=
+  | mk_sl : forall x : list A, is_sorted A R x -> sorted_list A R
   .
