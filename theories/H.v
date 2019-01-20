@@ -23,5 +23,6 @@ Definition collapse (P : Type) (wdec : wk_dec P) : P -> P .
 Proof.
  revert wdec .
  refine (lsum_elim_nodep (unit -> P) (P -> empty) (P -> P) ?[cl] ?[cr] _) .
- Show Existentials .
+ instantiate (cl := fun a _ => a tt) .
+ instantiate (cr := fun b x => absurd (b x)) .
 Admitted.
