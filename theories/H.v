@@ -22,5 +22,5 @@ Definition wk_dec (P : Type) := lsum (unit -> P) (P -> empty) .
 Definition collapse (P : Type) (wdec : wk_dec P) : P -> P .
 Proof.
  revert wdec .
- refine (lsum_elim_nodep (unit -> P) (P -> empty) (P -> P) _ _ _) .
+ refine (lsum_elim_nodep (unit -> P) (P -> empty) (P -> P) ?[cl] ?[cr] _) .
 Admitted.
