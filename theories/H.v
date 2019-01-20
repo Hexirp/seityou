@@ -23,4 +23,5 @@ Definition collapse (P : Type) (wdec : wk_dec P) : P -> P .
 Proof.
  revert wdec .
  refine (lsum_elim_nodep (unit -> P) (P -> empty) (P -> P) ?[cl] ?[cr] _) .
+ Show Existentials .
 Admitted.
