@@ -21,8 +21,10 @@ Definition wk_dec (P : Type) := lsum (unit -> P) (P -> empty) .
 
 Definition collapse (P : Type) (wdec : wk_dec P) : P -> P .
 Proof.
+ refine (fun x => _) .
  revert wdec .
- refine (lsum_elim_nodep (unit -> P) (P -> empty) (P -> P) ?[cl] ?[cr] _) .
- instantiate (cl := fun a _ => a tt) .
- instantiate (cr := fun b x => absurd (b x)) .
-Admitted.
+ refine (lsum_elim_nodep (unit -> P) (P -> empty) P ?[cl] ?[cr] _) .
+ instantiate (cl := fun a => a tt) .
+ instantiate (cr := fun b => absurd (b x)) .
+ exact (fun a b => absurd (b x)) .
+Defined.
