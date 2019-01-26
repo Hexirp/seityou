@@ -1,0 +1,38 @@
+(** * Decidability
+
+    決定可能な命題についての定義や定理を証明する。 *)
+
+Require Import Basis Path Homotopy Contraction .
+
+(** 戦術を使う。 *)
+Declare ML Module "ltac_plugin" .
+Set Default Proof Mode "Classic" .
+
+(** 記法を使う。 *)
+Import Basis.Notation .
+Import Basis.Notation.Path .
+
+
+(** [A] は決定可能である。 *)
+Definition decidable (A : Type) : Type := sum A (A -> empty) .
+
+(** [A] の道は決定可能である。 *)
+Definition path_decidable (A : Type) : Type := paths_is decidable A .
+
+(** [A] の二重否定は除去できる。 *)
+Definition stable (A : Type) : Type := ((A -> empty) -> empty) -> A .
+
+(** [A] が decidable であれば stable である。 *)
+Definition stable_decidable (A : Type) (dec : decidable A) : stable A .
+Proof.
+ revert dec .
+ refine (sum_elim_nodep _ _) .
+ -
+  refine (fun a nna => _) .
+  exact a .
+ -
+  refine (fun na nna => _) .
+  refine (absurd _) .
+  exact (nna na) .
+Defined.
+
