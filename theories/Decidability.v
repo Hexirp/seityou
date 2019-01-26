@@ -36,3 +36,18 @@ Proof.
   exact (nna na) .
 Defined.
 
+
+Definition decidable_contr (A : Type) (ic : contr A) : decidable A .
+Proof.
+ refine (left _) .
+ exact (center ic) .
+Defined.
+
+Definition path_decidable_ishprop
+  (A : Type) (ihp : is_hprop A) : path_decidable A .
+Proof.
+ refine (fun x y => _) .
+ pose (ic := ihp x y : contr (x = y)) .
+ refine (left _) .
+ exact (center ic) .
+Defined.
