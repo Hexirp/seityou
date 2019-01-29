@@ -84,3 +84,13 @@ Arguments acc_rect {_ _ _} _ {_} _ .
 (** [R] は整礎である。 *)
 Definition well_founded {A : Type} (R : A -> A -> Type) : Type
   := forall x : A, acc R x .
+
+(** 整礎帰納法。 *)
+Definition wf_ind
+  (A : Type) (R : A -> A -> Type) (H : well_founded R) (P : A -> Type)
+  (c: forall x : A, (forall xp : A, R xp x -> P xp) -> P x)
+  (x : A) : P x .
+Proof.
+ refine (acc_rec _ (H x)) .
+ exact c .
+Defined.
