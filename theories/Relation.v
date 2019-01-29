@@ -79,3 +79,8 @@ Arguments acc_case_nodep {_ _ _ _} _ _ .
 Arguments acc_case {_ _ _ _} _ _ .
 Arguments acc_rec {_ _ _} _ {_} _ .
 Arguments acc_rect {_ _ _} _ {_} _ .
+
+
+(** [R] は整礎である。 *)
+Definition well_founded {A : Type} (R : A -> A -> Type) : Type
+  := forall x : A, acc R x .
