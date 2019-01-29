@@ -85,6 +85,18 @@ Arguments acc_rect {_ _ _} _ {_} _ .
 Definition well_founded {A : Type} (R : A -> A -> Type) : Type
   := forall x : A, acc R x .
 
+(** 非依存の整礎帰納法。
+
+    「超限再帰的な定義」からの類推で、関数を整礎帰納法的に定義するともいえる。 *)
+Definition wf_ind_nodep
+  (A : Type) (R : A -> A -> Type) (H : well_founded R) (P : Type)
+  (c: forall x : A, (forall xp : A, R xp x -> P) -> P)
+  (x : A) : P .
+Proof.
+ refine (acc_rec _ (H x)) .
+ exact c .
+Defined.
+
 (** 整礎帰納法。 *)
 Definition wf_ind
   (A : Type) (R : A -> A -> Type) (H : well_founded R) (P : A -> Type)
