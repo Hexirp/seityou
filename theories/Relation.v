@@ -19,6 +19,11 @@ Definition relation_preserving
   (f : A -> B) : Type
   := forall x y : A, R x y -> S (f x) (f y) .
 
+(** 関数の結果を見た関係。 *)
+Definition rel_of (A : Type) (B : Type) (S : B -> B -> Type) (f : A -> B)
+  : A -> A -> Type
+  := fun x y => S (f x) (f y) .
+
 
 (** ** Well foundness *)
 
@@ -156,12 +161,6 @@ Definition fix_f
   (f : forall x : A, (forall y : A, R y x -> P y) -> P x)
   (x : A) : P x
   := fix_f_acc f (H x) .
-
-
-(** 関数の結果を見た関係。 *)
-Definition rel_of (A : Type) (B : Type) (S : B -> B -> Type) (f : A -> B)
-  : A -> A -> Type
-  := fun x y => S (f x) (f y) .
 
 
 (** ** Others *)
