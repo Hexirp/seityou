@@ -186,8 +186,16 @@ Proof.
  refine (fun xv xH => _) .
  refine (mk_acc _) .
  refine (dsum_elim _) .
- refine (fun xvp xHp xR => _) .
- change (R xvp xv) in xR .
+ revert xv xH .
+ refine (wf_ind wf_R _) .
+ refine (fun x xI => _) .
+ refine (fun xH xp xpH xpR => _) .
+ refine (xI xp _ _ _ _ _) .
+ -
+  change (R xp x) in xpR .
+  exact xpR .
+ -
+  
 Admitted.
 
 (** [rel_of] に整礎性は遺伝する。 *)
