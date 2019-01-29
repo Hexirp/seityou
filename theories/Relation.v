@@ -13,7 +13,7 @@ Import Basis.Notation .
 
 
 (** 関係を保つ (relation-preserving) 関数である。 *)
-Definition relation_preserving
+Definition rel_pre
   {A : Type} (R : A -> A -> Type)
   {B : Type} (S : B -> B -> Type)
   (f : A -> B) : Type
@@ -26,7 +26,7 @@ Definition rel_of {A : Type} {B : Type} (S : B -> B -> Type) (f : A -> B)
 
 (** [rel_of] は自明に関係を保つ関数を作る。 *)
 Definition rel_pre_of {A : Type} {B : Type} {S : B -> B -> Type} (f : A -> B)
-  : relation_preserving (rel_of S f) S f .
+  : rel_pre (rel_of S f) S f .
 Proof.
  change (forall x y, S (f x) (f y) -> S (f x) (f y)) .
  exact (fun x y => idmap) .
@@ -175,6 +175,17 @@ Definition fix_f
   (x : A) : P x
   := fix_f_acc f (H x) .
 
+
+(** [rel_dsum] に整礎性は遺伝する。 *)
+Definition wf_rel_dsum
+  {A : Type} (R : A -> A -> Type) (wf_R : well_founded R) (P : A -> Type)
+  : well_founded (rel_dsum R P) .
+Proof.
+ change (forall xh : (sigma x, P x), acc (rel_of R dfst) xh) .
+ refine (dsum_elim _) .
+ refine (wf_ind wf_R _) .
+ refine (fun x xH => _) .
+Admitted.
 
 (** [rel_of] に整礎性は遺伝する。 *)
 Definition wf_rel_of
