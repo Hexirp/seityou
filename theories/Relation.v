@@ -101,21 +101,15 @@ Definition well_founded {A : Type} (R : A -> A -> Type) : Type
 Definition wf_ind_nodep
   (A : Type) (R : A -> A -> Type) (H : well_founded R) (P : Type)
   (c: forall x : A, (forall xp : A, R xp x -> P) -> P)
-  (x : A) : P .
-Proof.
- refine (acc_rec _ (H x)) .
- exact c .
-Defined.
+  (x : A) : P
+  := acc_rec c (H x) .
 
 (** 整礎帰納法。 *)
 Definition wf_ind
   (A : Type) (R : A -> A -> Type) (H : well_founded R) (P : A -> Type)
   (c: forall x : A, (forall xp : A, R xp x -> P xp) -> P x)
-  (x : A) : P x .
-Proof.
- refine (acc_rec _ (H x)) .
- exact c .
-Defined.
+  (x : A) : P x
+  := acc_rec c (H x) .
 
 
 Section FixPoint .
@@ -126,8 +120,5 @@ Section FixPoint .
   Variable P : A -> Type .
   Variable f : forall x : A, (forall y : A, R y x -> P y) -> P x .
 
-  Definition fix_f (x : A) (H : acc R x) : P x .
-  Proof.
-   revert x H .
-   exact (@acc_rec A R P f) .
-  Defined.
+  Definition fix_f (x : A) (H : acc R x) : P x
+    := acc_rec f H .
