@@ -55,9 +55,9 @@ Definition acc_rect
               (Hp : forall xp : A,
                                 R xp x ->
                                 acc A R xp),
-                   (forall (xp  : A)
-                           (xpR : R xp x),
-                                  P xp (Hp xp xpR)) ->
+              (forall (xp  : A)
+                      (xpR : R xp x),
+                             P xp (Hp xp xpR)) ->
                P x (mk_acc A R x Hp))
   (x : A)
   (H : acc A R x)
