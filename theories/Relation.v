@@ -112,13 +112,25 @@ Definition wf_ind
   := acc_rec c (H x) .
 
 
+(** 整礎帰納法により構成される関数の不動点について。 *)
+
 Section FixPoint .
 
   Variable A : Type .
   Variable R : A -> A -> Type .
-  Variable wf_R : well_founded R .
   Variable P : A -> Type .
   Variable f : forall x : A, (forall y : A, R y x -> P y) -> P x .
 
-  Definition fix_f (x : A) (H : acc R x) : P x
+  (** [f] の不動点。 *)
+  Definition fix_f {x : A} (H : acc R x) : P x
     := acc_rec f H .
+
+  (** [fix_f] は不動点である。 *)
+  Definition path_fix_f (x : A) (H : acc R x)
+    : f x (fun (y : A) (yR : R y x) => fix_f (inv_acc H yR)) = fix_f H .
+  Proof.
+   revert x H .
+   refine (@acc_rect A R ?[P] _) .
+   refine (fun x Hp PH => _) .
+   change (f x (fun (y : A) (yR : R y x) => fix_f (Hp y yR)) = fix_f (mk_acc Hp)) .
+  Admitted.
