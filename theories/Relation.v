@@ -12,8 +12,8 @@ Set Default Proof Mode "Classic" .
 Import Basis.Notation .
 
 
-(** 順序を保つ (order-preserving) 関数である。 *)
-Definition order_preserving
+(** 関係を保つ (relation-preserving) 関数である。 *)
+Definition relation_preserving
   {A : Type} (R : A -> A -> Type)
   {B : Type} (S : B -> B -> Type)
   (f : A -> B) : Type
