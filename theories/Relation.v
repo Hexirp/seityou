@@ -195,7 +195,6 @@ Proof.
   change (R xp x) in xpR .
   exact xpR .
  -
-  
 Admitted.
 
 (** [rel_of] に整礎性は遺伝する。 *)
