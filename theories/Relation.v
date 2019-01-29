@@ -158,6 +158,12 @@ Definition fix_f
   := fix_f_acc f (H x) .
 
 
+(** 関数の結果を見た関係。 *)
+Definition rel_of (A : Type) (B : Type) (S : B -> B -> Type) (f : A -> B)
+  : A -> A -> Type
+  := fun x y => S (f x) (f y) .
+
+
 (** ** Others *)
 
 (** [acc] についての弱い道。
