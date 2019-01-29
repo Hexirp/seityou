@@ -106,3 +106,18 @@ Proof.
  refine (acc_rec _ (H x)) .
  exact c .
 Defined.
+
+
+Section FixPoint .
+
+  Variable A : Type .
+  Variable R : A -> A -> Type .
+  Variable wf_R : well_founded R .
+  Variable P : A -> Type .
+  Variable f : forall x : A, (forall y : A, R y x -> P y) -> P x .
+
+  Definition fix_f (x : A) (H : acc R x) : P x .
+  Proof.
+   revert x H .
+   exact (@acc_rec A R P f) .
+  Defined.
