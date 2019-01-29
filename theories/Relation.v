@@ -12,6 +12,16 @@ Set Default Proof Mode "Classic" .
 Import Basis.Notation .
 
 
+(** 順序を保つ (order-preserving) 関数である。 *)
+Definition order_preserving
+  {A : Type} (R : A -> A -> Type)
+  {B : Type} (S : B -> B -> Type)
+  (f : A -> B) : Type
+  := forall x y : A, R x y -> S (f x) (f y) .
+
+
+(** ** Well foundness *)
+
 (** [A] の関係 [R] は [x : A] において整礎である。 *)
 Inductive acc (A : Type) (R : A -> A -> Type) (x : A) : Type
   :=
@@ -90,16 +100,6 @@ Proof.
  exact (acc_case_nodep idmap H) .
 Defined.
 
-
-(** 順序を保つ (order-preserving) 関数である。 *)
-Definition order_preserving
-  {A : Type} (R : A -> A -> Type)
-  {B : Type} (S : B -> B -> Type)
-  (f : A -> B) : Type
-  := forall x y : A, R x y -> S (f x) (f y) .
-
-
-(** ** Well foundness *)
 
 (** [R] は整礎である。 *)
 Definition well_founded {A : Type} (R : A -> A -> Type) : Type
