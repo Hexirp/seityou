@@ -91,6 +91,8 @@ Proof.
 Defined.
 
 
+(** ** Well foundness *)
+
 (** [R] は整礎である。 *)
 Definition well_founded {A : Type} (R : A -> A -> Type) : Type
   := forall x : A, acc R x .
@@ -147,6 +149,8 @@ Definition fix_f
   (x : A) : P x
   := fix_f_acc f (H x) .
 
+
+(** ** Others *)
 
 (** [acc] についての弱い道。
 
