@@ -32,6 +32,11 @@ Proof.
  exact (fun x y => idmap) .
 Defined.
 
+(** [dsum] の第一引数だけを見た関係。 *)
+Definition rel_dsum {A : Type} (R : A -> A -> Type) (P : A -> Type)
+  : (sigma x, P x) -> (sigma x, P x) -> Type
+  := rel_of R dfst .
+
 
 (** ** Well foundness *)
 
