@@ -81,6 +81,16 @@ Arguments acc_rec {_ _ _} _ {_} _ .
 Arguments acc_rect {_ _ _} _ {_} _ .
 
 
+(** [mk_acc] の反対。 *)
+Definition inv_acc
+  {A : Type} {R : A -> A -> Type} {x : A} (H : acc R x)
+  {y : A} (yR : R y x) : acc R y .
+Proof.
+ revert y yR .
+ exact (acc_case_nodep idmap H) .
+Defined.
+
+
 (** [R] は整礎である。 *)
 Definition well_founded {A : Type} (R : A -> A -> Type) : Type
   := forall x : A, acc R x .
