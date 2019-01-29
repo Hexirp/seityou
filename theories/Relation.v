@@ -122,15 +122,27 @@ Section FixPoint .
   Variable f : forall x : A, (forall y : A, R y x -> P y) -> P x .
 
   (** [f] の不動点。 *)
-  Definition fix_f {x : A} (H : acc R x) : P x
+  Definition fix_f_acc {x : A} (H : acc R x) : P x
     := acc_rec f H .
 
   (** [fix_f] は不動点である。 *)
-  Definition path_fix_f (x : A) (H : acc R x)
-    : f x (fun (y : A) (yR : R y x) => fix_f (inv_acc H yR)) = fix_f H .
+  Definition path_fix_f_acc {x : A} {H : acc R x}
+    : f x (fun (y : A) (yR : R y x) => fix_f_acc (inv_acc H yR)) = fix_f_acc H .
   Proof.
    revert x H .
    refine (@acc_rect A R ?[P] _) .
    refine (fun x Hp PH => _) .
    exact idpath .
   Defined.
+
+End FixPoint .
+
+Arguments fix_f_acc {_ _ _} _ {_} _ .
+Arguments path_fix_f_acc {_ _ _ _ _ _} .
+
+(** [f] の全域に渡る不動点。 *)
+Definition fix_f
+  {A : Type} {R : A -> A -> Type} {H : well_founded R} {P : A -> Type}
+  (f : forall x : A, (forall y : A, R y x -> P y) -> P x)
+  (x : A) : P x
+  := fix_f_acc f (H x) .
