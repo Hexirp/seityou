@@ -176,6 +176,16 @@ Definition fix_f
   := fix_f_acc f (H x) .
 
 
+(** [rel_of] に整礎性は遺伝する。 *)
+Definition wf_rel_of
+  {A : Type} {B : Type} (S : B -> B -> Type) (f : A -> B)
+  (wf_S : well_founded S) : well_founded (rel_of S f) .
+Proof.
+ refine (fun x => _) .
+ refine (mk_acc _) .
+Admitted.
+
+
 (** ** Others *)
 
 (** [acc] についての弱い道。
