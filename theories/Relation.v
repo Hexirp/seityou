@@ -47,15 +47,21 @@ Proof.
 Defined.
 
 Definition acc_rect
-  (A : Type) (R : A -> A -> Type) (P : forall x : A, acc A R x -> Type)
+  (A : Type)
+  (R : A -> A -> Type)
+  (P : forall x : A, acc A R x -> Type)
   (case_mk_acc
-     : forall (x : A)
-              (Hp : forall xp : A, R xp x -> acc A R xp),
-              (forall (xp : A)
-                      (xpR : R xp x),
-                       P xp (Hp xp xpR)) ->
+     : forall (x  : A)
+              (Hp : forall xp : A,
+                                R xp x ->
+                                acc A R xp),
+                   (forall (xp  : A)
+                           (xpR : R xp x),
+                                  P xp (Hp xp xpR)) ->
                P x (mk_acc A R x Hp))
-  (x : A) (H : acc A R x) : P x H .
+  (x : A)
+  (H : acc A R x)
+     : P x H .
 Proof.
  revert x H .
  refine (fix go (x : A) (H : acc A R x) {struct H} : P x H := _) .
