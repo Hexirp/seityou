@@ -127,14 +127,14 @@ Definition well_founded {A : Type} (R : A -> A -> Type) : Type
 
     「超限再帰的な定義」からの類推で、関数を整礎帰納法的に定義するともいえる。 *)
 Definition wf_ind_nodep
-  (A : Type) (R : A -> A -> Type) (H : well_founded R) (P : Type)
+  {A : Type} {R : A -> A -> Type} (H : well_founded R) {P : Type}
   (c: forall x : A, (forall xp : A, R xp x -> P) -> P)
   (x : A) : P
   := acc_rec c (H x) .
 
 (** 整礎帰納法。 *)
 Definition wf_ind
-  (A : Type) (R : A -> A -> Type) (H : well_founded R) (P : A -> Type)
+  {A : Type} {R : A -> A -> Type} (H : well_founded R) {P : A -> Type}
   (c: forall x : A, (forall xp : A, R xp x -> P xp) -> P x)
   (x : A) : P x
   := acc_rec c (H x) .
@@ -181,8 +181,11 @@ Definition wf_rel_of
   {A : Type} {B : Type} (S : B -> B -> Type) (f : A -> B)
   (wf_S : well_founded S) : well_founded (rel_of S f) .
 Proof.
- refine (fun x => _) .
- refine (mk_acc _) .
+ assert (forall b, forall a, S (f a) b -> acc (rel_of S f) a) .
+ -
+  refine (wf_ind wf_S _) .
+  refine (fun b bH a aR => _) .
+  refine (bH ?[bp] _ a aR) .
 Admitted.
 
 
