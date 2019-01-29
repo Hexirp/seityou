@@ -146,3 +146,19 @@ Definition fix_f
   (f : forall x : A, (forall y : A, R y x -> P y) -> P x)
   (x : A) : P x
   := fix_f_acc f (H x) .
+
+
+(** [acc] についての弱い道。
+
+    この場合は外延的な等しさ／点ごとの道になる。 *)
+Inductive acc_weak_path
+  (A : Type) (R : A -> A -> Type) (x : A)
+  : acc R x -> acc R x -> Type
+  :=
+  | mk_acc_weak_path
+      : forall (r : forall xp : A, R xp x -> acc R xp)
+               (s : forall xp : A, R xp x -> acc R xp),
+       (forall (xp  : A)
+               (xpR : R xp x),
+                      acc_weak_path A R xp (r xp xpR) (s xp xpR)) ->
+           acc_weak_path A R x (mk_acc r) (mk_acc s) .
