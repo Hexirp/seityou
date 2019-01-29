@@ -183,8 +183,11 @@ Definition wf_rel_dsum
 Proof.
  change (forall xh : (sigma x, P x), acc (rel_of R dfst) xh) .
  refine (dsum_elim _) .
- refine (wf_ind wf_R _) .
- refine (fun x xH => _) .
+ refine (fun xv xH => _) .
+ refine (mk_acc _) .
+ refine (dsum_elim _) .
+ refine (fun xvp xHp xR => _) .
+ change (R xvp xv) in xR .
 Admitted.
 
 (** [rel_of] に整礎性は遺伝する。 *)
