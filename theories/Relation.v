@@ -132,5 +132,5 @@ Section FixPoint .
    revert x H .
    refine (@acc_rect A R ?[P] _) .
    refine (fun x Hp PH => _) .
-   change (f x (fun (y : A) (yR : R y x) => fix_f (Hp y yR)) = fix_f (mk_acc Hp)) .
-  Admitted.
+   exact idpath .
+  Defined.
