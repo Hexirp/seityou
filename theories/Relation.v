@@ -20,9 +20,17 @@ Definition relation_preserving
   := forall x y : A, R x y -> S (f x) (f y) .
 
 (** 関数の結果を見た関係。 *)
-Definition rel_of (A : Type) (B : Type) (S : B -> B -> Type) (f : A -> B)
+Definition rel_of {A : Type} {B : Type} (S : B -> B -> Type) (f : A -> B)
   : A -> A -> Type
   := fun x y => S (f x) (f y) .
+
+(** [rel_of] は自明に関係を保つ関数を作る。 *)
+Definition rel_pre_of {A : Type} {B : Type} {S : B -> B -> Type} (f : A -> B)
+  : relation_preserving (rel_of S f) S f .
+Proof.
+ change (forall x y, S (f x) (f y) -> S (f x) (f y)) .
+ exact (fun x y => idmap) .
+Defined.
 
 
 (** ** Well foundness *)
