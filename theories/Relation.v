@@ -204,6 +204,15 @@ Proof.
  exact (wf_R x) .
 Defined.
 
+(** [rel_pre] である関数は [x] 以下の整礎性を後ろ側へ保つ。 *)
+Definition acc_rel_pre
+  {A : Type} {R : A -> A -> Type}
+  {B : Type} {S : B -> B -> Type}
+  (f : A -> B) (fh : rel_pre R S f)
+  {x : A} (xh : acc S (f x)) : acc R x .
+Proof.
+Admitted.
+
 (** [rel_of] に [x] 以下の整礎性は遺伝する。 *)
 Definition acc_rel_of
   {A : Type} {B : Type} {S : B -> B -> Type} {f : A -> B}
