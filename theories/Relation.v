@@ -209,12 +209,13 @@ Definition acc_rel_pre_fiber
   {A : Type} {R : A -> A -> Type}
   {B : Type} {S : B -> B -> Type}
   (f : A -> B) (fh : rel_pre R S f)
-  {x : A} (xh : acc (rel_dsum S (fun y => sigma x, f x = y))
-                    (dpair (f x) (dpair x idpath)))
-     : acc R x .
+  {xh : sigma y x, f x = y}
+  (acc_xh : acc (rel_dsum S (fun y => sigma x, f x = y)) xh)
+  : acc R (dfst (dsnd xh)) .
 Proof.
- revert x xh .
- (* refine (@acc_rec A ?[ex_R] ?[ex_P] _) . *)
+ revert xh acc_xh .
+ refine (@acc_rec ?[ex_A] ?[ex_R] ?[ex_P] _) .
+ refine (fun xh xhI => _) .
 Admitted.
 
 (** [rel_pre] である関数は [x] 以下の整礎性を後ろ側へ保つ。 *)
