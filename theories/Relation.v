@@ -194,24 +194,15 @@ Defined.
 
 (** [rel_dsum] に整礎性は遺伝する。 *)
 Definition wf_rel_dsum
-  {A : Type} (R : A -> A -> Type) (wf_R : well_founded R) (P : A -> Type)
-  : well_founded (rel_dsum R P) .
+  {A : Type} (R : A -> A -> Type) (P : A -> Type)
+  (wf_R : well_founded R) : well_founded (rel_dsum R P) .
 Proof.
- change (forall xh : (sigma x, P x), acc (rel_of R dfst) xh) .
+ change (forall xh, acc (rel_dsum R P) xh) .
  refine (dsum_elim _) .
- refine (fun xv xH => _) .
- refine (mk_acc _) .
- refine (dsum_elim _) .
- revert xv xH .
- refine (wf_ind wf_R _) .
- refine (fun x xI => _) .
- refine (fun xH xp xpH xpR => _) .
- refine (xI xp _ _ _ _ _) .
- -
-  change (R xp x) in xpR .
-  exact xpR .
- -
-Admitted.
+ refine (fun x px => _) .
+ refine (acc_rel_dsum A R P x _ px) .
+ exact (wf_R x) .
+Defined.
 
 (** [rel_of] に整礎性は遺伝する。 *)
 Definition wf_rel_of
