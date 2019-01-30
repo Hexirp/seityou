@@ -176,6 +176,22 @@ Definition fix_f
   := fix_f_acc f (H x) .
 
 
+(** [rel_dsum] に [x] 以下の整礎性は遺伝する。 *)
+Definition acc_rel_dsum
+  (A : Type) (R : A -> A -> Type) (P : A -> Type)
+  (x : A) (xh : acc R x) (px : P x) : acc (rel_dsum R P) (dpair x px) .
+Proof.
+ revert x xh px .
+ refine (@acc_rec A R ?[ex] _) .
+ refine (fun x xI px => _) .
+ refine (mk_acc _) .
+ refine (dsum_elim _) .
+ refine (fun xp pxp xpr => _) .
+ refine (xI xp _ pxp) .
+ change (R xp x) in xpr .
+ exact xpr .
+Defined.
+
 (** [rel_dsum] に整礎性は遺伝する。 *)
 Definition wf_rel_dsum
   {A : Type} (R : A -> A -> Type) (wf_R : well_founded R) (P : A -> Type)
