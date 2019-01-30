@@ -178,8 +178,8 @@ Definition fix_f
 
 (** [rel_dsum] に [x] 以下の整礎性は遺伝する。 *)
 Definition acc_rel_dsum
-  (A : Type) (R : A -> A -> Type) (P : A -> Type)
-  (x : A) (xh : acc R x) (px : P x) : acc (rel_dsum R P) (dpair x px) .
+  {A : Type} {R : A -> A -> Type} {P : A -> Type}
+  {x : A} (xh : acc R x) {px : P x} : acc (rel_dsum R P) (dpair x px) .
 Proof.
  revert x xh px .
  refine (@acc_rec A R ?[ex] _) .
@@ -194,15 +194,22 @@ Defined.
 
 (** [rel_dsum] に整礎性は遺伝する。 *)
 Definition wf_rel_dsum
-  {A : Type} (R : A -> A -> Type) (P : A -> Type)
+  {A : Type} {R : A -> A -> Type} {P : A -> Type}
   (wf_R : well_founded R) : well_founded (rel_dsum R P) .
 Proof.
  change (forall xh, acc (rel_dsum R P) xh) .
  refine (dsum_elim _) .
  refine (fun x px => _) .
- refine (acc_rel_dsum A R P x _ px) .
+ refine (acc_rel_dsum _) .
  exact (wf_R x) .
 Defined.
+
+(** [rel_of] に [x] 以下の整礎性は遺伝する。 *)
+Definition acc_rel_of
+  {A : Type} {B : Type} {S : B -> B -> Type} {f : A -> B}
+  {x : A} (xh : acc S (f x)) : acc (rel_of S f) x .
+Proof.
+Admitted.
 
 (** [rel_of] に整礎性は遺伝する。 *)
 Definition wf_rel_of
