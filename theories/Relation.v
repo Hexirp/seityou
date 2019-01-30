@@ -213,6 +213,15 @@ Definition acc_rel_pre
 Proof.
 Admitted.
 
+(** [rec_pre] である関数は整礎性を後ろへ保つ。 *)
+Definition wf_rel_pre
+  {A : Type} {R : A -> A -> Type}
+  {B : Type} {S : B -> B -> Type}
+  (f : A -> B) (fh : rel_pre R S f)
+  (wf_S : well_founded S) : well_founded R .
+Proof.
+Admitted.
+
 (** [rel_of] に [x] 以下の整礎性は遺伝する。 *)
 Definition acc_rel_of
   {A : Type} {B : Type} {S : B -> B -> Type} {f : A -> B}
