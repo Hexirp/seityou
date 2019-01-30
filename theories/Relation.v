@@ -204,6 +204,19 @@ Proof.
  exact (wf_R x) .
 Defined.
 
+(** [rel_pre] である関数は、その維に関する [x] 以下の整礎性を後ろ側へ保つ。 *)
+Definition acc_rel_pre_fiber
+  {A : Type} {R : A -> A -> Type}
+  {B : Type} {S : B -> B -> Type}
+  (f : A -> B) (fh : rel_pre R S f)
+  {x : A} (xh : acc (rel_dsum S (fun y => sigma x, f x = y))
+                    (dpair (f x) (dpair x idpath)))
+     : acc R x .
+Proof.
+ revert x xh .
+ (* refine (@acc_rec A ?[ex_R] ?[ex_P] _) . *)
+Admitted.
+
 (** [rel_pre] である関数は [x] 以下の整礎性を後ろ側へ保つ。 *)
 Definition acc_rel_pre
   {A : Type} {R : A -> A -> Type}
