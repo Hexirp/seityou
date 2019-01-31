@@ -254,7 +254,10 @@ Definition wf_rel_pre
   (f : A -> B) (fh : rel_pre R S f)
   (wf_S : well_founded S) : well_founded R .
 Proof.
-Admitted.
+ refine (fun x => _) .
+ refine (acc_rel_pre f fh _) .
+ exact (wf_S (f x)) .
+Defined.
 
 (** [rel_of] に [x] 以下の整礎性は遺伝する。 *)
 Definition acc_rel_of
