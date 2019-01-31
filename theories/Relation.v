@@ -259,24 +259,14 @@ Proof.
  exact (wf_S (f x)) .
 Defined.
 
-(** [rel_of] に [x] 以下の整礎性は遺伝する。 *)
-Definition acc_rel_of
-  {A : Type} {B : Type} {S : B -> B -> Type} {f : A -> B}
-  {x : A} (xh : acc S (f x)) : acc (rel_of S f) x .
-Proof.
-Admitted.
-
 (** [rel_of] に整礎性は遺伝する。 *)
 Definition wf_rel_of
   {A : Type} {B : Type} (S : B -> B -> Type) (f : A -> B)
   (wf_S : well_founded S) : well_founded (rel_of S f) .
 Proof.
- assert (forall b, forall a, S (f a) b -> acc (rel_of S f) a) .
- -
-  refine (wf_ind wf_S _) .
-  refine (fun b bH a aR => _) .
-  refine (bH ?[bp] _ a aR) .
-Admitted.
+ refine (wf_rel_pre f (rel_pre_of f) _) .
+ exact wf_S .
+Defined.
 
 
 (** ** Others *)
