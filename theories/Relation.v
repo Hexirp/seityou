@@ -216,14 +216,22 @@ Proof.
  revert xh acc_xh .
  refine (@acc_rec ?[ex_A] ?[ex_R] ?[ex_P] _) .
  refine (dsum_elim _) .
- refine (fun xhv xhh xhI => _) .
+ refine (fun y => _) .
+ refine (dsum_elim _) .
+ refine (fun x xH => _) .
+ refine (fun I => _) .
  refine (mk_acc _) .
  refine (fun xp xpR => _) .
- pose (xph := dpair (f xp) (dpair xp idpath) : sigma y x, f x = y) .
- change (acc R (dfst (dsnd xph))) .
- refine (xhI xph _) .
- change (S (f xp) xhv) .
-Admitted.
+ pose (xhp := dpair (f xp) (dpair xp idpath) : sigma y x, f x = y) .
+ change (acc R (dfst (dsnd xhp))) .
+ refine (I xhp _) .
+ change (S (f xp) y) .
+ refine (transport xH _) .
+ change (forall x y : A, R x y -> S (f x) (f y)) in fh .
+ refine (fh xp x _) .
+ change (R xp x) in xpR .
+ exact xpR .
+Defined.
 
 (** [rel_pre] である関数は [x] 以下の整礎性を後ろ側へ保つ。 *)
 Definition acc_rel_pre
