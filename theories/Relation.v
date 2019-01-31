@@ -238,9 +238,14 @@ Definition acc_rel_pre
   {A : Type} {R : A -> A -> Type}
   {B : Type} {S : B -> B -> Type}
   (f : A -> B) (fh : rel_pre R S f)
-  {x : A} (xh : acc S (f x)) : acc R x .
+  {x : A} (acc_x : acc S (f x)) : acc R x .
 Proof.
-Admitted.
+ pose (xh := dpair (f x) (dpair x idpath) : sigma y x, f x = y) .
+ change (acc R (dfst (dsnd xh))) .
+ refine (acc_rel_pre_fiber f fh _) .
+ refine (acc_rel_dsum _) .
+ exact acc_x .
+Defined.
 
 (** [rec_pre] である関数は整礎性を後ろへ保つ。 *)
 Definition wf_rel_pre
