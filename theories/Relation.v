@@ -216,6 +216,11 @@ Proof.
  revert xh acc_xh .
  refine (@acc_rec ?[ex_A] ?[ex_R] ?[ex_P] _) .
  refine (fun xh xhI => _) .
+ refine (mk_acc _) .
+ refine (fun xp xpR => _) .
+ pose (xph := dpair (f xp) (dpair xp idpath) : sigma y x, f x = y) .
+ change (acc R (dfst (dsnd xph))) .
+ refine (xhI xph _) .
 Admitted.
 
 (** [rel_pre] である関数は [x] 以下の整礎性を後ろ側へ保つ。 *)
