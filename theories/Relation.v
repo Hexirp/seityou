@@ -66,30 +66,30 @@ Section Acc .
   Definition acc_rec
     (P : A -> Type)
     (case_mk_acc : forall x, (forall xp, R xp x -> P xp) -> P x)
-    (x : A) (H : acc x) : P x .
+    (x : A) (xH : acc x) : P x .
   Proof.
-   revert x H .
-   refine (fix go (x : A) (H : acc x) {struct H} : P x := _) .
-   refine (acc_case_nodep x (P x) _ H) .
-   refine (fun Hp => _) .
+   revert x xH .
+   refine (fix go (x : A) (xH : acc x) {struct xH} : P x := _) .
+   refine (acc_case_nodep x (P x) _ xH) .
+   refine (fun Hps => _) .
    refine (case_mk_acc x _) .
    refine (fun xp xpR => _) .
-   exact (go xp (Hp xp xpR)) .
+   exact (go xp (Hps xp xpR)) .
   Defined.
 
   Definition acc_rect
     (P : forall x, acc x -> Type)
     (case_mk_acc
        : forall x Hp, (forall xp xpR, P xp (Hp xp xpR)) -> P x (mk_acc x Hp))
-    (x : A) (H : acc x) : P x H .
+    (x : A) (xH : acc x) : P x xH .
   Proof.
-   revert x H .
-   refine (fix go (x : A) (H : acc x) {struct H} : P x H := _) .
-   refine (acc_case x (P x) _ H) .
-   refine (fun Hp => _) .
-   refine (case_mk_acc x Hp _) .
+   revert x xH .
+   refine (fix go (x : A) (xH : acc x) {struct xH} : P x xH := _) .
+   refine (acc_case x (P x) _ xH) .
+   refine (fun Hps => _) .
+   refine (case_mk_acc x Hps _) .
    refine (fun xp xpR => _) .
-   exact (go xp (Hp xp xpR)) .
+   exact (go xp (Hps xp xpR)) .
   Defined.
 
 End Acc.
