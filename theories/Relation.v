@@ -326,17 +326,20 @@ Defined.
 
 (** ** Others *)
 
-(** [acc] についての弱い道。
+Section AccPath .
 
-    この場合は外延的な等しさ／点ごとの道になる。 *)
-Inductive acc_weak_path
-  (A : Type) (R : A -> A -> Type) (x : A)
-  : acc R x -> acc R x -> Type
-  :=
-  | mk_acc_weak_path
-      : forall (r : forall xp : A, R xp x -> acc R xp)
-               (s : forall xp : A, R xp x -> acc R xp),
-       (forall (xp  : A)
-               (xpR : R xp x),
-                      acc_weak_path A R xp (r xp xpR) (s xp xpR)) ->
-           acc_weak_path A R x (mk_acc r) (mk_acc s) .
+  Variable A : Type .
+  Variable R : A -> A -> Type .
+
+  (** [acc] についての弱い道。
+
+      この場合は外延的な等しさ／点ごとの道になる。 *)
+  Inductive acc_path (x : A) : acc R x -> acc R x -> Type
+    :=
+    | mk_acc_path
+      : forall r s,
+              (forall xp xpR, acc_path xp (r xp xpR) (s xp xpR))->
+                     acc_path x (mk_acc r) (mk_acc s)
+    .
+
+End AccPath .
