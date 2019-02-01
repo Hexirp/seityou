@@ -59,9 +59,9 @@ Section Acc .
 
   Definition acc_case
     (x : A) (P : acc x -> Type)
-    (case_mk_acc : forall Hp , P (mk_acc x Hp))
+    (case_mk_acc : forall Hps, P (mk_acc x Hps))
     (H : acc x) : P H
-    := match H with mk_acc _ Hp => case_mk_acc Hp end .
+    := match H with mk_acc _ Hps => case_mk_acc Hps end .
 
   Definition acc_rec
     (P : A -> Type)
@@ -80,7 +80,7 @@ Section Acc .
   Definition acc_rect
     (P : forall x, acc x -> Type)
     (case_mk_acc
-       : forall x Hp, (forall xp xpR, P xp (Hp xp xpR)) -> P x (mk_acc x Hp))
+       : forall x Hps, (forall xp xpR, P xp (Hps xp xpR)) -> P x (mk_acc x Hps))
     (x : A) (xH : acc x) : P x xH .
   Proof.
    revert x xH .
