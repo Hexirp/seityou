@@ -1,0 +1,9 @@
+language: generic
+sudo: false
+dist: trusty
+
+notifications:
+  email: false
+
+script:
+  - wc -m theories/*.v && echo "Good Job!"
