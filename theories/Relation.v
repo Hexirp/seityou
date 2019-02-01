@@ -142,6 +142,53 @@ Definition wf_ind
 
 (** 整礎帰納法により構成される関数の不動点について。 *)
 
+Section FixPointNodep .
+
+  Variable A : Type .
+  Variable R : A -> A -> Type .
+  Variable P : Type .
+  Variable f : forall x : A, (forall y : A, R y x -> P) -> P .
+
+  (** [f] の不動点。 *)
+  Definition fix_f_acc_nodep {x : A} (H : acc R x) : P
+    := acc_rec f H .
+
+  (** [fix_f] は不動点である。 *)
+  Definition path_fix_f_acc_nodep {x : A} {H : acc R x}
+    : paths (f x (fun (y : A) (yR : R y x) => fix_f_acc_nodep (inv_acc H yR)))
+            (fix_f_acc_nodep H) .
+  Proof.
+   revert x H .
+   refine (@acc_rect A R ?[ex_P] _) .
+   refine (fun x Hp I => _) .
+
+   change (fix_f_acc_nodep (mk_acc Hp))
+     with (acc_rec f (mk_acc Hp)) .
+
+   change (acc_rec f (mk_acc Hp))
+     with (f x (fun y yR => acc_rec f (Hp y yR))) .
+
+   change (fun y yR => acc_rec f (Hp y yR))
+     with (fun y yR => fix_f_acc_nodep (Hp y yR)) .
+
+   change (fun y yR => fix_f_acc_nodep (Hp y yR))
+     with (fun y yR => fix_f_acc_nodep (inv_acc (mk_acc Hp) (y := y) yR)) .
+
+   exact idpath .
+  Defined.
+
+End FixPointNodep .
+
+Arguments fix_f_acc_nodep {_ _ _} _ {_} _ .
+Arguments path_fix_f_acc_nodep {_ _ _ _ _ _} .
+
+(** [f] の全域に渡る不動点。 *)
+Definition fix_f_nodep
+  {A : Type} {R : A -> A -> Type} {wf_R : well_founded R} {P : Type}
+  (f : forall x : A, (forall y : A, R y x -> P) -> P)
+  (x : A) : P
+  := fix_f_acc_nodep f (wf_R x) .
+
 Section FixPoint .
 
   Variable A : Type .
@@ -159,7 +206,20 @@ Section FixPoint .
   Proof.
    revert x H .
    refine (@acc_rect A R ?[P] _) .
-   refine (fun x Hp PH => _) .
+   refine (fun x Hp I => _) .
+
+   change (fix_f_acc (mk_acc Hp))
+     with (acc_rec f (mk_acc Hp)) .
+
+   change (acc_rec f (mk_acc Hp))
+     with (f x (fun y yR => acc_rec f (Hp y yR))) .
+
+   change (fun y yR => acc_rec f (Hp y yR))
+     with (fun y yR => fix_f_acc (Hp y yR)) .
+
+   change (fun y yR => fix_f_acc (Hp y yR))
+     with (fun y yR => fix_f_acc (inv_acc (mk_acc Hp) (y := y) yR)) .
+
    exact idpath .
   Defined.
 
@@ -170,10 +230,10 @@ Arguments path_fix_f_acc {_ _ _ _ _ _} .
 
 (** [f] の全域に渡る不動点。 *)
 Definition fix_f
-  {A : Type} {R : A -> A -> Type} {H : well_founded R} {P : A -> Type}
+  {A : Type} {R : A -> A -> Type} {wf_R : well_founded R} {P : A -> Type}
   (f : forall x : A, (forall y : A, R y x -> P y) -> P x)
   (x : A) : P x
-  := fix_f_acc f (H x) .
+  := fix_f_acc f (wf_R x) .
 
 
 (** [rel_dsum] に [x] 以下の整礎性は遺伝する。 *)
