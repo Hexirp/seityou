@@ -338,7 +338,7 @@ Section AccPath .
     :=
     | mk_acc_path
       : forall r s,
-              (forall xp xpR, acc_path xp (r xp xpR) (s xp xpR))->
+                    (forall xp xpR, acc_path xp (r xp xpR) (s xp xpR)) ->
                      acc_path x (mk_acc r) (mk_acc s)
     .
 
