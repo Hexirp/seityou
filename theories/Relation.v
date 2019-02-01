@@ -117,9 +117,13 @@ Defined.
 Definition well_founded {A : Type} (R : A -> A -> Type) : Type
   := forall x : A, acc R x .
 
-(** 非依存の整礎帰納法。
+
+
+(** Well-founded induction
 
     「超限再帰的な定義」からの類推で、関数を整礎帰納法的に定義するともいえる。 *)
+
+(** 非依存の整礎帰納法。 *)
 Definition wf_ind_nodep
   {A : Type} {R : A -> A -> Type} {P : Type}
   (c : forall x, (forall xp, R xp x -> P) -> P)
@@ -134,7 +138,9 @@ Definition wf_ind
   := acc_rec c (wf_R x) .
 
 
-(** 整礎帰納法により構成される関数の不動点について。 *)
+(** Fixpoints by well-founded induction
+
+    整礎帰納法により構成される関数の不動点について。 *)
 
 Section FixPointNodep .
 
@@ -232,6 +238,11 @@ Definition fix_f
   := fix_f_acc f (wf_R x) .
 
 
+
+(** *** Propagation of well-foundness
+
+    整礎性の伝播に関する定理について。 *)
+
 (** [rel_dsum] に [x] 以下の整礎性は遺伝する。 *)
 Definition acc_rel_dsum
   {A : Type} {R : A -> A -> Type} {P : A -> Type}
@@ -324,7 +335,7 @@ Proof.
 Defined.
 
 
-(** ** Others *)
+(** *** Others *)
 
 Section AccPath .
 
