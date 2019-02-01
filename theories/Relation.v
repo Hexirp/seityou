@@ -71,25 +71,25 @@ Section Acc .
    revert x xH .
    refine (fix go (x : A) (xH : acc x) {struct xH} : P x := _) .
    refine (acc_case_nodep x (P x) _ xH) .
-   refine (fun Hps => _) .
+   refine (fun xHps => _) .
    refine (case_mk_acc x _) .
    refine (fun xp xpR => _) .
-   exact (go xp (Hps xp xpR)) .
+   exact (go xp (xHps xp xpR)) .
   Defined.
 
   Definition acc_rect
     (P : forall x, acc x -> Type)
     (case_mk_acc
-       : forall x Hps, (forall xp xpR, P xp (Hps xp xpR)) -> P x (mk_acc x Hps))
+       : forall x xHps, (forall xp xpR, P xp (xHps xp xpR)) -> P x (mk_acc x xHps))
     (x : A) (xH : acc x) : P x xH .
   Proof.
    revert x xH .
    refine (fix go (x : A) (xH : acc x) {struct xH} : P x xH := _) .
    refine (acc_case x (P x) _ xH) .
-   refine (fun Hps => _) .
-   refine (case_mk_acc x Hps _) .
+   refine (fun xHps => _) .
+   refine (case_mk_acc x xHps _) .
    refine (fun xp xpR => _) .
-   exact (go xp (Hps xp xpR)) .
+   exact (go xp (xHps xp xpR)) .
   Defined.
 
 End Acc.
@@ -107,8 +107,9 @@ Definition inv_acc
   {A : Type} {R : A -> A -> Type} {x : A} (H : acc R x)
   {y : A} (yR : R y x) : acc R y .
 Proof.
- revert y yR .
- exact (acc_case_nodep idmap H) .
+ revert H y yR .
+ refine (acc_case_nodep _) .
+ exact idmap .
 Defined.
 
 
@@ -120,17 +121,17 @@ Definition well_founded {A : Type} (R : A -> A -> Type) : Type
 
     「超限再帰的な定義」からの類推で、関数を整礎帰納法的に定義するともいえる。 *)
 Definition wf_ind_nodep
-  {A : Type} {R : A -> A -> Type} (H : well_founded R) {P : Type}
-  (c: forall x : A, (forall xp : A, R xp x -> P) -> P)
-  (x : A) : P
-  := acc_rec c (H x) .
+  {A : Type} {R : A -> A -> Type} {P : Type}
+  (c : forall x, (forall xp, R xp x -> P) -> P)
+  (wf_R : well_founded R) (x : A) : P
+  := acc_rec c (wf_R x) .
 
 (** 整礎帰納法。 *)
 Definition wf_ind
-  {A : Type} {R : A -> A -> Type} (H : well_founded R) {P : A -> Type}
+  {A : Type} {R : A -> A -> Type} {P : A -> Type}
   (c: forall x : A, (forall xp : A, R xp x -> P xp) -> P x)
-  (x : A) : P x
-  := acc_rec c (H x) .
+  (wf_R : well_founded R) (x : A) : P x
+  := acc_rec c (wf_R x) .
 
 
 (** 整礎帰納法により構成される関数の不動点について。 *)
@@ -143,29 +144,30 @@ Section FixPointNodep .
   Variable f : forall x : A, (forall y : A, R y x -> P) -> P .
 
   (** [f] の不動点。 *)
-  Definition fix_f_acc_nodep {x : A} (H : acc R x) : P
-    := acc_rec f H .
+  Definition fix_f_acc_nodep {x : A} (xH : acc R x) : P
+    := acc_rec f xH .
 
   (** [fix_f] は不動点である。 *)
-  Definition path_fix_f_acc_nodep {x : A} {H : acc R x}
-    : paths (f x (fun (y : A) (yR : R y x) => fix_f_acc_nodep (inv_acc H yR)))
-            (fix_f_acc_nodep H) .
+  Definition path_fix_f_acc_nodep
+    {x : A} {xH : acc R x}
+    : paths (f x (fun y yR => @fix_f_acc_nodep y (@inv_acc A R x xH y yR)))
+            (@fix_f_acc_nodep x xH) .
   Proof.
-   revert x H .
+   revert x xH .
    refine (@acc_rect A R ?[ex_P] _) .
-   refine (fun x Hp I => _) .
+   refine (fun x xHps I => _) .
 
-   change (fix_f_acc_nodep (mk_acc Hp))
-     with (acc_rec f (mk_acc Hp)) .
+   change (fix_f_acc_nodep (mk_acc xHps))
+     with (acc_rec f (mk_acc xHps)) .
 
-   change (acc_rec f (mk_acc Hp))
-     with (f x (fun y yR => acc_rec f (Hp y yR))) .
+   change (acc_rec f (mk_acc xHps))
+     with (f x (fun y yR => acc_rec f (xHps y yR))) .
 
-   change (fun y yR => acc_rec f (Hp y yR))
-     with (fun y yR => fix_f_acc_nodep (Hp y yR)) .
+   change (fun y yR => acc_rec f (xHps y yR))
+     with (fun y yR => fix_f_acc_nodep (xHps y yR)) .
 
-   change (fun y yR => fix_f_acc_nodep (Hp y yR))
-     with (fun y yR => fix_f_acc_nodep (inv_acc (mk_acc Hp) (y := y) yR)) .
+   change (fun y yR => fix_f_acc_nodep (xHps y yR))
+     with (fun y yR => fix_f_acc_nodep (inv_acc (mk_acc xHps) (y := y) yR)) .
 
    exact idpath .
   Defined.
@@ -177,9 +179,9 @@ Arguments path_fix_f_acc_nodep {_ _ _ _ _ _} .
 
 (** [f] の全域に渡る不動点。 *)
 Definition fix_f_nodep
-  {A : Type} {R : A -> A -> Type} {wf_R : well_founded R} {P : Type}
+  {A : Type} {R : A -> A -> Type} {P : Type}
   (f : forall x : A, (forall y : A, R y x -> P) -> P)
-  (x : A) : P
+  (wf_R : well_founded R) (x : A) : P
   := fix_f_acc_nodep f (wf_R x) .
 
 Section FixPoint .
@@ -190,28 +192,29 @@ Section FixPoint .
   Variable f : forall x : A, (forall y : A, R y x -> P y) -> P x .
 
   (** [f] の不動点。 *)
-  Definition fix_f_acc {x : A} (H : acc R x) : P x
-    := acc_rec f H .
+  Definition fix_f_acc {x : A} (xH : acc R x) : P x
+    := acc_rec f xH .
 
   (** [fix_f] は不動点である。 *)
-  Definition path_fix_f_acc {x : A} {H : acc R x}
-    : f x (fun (y : A) (yR : R y x) => fix_f_acc (inv_acc H yR)) = fix_f_acc H .
+  Definition path_fix_f_acc {x : A} {xH : acc R x}
+    : paths (f x (fun y yR => @fix_f_acc y (@inv_acc A R x xH y yR)))
+            (@fix_f_acc x xH) .
   Proof.
-   revert x H .
+   revert x xH .
    refine (@acc_rect A R ?[P] _) .
-   refine (fun x Hp I => _) .
+   refine (fun x xHps I => _) .
 
-   change (fix_f_acc (mk_acc Hp))
-     with (acc_rec f (mk_acc Hp)) .
+   change (fix_f_acc (mk_acc xHps))
+     with (acc_rec f (mk_acc xHps)) .
 
-   change (acc_rec f (mk_acc Hp))
-     with (f x (fun y yR => acc_rec f (Hp y yR))) .
+   change (acc_rec f (mk_acc xHps))
+     with (f x (fun y yR => acc_rec f (xHps y yR))) .
 
-   change (fun y yR => acc_rec f (Hp y yR))
-     with (fun y yR => fix_f_acc (Hp y yR)) .
+   change (fun y yR => acc_rec f (xHps y yR))
+     with (fun y yR => fix_f_acc (xHps y yR)) .
 
-   change (fun y yR => fix_f_acc (Hp y yR))
-     with (fun y yR => fix_f_acc (inv_acc (mk_acc Hp) (y := y) yR)) .
+   change (fun y yR => fix_f_acc (xHps y yR))
+     with (fun y yR => fix_f_acc (inv_acc (mk_acc xHps) (y := y) yR)) .
 
    exact idpath .
   Defined.
@@ -223,9 +226,9 @@ Arguments path_fix_f_acc {_ _ _ _ _ _} .
 
 (** [f] の全域に渡る不動点。 *)
 Definition fix_f
-  {A : Type} {R : A -> A -> Type} {wf_R : well_founded R} {P : A -> Type}
+  {A : Type} {R : A -> A -> Type} {P : A -> Type}
   (f : forall x : A, (forall y : A, R y x -> P y) -> P x)
-  (x : A) : P x
+  (wf_R : well_founded R) (x : A) : P x
   := fix_f_acc f (wf_R x) .
 
 
