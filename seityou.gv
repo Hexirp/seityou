@@ -18,4 +18,11 @@ digraph deps {
 
   Basis -> Peano;
 
+  Basis -> Decidability;
+  Path -> Decidability;
+  Homotopy -> Decidability;
+  Contraction -> Decidability;
+
+  Basis -> Relation;
+
 }

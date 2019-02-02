@@ -14,6 +14,8 @@ coqc -nois -verbose \
  theories/Contraction.v \
  theories/Equivalence.v \
  theories/Peano.v \
+ theories/Decidability.v \
+ theories/Relation.v \
  theories/D.v \
  theories/K.v \
  theories/W.v \

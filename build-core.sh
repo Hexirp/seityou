@@ -13,4 +13,6 @@ coqc -nois -verbose \
  theories/Pwpath.v \
  theories/Contraction.v \
  theories/Equivalence.v \
- theories/Peano.v
+ theories/Peano.v \
+ theories/Decidability.v \
+ theories/Relation.v
