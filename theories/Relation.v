@@ -80,7 +80,9 @@ Section Acc .
   Definition acc_rect
     (P : forall x, acc x -> Type)
     (case_mk_acc
-       : forall x xHps, (forall xp xpR, P xp (xHps xp xpR)) -> P x (mk_acc x xHps))
+       : forall x xHps,
+                        (forall xp xpR, P xp (xHps xp xpR)) ->
+                         P x (mk_acc x xHps))
     (x : A) (xH : acc x) : P x xH .
   Proof.
    revert x xH .
