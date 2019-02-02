@@ -6,4 +6,6 @@ notifications:
   email: false
 
 script:
-  - wc -m theories/*.v && echo "Good Job!"
+  - wc -m theories/*.v || echo -n ''
+  - grep -E '^................................................................................' theories/*.v || echo -n ''
+  - echo 'Good Job!'
