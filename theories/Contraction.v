@@ -125,14 +125,14 @@ Defined.
     [s : Y -> X] は [Y -> unit] と同じように [const] によって自明に
     与えられることに注意せよ。 *)
 Definition contr_retract
-  {X Y} (cA : contr X) (r : X -> Y) (s : Y -> X)
+  {X Y} (cX : contr X) (r : X -> Y) (s : Y -> X)
   (retr : forall x, r (s x) = x) : contr Y .
 Proof.
- refine (dpair (r (center cA)) _) .
+ refine (dpair (r (center cX)) _) .
  refine (fun y => _) .
  refine (concat (y := r (s y)) _ _).
  -
-  exact (contr_dom_constant cA r) .
+  exact (contr_dom_constant cX r) .
  -
   exact (retr y) .
 Defined.
