@@ -37,19 +37,19 @@ Proof.
 Defined.
 
 
-Definition decidable_contr (A : Type) (ic : contr A) : decidable A .
+Definition decidable_contr (A : Type) (cA : contr A) : decidable A .
 Proof.
  refine (left _) .
- exact (center ic) .
+ exact (center cA) .
 Defined.
 
 Definition path_decidable_ishprop
-  (A : Type) (ihp : is_hprop A) : path_decidable A .
+  (A : Type) (pA : is_hprop A) : path_decidable A .
 Proof.
  refine (fun x y => _) .
- pose (ic := ihp x y : contr (x = y)) .
+ pose (c := pA x y : contr (x = y)) .
  refine (left _) .
- exact (center ic) .
+ exact (center c) .
 Defined.
 
 
