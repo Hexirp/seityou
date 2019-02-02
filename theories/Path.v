@@ -124,9 +124,9 @@ Definition contrans_concat
   : p @ q = contrans p q .
 Proof.
  revert z q .
- refine (@paths_elim A y _ _) .
+ refine (@paths_elim A y ?[ex_P] _) .
  revert y p .
- refine (@paths_elim A x _ _) .
+ refine (@paths_elim A x ?[ex_P] _) .
  exact 1 .
 Defined.
 
@@ -164,9 +164,9 @@ Definition ap_pp
   : ap f (p @ q) = ap f p @ ap f q .
 Proof.
  revert z q .
- refine (@paths_elim A y _ _) .
+ refine (@paths_elim A y ?[ex_P] _) .
  revert y p .
- refine (@paths_elim A x _ _) .
+ refine (@paths_elim A x ?[ex_P] _) .
  exact 1 .
 Defined.
 
@@ -178,7 +178,7 @@ Definition ap_ff
   : ap (f o g) p = ap f (ap g p) .
 Proof.
  revert y p .
- refine (@paths_elim A x _ _) .
+ refine (@paths_elim A x ?[ex_P] _) .
  exact 1 .
 Defined.
 
@@ -222,7 +222,7 @@ Definition concat_1p
   : 1 @ p = p .
 Proof.
  revert y p .
- refine (@paths_elim A x _ _) .
+ refine (@paths_elim A x ?[ex_P] _) .
  exact 1 .
 Defined.
 
@@ -234,9 +234,9 @@ Definition concat2
   : p @ s = q @ t .
 Proof.
  revert t u .
- refine (@paths_elim_nodep (y = z) s _ _) .
+ refine (@paths_elim_nodep (y = z) s ?[ex_P] _) .
  revert q r .
- refine (@paths_elim_nodep (x = y) p _ _) .
+ refine (@paths_elim_nodep (x = y) p ?[ex_P] _) .
  exact 1 .
 Defined.
 
@@ -246,7 +246,7 @@ Definition coninv_pp
   (p : x = y) : coninv p p = 1 .
 Proof.
  revert y p .
- refine (@paths_elim A x _ _) .
+ refine (@paths_elim A x ?[ex_P] _) .
  exact 1 .
 Defined.
 
