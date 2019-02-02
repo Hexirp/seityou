@@ -254,3 +254,10 @@ Module Notation .
     .
 
 End Notation .
+
+(** 参考文献:
+
+    * https://github.com/HoTT/HoTT/blob/1940297dd121d54d033274d84c5d023fdc56bfb4/theories/Basics/Overture.v
+    * https://github.com/HoTT/HoTT/blob/1940297dd121d54d033274d84c5d023fdc56bfb4/theories/Basics/PathGroupoids.v
+
+    *)
