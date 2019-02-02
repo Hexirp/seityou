@@ -143,6 +143,16 @@ Proof.
  exact r .
 Defined.
 
+(** [transport] の依存版。 *)
+Definition transport_dep
+  {A : Type} {a : A} {P : forall a', a = a' -> Type}
+  {a' : A} (p : a = a') (x : P a idpath) : P a' p .
+Proof.
+ revert a' p .
+ refine (@paths_elim A a P _) .
+ exact x .
+Defined.
+
 
 (** ** Groupoid Structures *)
 
