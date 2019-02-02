@@ -17,49 +17,50 @@ Import Basis.Notation.Path .
 
 (** [center] と [x : A] の間に道がある。 *)
 Definition center_path
-  {A : Type} (IC : contr A) (x : A) : center IC = x .
+  {A : Type} (cA : contr A) (x : A) : center cA = x .
 Proof.
- exact (dsnd IC x) .
+ exact (dsnd cA x) .
 Defined.
 
 (** [A] が [contr] であれば [x y : A] の間に道がある。 *)
 Definition path_contr
-  {A : Type} (IC : contr A) (x y : A) : x = y .
+  {A : Type} (cA : contr A) (x y : A) : x = y .
 Proof.
- refine (coninv (y := center IC) _ _) .
+ refine (coninv (y := center cA) _ _) .
  -
-  exact (center_path IC x) .
+  exact (center_path cA x) .
  -
-  exact (center_path IC y) .
+  exact (center_path cA y) .
 Defined.
 
 (** [A] が [IC : contr A] であれば、その二点の間の道 [p : paths x y] は
     [path_contr IC x y] からの道を持つ。 *)
 Definition K_path_contr
-  {A : Type} (IC : contr A) {x y : A} (p : x = y)
-  : path_contr IC x y = p .
+  {A : Type} (cA : contr A) {x y : A} (p : x = y)
+  : path_contr cA x y = p .
 Proof.
- refine (paths_elim (P := fun y' p' => path_contr IC x y' = p') _ p) .
- exact (coninv_pp (center_path IC x)) .
+ revert y p .
+ refine (@paths_elim A x ?[ex_P] _) .
+ exact (coninv_pp (center_path cA x)) .
 Defined.
 
 (** [A] が [contr] であれば [p q : paths x y] の間に道がある。 *)
 Definition path_path_contr
-  {A : Type} (IC : contr A) {x y : A} (p q : x = y) : p = q .
+  {A : Type} (cA : contr A) {x y : A} (p q : x = y) : p = q .
 Proof.
- refine (coninv (y := path_contr IC x y) _ _) .
+ refine (coninv (y := path_contr cA x y) _ _) .
  -
-  exact (K_path_contr IC p) .
+  exact (K_path_contr cA p) .
  -
-  exact (K_path_contr IC q) .
+  exact (K_path_contr cA q) .
 Defined.
 
 (** [A] が [contr] であれば、その二点の間の [paths] も [contr] である。 *)
 Definition contr_paths_contr
-  {A : Type} (IC : contr A) (x y : A) : contr (x = y) .
+  {A : Type} (cA : contr A) (x y : A) : contr (x = y) .
 Proof.
- refine (dpair (path_contr IC x y) _) .
- exact (K_path_contr IC) .
+ refine (dpair (path_contr cA x y) _) .
+ exact (K_path_contr cA) .
 Defined.
 
 
@@ -111,11 +112,11 @@ Defined.
 (** 定義域 (domain) が [contr] である関数は、
     命題的定値 (propositionally constant) である。 *)
 Definition contr_dom_constant
-  {A B : Type} (IC : contr A) (f : A -> B) {x y : A}
+  {A B : Type} (cA : contr A) (f : A -> B) {x y : A}
   : f x = f y .
 Proof.
  refine (ap f _) .
- exact (path_contr IC x y) .
+ exact (path_contr cA x y) .
 Defined.
 
 (** [X] が [contr] で [r : Y -> X] が引き込み (retraction) であれば、
@@ -124,14 +125,14 @@ Defined.
     [s : Y -> X] は [Y -> unit] と同じように [const] によって自明に
     与えられることに注意せよ。 *)
 Definition contr_retract
-  {X Y} (IC : contr X) (r : X -> Y) (s : Y -> X)
+  {X Y} (cA : contr X) (r : X -> Y) (s : Y -> X)
   (retr : forall x, r (s x) = x) : contr Y .
 Proof.
- refine (dpair (r (dfst IC)) _) .
+ refine (dpair (r (center cA)) _) .
  refine (fun y => _) .
  refine (concat (y := r (s y)) _ _).
  -
-  exact (contr_dom_constant IC r) .
+  exact (contr_dom_constant cA r) .
  -
   exact (retr y) .
 Defined.
