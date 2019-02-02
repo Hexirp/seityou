@@ -389,7 +389,7 @@ Definition paths_elim_nop
 Definition inverse
   {A : Type} {x y : A}
   (p : paths x y) : paths y x
-  := paths_elim_nodep (P := fun y' => paths y' x) idpath p .
+  := paths_elim_nodep (A := A) (a := x) (P y' := paths y' x) idpath (a' := y) p .
 
 (** 道を結合する。
 
