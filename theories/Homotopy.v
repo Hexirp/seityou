@@ -13,6 +13,13 @@ Set Default Proof Mode "Classic" .
 Import Basis.Notation .
 Import Basis.Notation.Path .
 
+(** 覚え書き: 相同、ホモトピー、homotopy は、もともとの意味では、ある二つの
+    連続写像の間の一種の等しさであり、それらが連続的に移り合えるかを表す。
+    相同的型理論でいうならば、そこにおいての関数は全てが連続写像であるため、
+    [f g : A -> B] の間の [forall x, f x = g x] という等しさとして表される。
+    ただし、相同論的な構造を単に相同と呼ぶ例もあるようで、よしなに解釈して
+    ほしい。 *)
+
 
 (** ** Equivalence *)
 
