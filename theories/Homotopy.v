@@ -152,21 +152,15 @@ Definition equiv_fun_is_equiv
 
 (** 切捨 (Truncation) は、型の複雑性を測定する。このライブラリでは、ある型が
     ｎ次切捨 (n-truncated) であるという証拠を [is_trunc n] として形式化する。
-    これは HoTT ライブラリに倣ったものである。
-
-    [is_trunc n (@paths A a b)] よりも [is_trunc (S n) A] の方を、
-    [is_trunc n (forall a, P a)] よりも [forall a, is_trunc n (P a)] の方を、
-    [is_trunc n (prod A B)] よりも [prod (is_trunc n A) (is_trunc n B)] の方を、
-    つまり、より細かい型に対して記述するようにする。 *)
+    これは HoTT ライブラリに倣ったものである。 *)
 
 (** *** Contraction *)
 
 (** 空間 [A] が可縮であるというのは、一つの点 [x : A] があって、一つの
     （点ごと）相同的接続 (homotopy connecting) 、それが [A] の上での
     恒等写像から [x] への定値写像 (constant map) までのがあるときである。
-    ゆえに、一つの [contr A] の値は依存ペアで、最初の構成要素が一つの点
-    [x] であり、二番目の構成要素が、一つの [A] から [x] への引き込み
-    である。 *)
+    ゆえに、一つの [contr A] の値は依存ペアで、最初の構成要素が点 [x] で
+    あり、二番目の構成要素が [A] の値全てから [x] への引き込みである。 *)
 
 (** [x] は全ての点への道を持つ。 *)
 Definition is_contr_center (A : Type) (x : A) : Type
@@ -177,32 +171,32 @@ Definition is_contr (A : Type) : Type
   := sigma x, is_contr_center A x .
 
 (** [A] が [contr] であるとき、その中心を得る。 *)
-Definition center {A : Type} (IC : is_contr A) : A
-  := dfst IC .
+Definition center {A : Type} (cA : is_contr A) : A
+  := dfst cA .
 
 (** *** Truncation *)
 
 (** 切捨 (Truncation) は、高階道空間の文脈において、型の複雑性を測る。
-    (-2) 次切捨である型は、可縮である型のことであり、その相同 (Homotopy) は
+    (-2) 次切捨である型は、可縮である型のことであり、その相同 (homotopy) は
     完全に自明である。また (n+1) 次切捨である型は、それらの道空間が n 次切捨
     である。
 
     ゆえに (-1) 次切捨であるということは「任意の二つの点の間の道の空間は可縮
     である」ということを意味する。そのような空間は部分単一 (sub-singleton)
     である、つまり、任意の二つの点は相同的に単一 (unique) である道で結ばれて
-    いる。別の言葉でいえば (-1) 次切捨である空間は、真理値（私たちは「命題」と
-    呼ぶ）である。
+    いる。別の言葉でいえば (-1) 次切捨である空間は、真理値（「命題」とも）で
+    ある。
 
     次に 0 次切捨であるということは「任意の二つの点の間の道の空間は部分単一
     である」ということを意味する。ゆえに、二つの点は、その間に道を持たないか、
     単一の道を持つかである。そのような空間は沢山の点を持ち得るが、それは
-    全ての道が自明であるという意味で、離散的である。私たちは、その空間群を
-    「集合」と呼ぶ。 *)
+    全ての道が自明であるという意味で、離散的である。それらの空間たちは
+    「集合」である。 *)
 
 (** 切捨度。つまり n 次切捨と書いたときの "n" を表す型。
 
-    自然数のペアノの公理による定義と同じ構造を持っているが、
-    -2 が最小の値である。 *)
+    自然数のペアノの公理による定義と同じ構造を持っているが、-2 が最小の値で
+    ある。 *)
 Inductive trunc_index : Type
   :=
   | minus_two : trunc_index
@@ -332,7 +326,7 @@ Definition path_forall_2
     名前は "pointed type" を縮めたもの。 *)
 Definition pType : Type := sigma A, A .
 
-(** 相同的繊維。 [f] で [y] に移される値の集まり。 
+(** 相同的維。 [f] で [y] に移される値の集まり。
 
     名前は "homotopical fiber" を縮めたもの。点の相同的な逆像。 *)
 Definition hfiber {A B : Type} (f : A -> B) (y : B) : Type
