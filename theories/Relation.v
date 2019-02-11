@@ -135,10 +135,71 @@ Definition wf_ind_nodep
 (** 整礎帰納法。 *)
 Definition wf_ind
   {A : Type} {R : A -> A -> Type} {P : A -> Type}
-  (c: forall x : A, (forall xp : A, R xp x -> P xp) -> P x)
+  (c : forall x : A, (forall xp : A, R xp x -> P xp) -> P x)
   (wf_R : well_founded R) (x : A) : P x
   := acc_rec c (wf_R x) .
 
+Definition infinite_descent_0
+  {A : Type} {R : A -> A -> Type} {P : A -> Type}
+  (c : forall x : A, (forall xp : A, R xp x -> P xp -> empty) -> P x -> empty)
+  (wf_R : well_founded R) (x : A) : P x -> empty
+  := (wf_ind c wf_R x) .
+
+Definition infinite_descent_1
+  {A : Type} {R : A -> A -> Type} {P : A -> Type}
+  (c : forall x  : (sigma xv, P xv),
+                   (forall xp : (sigma xv, P xv),
+                                 R (dfst xp) (dfst x) ->
+                                 empty) ->
+                    empty)
+  (wf_R : well_founded R) (x : sigma xv, P xv) : empty .
+Proof.
+ revert x .
+ refine (dsum_elim_nodep _) .
+ refine (infinite_descent_0 _ wf_R) .
+ refine (fun x I xH => _) .
+ refine (c (dpair x xH) _) .
+ refine (dsum_elim _) .
+ refine (fun xp xpH xpR => _) .
+ refine (I xp _ xpH) .
+ change (R xp x) in xpR .
+ exact xpR .
+Defined.
+
+Definition infinite_descent_2
+  {A : Type} {R : A -> A -> Type} {P : A -> Type}
+  (c : forall x : (sigma xv, P xv),
+                   sigma xp : (sigma xvp, P xvp), R (dfst xp) (dfst x))
+  (wf_R : well_founded R) (x : sigma xv, P xv) : empty .
+Proof.
+ revert x .
+ refine (infinite_descent_1 _ wf_R) .
+ refine (fun x I => _) .
+ refine (dsum_elim_nodep _ (c x)) .
+ refine (fun xp xpR => _) .
+ refine (I xp _) .
+ exact xpR .
+Defined.
+
+Definition infinite_descent_3
+  {A : Type} {R : A -> A -> Type} {P : A -> Type}
+  (c : forall xv, P xv -> sigma xpv, prod (P xpv) (R xpv xv))
+  (wf_R : well_founded R) (xv : A) (xh : P xv) : empty .
+Proof.
+ refine (infinite_descent_2 _ wf_R (dpair xv xh)) ; clear xv xh .
+ refine (dsum_elim _) .
+ refine (fun xv xh => _) .
+ refine (dsum_elim_nodep _ (c xv xh)) .
+ refine (fun xpv => _) .
+ refine (prod_elim_nodep _) .
+ refine (fun xph xpr => _) .
+ refine (dpair (dpair xpv xph) _) .
+ change (R xpv xv) .
+ exact xpr .
+Defined.
+
+(** 無限降下法。 *)
+Notation infinite_descent := infinite_descent_3 .
 
 (** Fixpoints by well-founded induction
 
