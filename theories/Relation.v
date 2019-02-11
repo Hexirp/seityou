@@ -201,6 +201,7 @@ Defined.
 (** 無限降下法。 *)
 Notation infinite_descent := infinite_descent_3 .
 
+
 (** Fixpoints by well-founded induction
 
     整礎帰納法により構成される関数の不動点について。 *)
