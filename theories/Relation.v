@@ -175,7 +175,8 @@ Proof.
  revert x .
  refine (infinite_descent_1 _ wf_R) .
  refine (fun x I => _) .
- refine (dsum_elim_nodep _ (c x)) .
+ generalize (c x) .
+ refine (dsum_elim_nodep _) .
  refine (fun xp xpR => _) .
  refine (I xp _) .
  exact xpR .
@@ -189,7 +190,8 @@ Proof.
  refine (infinite_descent_2 _ wf_R (dpair xv xh)) ; clear xv xh .
  refine (dsum_elim _) .
  refine (fun xv xh => _) .
- refine (dsum_elim_nodep _ (c xv xh)) .
+ generalize (c xv xh) .
+ refine (dsum_elim_nodep _) .
  refine (fun xpv => _) .
  refine (prod_elim_nodep _) .
  refine (fun xph xpr => _) .
