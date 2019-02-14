@@ -409,38 +409,33 @@ Section Chain .
   (** [A] の関係 [R] は [x : A] において反整礎である。 *)
   CoInductive chain (x : A) : Type
     :=
-    | mk_chain : forall xp, R xp x -> chain xp -> chain x
+    | chain_build : (sigma xp, prod (R xp x) (chain xp)) -> chain x
     .
 
-  Definition chain_case_nodep
+  Definition ds_chain
     (x : A) (P : Type)
-    (case_mk_chain : forall xp, R xp x -> chain xp -> P)
-    (H : chain x) : P
-    := match H with mk_chain _ xp Hr Hp => case_mk_chain xp Hr Hp end .
-
-  Definition chain_case
-    (x : A) (P : chain x -> Type)
-    (case_mk_chain : forall xp Hr Hp, P (mk_chain x xp Hr Hp))
-    (H : chain x) : P H
-    := match H with mk_chain _ xp Hr Hp => case_mk_chain xp Hr Hp end .
+    (H : chain x) : sigma xp, prod (R xp x) (chain xp)
+    := match H with chain_build _ Hp => Hp end .
 
   Definition chain_corec
     (P : A -> Type)
-    (case_mk_chain : forall x (xH : P x), sigma xp, prod (R xp x) (P xp))
+    (case_ds_chain : forall (x : A) (xH : P x), sigma xp, prod (R xp x) (P xp))
     (x : A) (xH : P x) : chain x .
   Proof.
    revert x xH .
    refine (cofix go (x : A) (xH : P x) : chain x := _) .
-   generalize (case_mk_chain x xH) .
+   refine (chain_build x _) .
+   generalize (case_ds_chain x xH) .
    refine (dsum_elim _) .
    refine (fun xp => _) .
    refine (prod_elim _) .
    refine (fun Hr Hp => _) .
-   refine (mk_chain x xp Hr _) .
+   refine (dpair xp _) .
+   refine (pair Hr _) .
    exact (go xp Hp) .
   Defined.
 
-End Acc.
+End Chain.
 
 
 (** *** Others *)
