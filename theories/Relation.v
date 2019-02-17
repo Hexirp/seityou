@@ -12,6 +12,9 @@ Set Default Proof Mode "Classic" .
 Import Basis.Notation .
 
 
+(** [A] 上の関係。 *)
+Definition rel (A : Type) : Type := A -> A -> Type .
+
 (** 関係を保つ (relation-preserving) 関数である。 *)
 Definition rel_pre
   {A : Type} (R : A -> A -> Type)
