@@ -37,8 +37,24 @@ Definition exerise_1_8
   (a' : A) (x : paths A a a') : P a' x .
 Proof.
  pose (Q := fun h => P (dfst h) (dsnd h)) .
- change (Q (dpair a (idpath A a))) in case_idpath .
- change (Q (dpair a' x)) .
- revert case_idpath .
- refine (paths_elim_nop (dsum (paths A a)) (fun x y _ => Q x -> Q y) _ (dpair a (idpath A a)) (dpair a' x)) .
-Admitted.
+ pose (h := dpair a (idpath A a)) .
+ pose (h' := dpair a' x) .
+ change (Q h) in case_idpath .
+ change (Q h') .
+ refine (
+   paths_elim_nop
+     (dsum (paths A a))
+     (fun x y _ => Q x -> Q y)
+      _
+     (dpair a (idpath A a))
+     (dpair a' x)
+      _
+      case_idpath) .
+ -
+  exact (fun h x => x) .
+ -
+  clear P Q case_idpath h h'.
+  revert a a' x .
+  refine (paths_elim_nop A ?[ex_P] _) .
+  exact (fun a => idpath (dsum (paths A a)) (dpair a (idpath A a))) .
+Defined.
