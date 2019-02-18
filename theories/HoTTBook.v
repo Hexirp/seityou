@@ -4,10 +4,6 @@ Require Import Basis .
 Declare ML Module "ltac_plugin" .
 Set Default Proof Mode "Classic" .
 
-(** 記法を使う。 *)
-Import Basis.Notation .
-Import Basis.Notation.Path .
-
 
 Arguments paths : clear implicits .
 Arguments idpath : clear implicits .
@@ -40,4 +36,10 @@ Definition exerise_1_8
   (case_idpath : P a (idpath A a))
   (a' : A) (x : paths A a a') : P a' x .
 Proof.
+ change (P (dfst (dpair a' x)) (dsnd (dpair a' x))) .
+ change (P (dfst (dpair a (idpath A a))) (dsnd (dpair a (idpath A a)))) in case_idpath .
+ pose (Q := fun h => P (dfst h) (dsnd h)) .
+ change (Q (dpair a' x)) .
+ change (Q (dpair a (idpath A a))) in case_idpath .
+ revert case_idpath .
 Admitted.
