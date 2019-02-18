@@ -41,5 +41,5 @@ Proof.
  pose (Q := fun h => P (dfst h) (dsnd h)) .
  change (Q (dpair a' x)) .
  change (Q (dpair a (idpath A a))) in case_idpath .
- revert case_idpath .
+ refine (paths_elim_nop A _ _ a a' x) .
 Admitted.
