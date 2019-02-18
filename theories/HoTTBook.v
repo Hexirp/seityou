@@ -20,9 +20,15 @@ Definition book_1_12_2_b
   (case_idpath : P a (idpath A a))
   (a' : A) (x : paths A a a') : P a' x .
 Proof.
- revert x P case_idpath .
- revert a a' .
+ revert a a' x P case_idpath .
  refine (paths_elim_nop A ?[ex_P] _) .
  refine (fun a P h => _) .
  exact h .
 Defined.
+
+Definition exerise_1_8
+  (A : Type) (a : A) (P : forall a', paths A a a' -> Type)
+  (case_idpath : P a (idpath A a))
+  (a' : A) (x : paths A a a') : P a' x .
+Proof.
+Admitted.
