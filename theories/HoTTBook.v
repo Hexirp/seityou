@@ -13,7 +13,9 @@ Arguments paths : clear implicits .
 Arguments idpath : clear implicits .
 Arguments paths_elim_nop : clear implicits .
 
-Definition exerise_1_8
+Definition book_1_12_2_a := paths_elim_nop .
+
+Definition book_1_12_2_b
   (A : Type) (a : A) (P : forall a', paths A a a' -> Type)
   (case_idpath : P a (idpath A a))
   (a' : A) (x : paths A a a') : P a' x .
