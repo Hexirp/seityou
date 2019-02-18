@@ -31,6 +31,29 @@ Proof.
  exact h .
 Defined.
 
+(* transport *)
+Definition exerise_1_8_lemma_1
+  (A : Type) (P : A -> Type)
+  (x y : A) (p : paths A x y)
+  (u : P x) : P y .
+Proof.
+ revert x y p u .
+ refine (paths_elim_nop A (fun x y _ => P x -> P y) _) .
+ exact (fun z v => v) .
+Defined.
+
+(* path_based_paths *)
+Definition exerise_1_8_lemma_2
+  (X : Type) (x : X) (p : dsum (paths X x))
+  : paths (dsum (paths X x)) (dpair x (idpath X x)) p .
+Proof.
+ revert p .
+ refine (dsum_elim _) .
+ revert x .
+ refine (paths_elim_nop X ?[ex_P] _) .
+ exact (fun z => idpath (dsum (paths X z)) (dpair z (idpath X z))) .
+Defined.
+
 Definition exerise_1_8
   (A : Type) (a : A) (P : forall a', paths A a a' -> Type)
   (case_idpath : P a (idpath A a))
@@ -41,20 +64,7 @@ Proof.
  pose (h' := dpair a' x) .
  change (Q h) in case_idpath .
  change (Q h') .
- refine (
-   paths_elim_nop
-     (dsum (paths A a))
-     (fun x y _ => Q x -> Q y)
-      _
-     (dpair a (idpath A a))
-     (dpair a' x)
-      _
-      case_idpath) .
- -
-  exact (fun h x => x) .
- -
-  clear P Q case_idpath h h'.
-  revert a a' x .
-  refine (paths_elim_nop A ?[ex_P] _) .
-  exact (fun a => idpath (dsum (paths A a)) (dpair a (idpath A a))) .
+ refine (exerise_1_8_lemma_1 (dsum (paths A a)) Q h h' _ case_idpath) .
+ change (paths (dsum (paths A a)) (dpair a (idpath A a)) h') .
+ exact (exerise_1_8_lemma_2 A a h') .
 Defined.
