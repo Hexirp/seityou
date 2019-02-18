@@ -36,10 +36,9 @@ Definition exerise_1_8
   (case_idpath : P a (idpath A a))
   (a' : A) (x : paths A a a') : P a' x .
 Proof.
- change (P (dfst (dpair a' x)) (dsnd (dpair a' x))) .
- change (P (dfst (dpair a (idpath A a))) (dsnd (dpair a (idpath A a)))) in case_idpath .
  pose (Q := fun h => P (dfst h) (dsnd h)) .
- change (Q (dpair a' x)) .
  change (Q (dpair a (idpath A a))) in case_idpath .
- refine (paths_elim_nop A _ _ a a' x) .
+ change (Q (dpair a' x)) .
+ revert case_idpath .
+ refine (paths_elim_nop (dsum (paths A a)) (fun x y _ => Q x -> Q y) _ (dpair a (idpath A a)) (dpair a' x)) .
 Admitted.
