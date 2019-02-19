@@ -41,7 +41,7 @@ Definition rel_dsum {A : Type} (R : A -> A -> Type) (P : A -> Type)
   := rel_of R dfst .
 
 
-(** ** Well foundness *)
+(** ** Well-foundness *)
 
 Section Acc .
 
@@ -403,6 +403,8 @@ Proof.
  exact wf_S .
 Defined.
 
+
+(** * Existence of infinite descending chains *)
 
 Section Chain .
 
