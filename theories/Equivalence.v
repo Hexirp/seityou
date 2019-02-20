@@ -330,6 +330,24 @@ Proof.
  exact (is_equiv_compose f_iv h_iv) .
 Defined.
 
+
+(** ** Homotopic
+
+    [h : f == g] を通して [is_equiv f] から [is_equiv g] を得る。 *)
+
+Lemma retr_homotopic
+  {A B : Type} {f : A -> B} {g : A -> B} {h : B -> A}
+  (r : retraction f h) (homo : f == g)
+  : retraction g h .
+Proof.
+ unfold retraction; unfold retraction in r .
+ refine ( _ @[ f o h ] _ ) .
+ -
+  exact (wiskerR_pw_fn homo^ h) .
+ -
+  exact r .
+Defined.
+
 (** 参考文献:
 
     * https://github.com/HoTT/HoTT/blob/1940297dd121d54d033274d84c5d023fdc56bfb4/theories/Basics/Equivalences.v
