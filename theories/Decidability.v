@@ -14,13 +14,13 @@ Import Basis.Notation.Path .
 
 
 (** [A] は決定可能である。 *)
-Definition decidable (A : Type) : Type := sum A (A -> empty) .
+Definition decidable (A : Type) : Type := sum A (~ A) .
 
 (** [A] の道は決定可能である。 *)
 Definition path_decidable (A : Type) : Type := paths_is decidable A .
 
 (** [A] の二重否定は除去できる。 *)
-Definition stable (A : Type) : Type := ((A -> empty) -> empty) -> A .
+Definition stable (A : Type) : Type := ~ ~ A -> A .
 
 (** [A] が decidable であれば stable である。 *)
 Definition stable_decidable (A : Type) (dec : decidable A) : stable A .
