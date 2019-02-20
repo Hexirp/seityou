@@ -211,50 +211,46 @@ Proof.
      (* h o f @> (g @> s_hi <@ f) @ s_fg *)
    ) .
  -
-  exact wiskerR_pw_fn_pp .
+  exact (wiskerR_pw_fn_pp (h @> r_fg <@ i) r_hi (h o f)) .
  -
   refine (concat_pw_pw _ _) .
   +
    refine ( _ @[ h @> r_fg <@ i <@ h <@ f ] _ ) .
    *
-    exact (wiskerR_pw_fn_ff (p := h @> r_fg <@ i)) .
+    exact (wiskerR_pw_fn_ff (h @> r_fg <@ i) h f) .
    *
     refine (wiskerR_pw_fn_p _ f) .
-    exact (wiskerR_pw_fn_ff (p := h @> r_fg))^ .
+    exact (wiskerR_pw_fn_ff (h @> r_fg) i h)^ .
   +
    refine ( _ @[ r_hi <@ h <@ f ] _ ) .
    *
-    exact (wiskerR_pw_fn_ff (p := r_hi)) .
+    exact (wiskerR_pw_fn_ff r_hi h f) .
    *
     refine (wiskerR_pw_fn_p _ f) .
     exact hi .
  -
-  refine (
-    _ @[ (h @> r_fg <@ i o h) @ (h @> s_hi) <@ f ] _
-    ) .
+  refine ( _ @[ (h @> r_fg <@ i o h) @ (h @> s_hi) <@ f ] _ ) .
   +
-   exact wiskerR_pw_fn_pp^ .
+   exact (wiskerR_pw_fn_pp (h @> r_fg <@ i o h) (h @> s_hi) f)^ .
   +
    refine (wiskerR_pw_fn_p _ f) .
    refine ( _ @[ (h @> (r_fg <@ i o h)) @ (h @> s_hi) ] _ ).
    *
     refine (wiskerR_pw_pw _ (h @> s_hi)) .
-    exact (wiskerLR_pw_fn_comm (f := h) (p := r_fg) (i := i o h)) .
+    exact (wiskerLR_pw_fn_comm h r_fg (i o h)) .
    *
-    exact wiskerL_pw_fn_pp^ .
+    exact (wiskerL_pw_fn_pp h (r_fg <@ i o h) s_hi)^ .
  -
   refine (wiskerR_pw_fn_p _ f) .
   refine (wiskerL_pw_fn_p h _) .
-  exact concat_pw_wLpp^ .
+  exact (concat_pw_wLpp r_fg s_hi)^ .
  -
-  refine (
-    _ @[ (h @> f o g @> s_hi) @ (h @> r_fg) <@ f ] _
-    ) .
+  refine ( _ @[ (h @> f o g @> s_hi) @ (h @> r_fg) <@ f ] _ ) .
   +
    refine (wiskerR_pw_fn_p _ f) .
-   exact wiskerL_pw_fn_pp .
+   exact (wiskerL_pw_fn_pp h (f o g @> s_hi) r_fg) .
   +
-   exact wiskerR_pw_fn_pp .
+   exact (wiskerR_pw_fn_pp (h @> f o g @> s_hi) (h @> r_fg) f) .
  -
   refine (concat_pw_pw _ _) .
   +
@@ -262,27 +258,27 @@ Proof.
    *
     refine (wiskerR_pw_fn_p _ f) .
     refine (wiskerL_pw_fn_p h _) .
-    exact (wiskerL_pw_fn_ff (p := s_hi)) .
+    exact (wiskerL_pw_fn_ff f g s_hi) .
    *
     refine ( _ @[ h o f @> g @> s_hi <@ f ] _ ) .
     --
      refine (wiskerR_pw_fn_p _ f) .
-     exact (wiskerL_pw_fn_ff (f := h) (g := f) (p := g @> s_hi))^ .
+     exact (wiskerL_pw_fn_ff h f (g @> s_hi))^ .
     --
-     exact wiskerLR_pw_fn_comm .
+     exact (wiskerLR_pw_fn_comm (h o f) (g @> s_hi) f) .
   +
    refine ( _ @[ h @> (r_fg <@ f) ] _ ) .
    *
-    exact (wiskerLR_pw_fn_comm (f := h) (p := r_fg) (i := f)) .
+    exact (wiskerLR_pw_fn_comm h r_fg f) .
    *
     refine ( _ @[ h @> f @> s_fg ] _ ) .
     --
      refine (wiskerL_pw_fn_p h _) .
      exact fg .
     --
-     exact (wiskerL_pw_fn_ff (f := h) (g := f) (p := s_fg))^ .
+     exact (wiskerL_pw_fn_ff h f s_fg)^ .
  -
-  exact wiskerL_pw_fn_pp^ .
+  exact (wiskerL_pw_fn_pp (h o f) (g @> s_hi <@ f) s_fg)^ .
 Defined.
 
 Lemma is_equiv_rel_compose
