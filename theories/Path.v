@@ -159,8 +159,8 @@ Defined.
 (** [ap] の分配則。 *)
 Definition ap_pp
   {A B : Type}
-  {f : A -> B} {x y z : A}
-  {p : x = y} {q : y = z}
+  (f : A -> B) {x y z : A}
+  (p : x = y) (q : y = z)
   : ap f (p @ q) = ap f p @ ap f q .
 Proof.
  revert z q .
@@ -173,7 +173,7 @@ Defined.
 (** [ap] の分配則その２。 *)
 Definition ap_ff
   {A B C : Type}
-  {f : B -> C} {g : A -> B}
+  (f : B -> C) (g : A -> B)
   {x y : A} {p : x = y}
   : ap (f o g) p = ap f (ap g p) .
 Proof.
@@ -207,7 +207,7 @@ Defined.
 (** [concat p 1] は [p] に等しい。 *)
 Definition concat_p1
   {A : Type}
-  {x y : A} {p : x = y}
+  {x y : A} (p : x = y)
   : p @ 1 = p .
 Proof.
  revert y p .
@@ -218,7 +218,7 @@ Defined.
 (** [concat 1 p] は [p] に等しい。 *)
 Definition concat_1p
   {A : Type}
-  {x y : A} {p : x = y}
+  {x y : A} (p : x = y)
   : 1 @ p = p .
 Proof.
  revert y p .
