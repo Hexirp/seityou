@@ -100,8 +100,8 @@ Defined.
 (** [wiskerL_pw_fn] の分配則。 *)
 Definition wiskerL_pw_fn_pp
   {A B C : Type}
-  {f : B -> C}
-  {g h i : A -> B} {p : g == h} {q : h == i}
+  (f : B -> C)
+  {g h i : A -> B} (p : g == h) (q : h == i)
   : pwpaths
     (wiskerL_pw_fn f (concat_pw p q))
     (concat_pw (wiskerL_pw_fn f p) (wiskerL_pw_fn f q)) .
@@ -115,8 +115,8 @@ Defined.
 (** [wiskerR_pw_fn] の分配則。 *)
 Definition wiskerR_pw_fn_pp
   {A B C : Type}
-  {f g h : B -> C} {p : f == g} {q : g == h}
-  {i : A -> B}
+  {f g h : B -> C} (p : f == g) (q : g == h)
+  (i : A -> B)
   : pwpaths
     (wiskerR_pw_fn (concat_pw p q) i)
     (concat_pw (wiskerR_pw_fn p i) (wiskerR_pw_fn q i)) .
@@ -130,8 +130,8 @@ Defined.
 (** [wiskerL_pw_fn] の分配則その２。 *)
 Definition wiskerL_pw_fn_ff
   {A B C D : Type}
-  {f : C -> D} {g : B -> C}
-  {h i : A -> B} {p : h == i}
+  (f : C -> D) (g : B -> C)
+  {h i : A -> B} (p : h == i)
   : pwpaths
     (wiskerL_pw_fn (f o g) p)
     (wiskerL_pw_fn f (wiskerL_pw_fn g p)) .
@@ -144,8 +144,8 @@ Defined.
 (** [wiskerR_pw_fn] の分配則その２。 *)
 Definition wiskerR_pw_fn_ff
   {A B C D : Type}
-  {f g : C -> D} {p : f == g}
-  {h : B -> C} {i : A -> B}
+  {f g : C -> D} (p : f == g)
+  (h : B -> C) (i : A -> B)
   : pwpaths
     (wiskerR_pw_fn p (h o i))
     (wiskerR_pw_fn (wiskerR_pw_fn p h) i) .
@@ -159,7 +159,7 @@ Defined.
     それらをどのような順番で適用しても等しい。 *)
 Definition concat_pw_wLpp
   {A : Type} {f g : A -> A}
-  {p : f == idmap} {q : g == idmap}
+  (p : f == idmap) (q : g == idmap)
   : concat_pw (wiskerL_pw_fn f q) p == concat_pw (wiskerR_pw_fn p g) q .
 Proof.
  refine (fun x => _) .
@@ -182,9 +182,9 @@ Defined.
 (** [wiskerL_pw_fn] と [wiskerR_pw_fn] は交換する。 *)
 Definition wiskerLR_pw_fn_comm
   {A B C D : Type}
-  {f : C -> D}
-  {g h : B -> C} {p : g == h}
-  {i : A -> B}
+  (f : C -> D)
+  {g h : B -> C} (p : g == h)
+  (i : A -> B)
   : pwpaths
     (wiskerR_pw_fn (wiskerL_pw_fn f p) i)
     (wiskerL_pw_fn f (wiskerR_pw_fn p i)) .
