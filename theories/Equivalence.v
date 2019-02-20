@@ -361,6 +361,18 @@ Proof.
   exact s .
 Defined.
 
+Lemma is_adj_homotopic
+  {A B : Type} {f : A -> B} {g : A -> B} {h : B -> A}
+  (r : retraction f h) (s : section f h)
+  (a : is_adjoint r s) (homo : f == g)
+  : is_adjoint (retr_homotopic r homo) (sect_homotopic s homo) .
+Proof.
+ unfold is_adjoint ; unfold is_adjoint in a .
+ unfold retraction in r .
+ unfold section in s .
+ unfold retr_homotopic, sect_homotopic .
+Admitted.
+
 (** 参考文献:
 
     * https://github.com/HoTT/HoTT/blob/1940297dd121d54d033274d84c5d023fdc56bfb4/theories/Basics/Equivalences.v
