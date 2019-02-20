@@ -348,6 +348,19 @@ Proof.
   exact r .
 Defined.
 
+Lemma sect_homotopic
+  {A B : Type} {f : A -> B} {g : A -> B} {h : B -> A}
+  (s : section f h) (homo : f == g)
+  : section g h .
+Proof.
+ unfold section; unfold section in s .
+ refine ( _ @[ h o f ] _ ) .
+ -
+  exact (wiskerL_pw_fn h homo^) .
+ -
+  exact s .
+Defined.
+
 (** 参考文献:
 
     * https://github.com/HoTT/HoTT/blob/1940297dd121d54d033274d84c5d023fdc56bfb4/theories/Basics/Equivalences.v
