@@ -109,7 +109,7 @@ Proof.
  refine (fun x => _) .
  change (ap f (concat_pw p q x) = wiskerL_pw_fn f p x @ wiskerL_pw_fn f q x) .
  change (ap f (p x @ q x) = ap f (p x) @ ap f (q x)) .
- exact ap_pp .
+ exact (ap_pp f (p x) (q x)) .
 Defined.
 
 (** [wiskerR_pw_fn] の分配則。 *)
@@ -138,7 +138,7 @@ Definition wiskerL_pw_fn_ff
 Proof.
  refine (fun x => _) .
  change (ap (f o g) (p x) = ap f (ap g (p x))) .
- exact ap_ff .
+ exact (ap_ff f g (p x)) .
 Defined.
 
 (** [wiskerR_pw_fn] の分配則その２。 *)
@@ -174,9 +174,9 @@ Proof.
    concat (y := p (g x)) _ _
    ) .
  -
-  exact concat_1p .
+  exact (concat_1p (p (g x))) .
  -
-  exact concat_p1^ .
+  exact (concat_p1 (p (g x)))^ .
 Defined.
 
 (** [wiskerL_pw_fn] と [wiskerR_pw_fn] は交換する。 *)

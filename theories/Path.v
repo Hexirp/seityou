@@ -174,7 +174,7 @@ Defined.
 Definition ap_ff
   {A B C : Type}
   (f : B -> C) (g : A -> B)
-  {x y : A} {p : x = y}
+  {x y : A} (p : x = y)
   : ap (f o g) p = ap f (ap g p) .
 Proof.
  revert y p .
