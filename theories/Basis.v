@@ -258,6 +258,10 @@ Arguments paths_elim_nodep {_ _ _} _ {_} _ .
 Arguments paths_elim {_ _ _} _ {_} _ .
 
 
+(** [A] の否定。 *)
+Definition not (A : Type) : Type := A -> empty.
+
+
 (** ** Functions
 
     標準的な関数を定義する。 *)
@@ -489,6 +493,12 @@ Module Notation .
   (** [T] の上の道だと特に書きたいときの道の記法。 *)
   Notation "x = y :> T" := (@paths T x y)
     (at level 70, y at next level, no associativity)
+    : type_scope
+    .
+
+  (** [x] の否定の記法。 *)
+  Notation "~ x" := (not x)
+    (at level 75, right associativity)
     : type_scope
     .
 
