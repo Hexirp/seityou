@@ -374,21 +374,24 @@ Proof.
  refine (
      (* (homo^ <@ h) @ r <@ g *)
    _
-     @[ concat_pw_pw ((homo^ <@ h) @ r) (idpath_pw g) ]
+     @[ concat_pw_pw (concat_pw_pw homo^ (idpath_pw h) @ r) (idpath_pw g) ]
    _
-     @[ concat_pw_pw ((homo^ <@ h) @ r) (homo^ @ idpath_pw f @ homo) ]
+     @[ concat_pw_pw (concat_pw_pw homo^ (idpath_pw h) @ r) (homo^ @ idpath_pw f @ homo) ]
    _
-     @[ concat_pw_pw (homo^ <@ h) homo^ @ concat_pw_pw (idpath_pw f) r @ homo ]
+     @[ concat_pw_pw (concat_pw_pw homo^ (idpath_pw h)) homo^ @ concat_pw_pw (idpath_pw f) r @ homo ]
    _
-     @[ concat_pw_pw (homo^ <@ h) homo^ @ (f @> r) @ homo ]
+     @[ concat_pw_pw (concat_pw_pw homo^ (idpath_pw h)) homo^ @ (f @> r) @ homo ]
    _
-     @[ concat_pw_pw (homo^ <@ h) homo^ @ (s <@ f) @ homo ]
+     @[ concat_pw_pw homo^ (concat_pw_pw (idpath_pw h) homo^) @ (s <@ f) @ homo ]
    _
-     @[ concat_pw_pw (homo^ <@ h) homo^ @ concat_pw_pw s (idpath_pw f) @ homo ]
+     @[ concat_pw_pw homo^ (concat_pw_pw (idpath_pw h) homo^) @ concat_pw_pw s (idpath_pw f) @ homo ]
    _
-     @[ concat_pw_pw ((homo^ <@ h) @ s) (homo^ @ (idpath_pw f) @ homo) ]
+     @[ concat_pw_pw (homo^ @ idpath_pw f @ homo) (concat_pw_pw (idpath_pw h) homo^ @ s) ]
    _
-     
+     @[ concat_pw_pw (idpath_pw g) (concat_pw_pw (idpath_pw h) homo^ @ s) ]
+   _
+     (* g @> (h @> homo^) @ s *)
+   ) .
 Admitted.
 
 (** 参考文献:
