@@ -371,6 +371,24 @@ Proof.
  unfold retraction in r .
  unfold section in s .
  unfold retr_homotopic, sect_homotopic .
+ refine (
+     (* (homo^ <@ h) @ r <@ g *)
+   _
+     @[ concat_pw_pw ((homo^ <@ h) @ r) (idpath_pw g) ]
+   _
+     @[ concat_pw_pw ((homo^ <@ h) @ r) (homo^ @ idpath_pw f @ homo) ]
+   _
+     @[ concat_pw_pw (homo^ <@ h) homo^ @ concat_pw_pw (idpath_pw f) r @ homo ]
+   _
+     @[ concat_pw_pw (homo^ <@ h) homo^ @ (f @> r) @ homo ]
+   _
+     @[ concat_pw_pw (homo^ <@ h) homo^ @ (s <@ f) @ homo ]
+   _
+     @[ concat_pw_pw (homo^ <@ h) homo^ @ concat_pw_pw s (idpath_pw f) @ homo ]
+   _
+     @[ concat_pw_pw ((homo^ <@ h) @ s) (homo^ @ (idpath_pw f) @ homo) ]
+   _
+     
 Admitted.
 
 (** 参考文献:
