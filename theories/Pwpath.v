@@ -26,12 +26,12 @@ Definition pwpaths_paths
 
 (** 点ごとの恒等道。 *)
 Definition idpath_pw
-  {A : Type} {B : A -> Type}
+  (A : Type) (B : A -> Type)
   (f : forall a, B a)
   : pwpaths f f
   := fun a => idpath (f a) .
 
-Arguments idpath_pw {_ _ _}, [_ _] _ .
+Arguments idpath_pw {_ _ _} , [_ _] _ .
 
 (** 点ごとの道の逆。 *)
 Definition inverse_pw
