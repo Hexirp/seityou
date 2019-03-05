@@ -361,10 +361,6 @@ Proof.
   exact s .
 Defined.
 
-Definition idpath_pw' := @idpath_pw .
-
-Arguments idpath_pw' [_ _] _ .
-
 Lemma is_adj_homotopic
   {A B : Type} {f : A -> B} {g : A -> B} {h : B -> A}
   (r : retraction f h) (s : section f h)
@@ -378,21 +374,21 @@ Proof.
  refine (
      (* (homo^ <@ h) @ r <@ g *)
    _
-     @[ concat_pw_pw (concat_pw_pw homo^ (idpath_pw' h) @ r) (idpath_pw' g) ]
+     @[ concat_pw_pw (concat_pw_pw homo^ (1 : h == h) @ r) (1 : g == g) ]
    _
-     @[ concat_pw_pw (concat_pw_pw homo^ (idpath_pw' h) @ r) (homo^ @ idpath_pw' f @ homo) ]
+     @[ concat_pw_pw (concat_pw_pw homo^ (1 : h == h) @ r) (homo^ @ (1 : f == f) @ homo) ]
    _
-     @[ concat_pw_pw (concat_pw_pw homo^ (idpath_pw' h)) homo^ @ concat_pw_pw (idpath_pw' f) r @ homo ]
+     @[ concat_pw_pw (concat_pw_pw homo^ (1 : h == h)) homo^ @ concat_pw_pw (1 : f == f) r @ homo ]
    _
-     @[ concat_pw_pw (concat_pw_pw homo^ (idpath_pw' h)) homo^ @ (f @> r) @ homo ]
+     @[ concat_pw_pw (concat_pw_pw homo^ (1 : h == h)) homo^ @ (f @> r) @ homo ]
    _
-     @[ concat_pw_pw homo^ (concat_pw_pw (idpath_pw' h) homo^) @ (s <@ f) @ homo ]
+     @[ concat_pw_pw homo^ (concat_pw_pw (1 : h == h) homo^) @ (s <@ f) @ homo ]
    _
-     @[ concat_pw_pw homo^ (concat_pw_pw (idpath_pw' h) homo^) @ concat_pw_pw s (idpath_pw' f) @ homo ]
+     @[ concat_pw_pw homo^ (concat_pw_pw (1 : h == h) homo^) @ concat_pw_pw s (1 : f == f) @ homo ]
    _
-     @[ concat_pw_pw (homo^ @ idpath_pw' f @ homo) (concat_pw_pw (idpath_pw' h) homo^ @ s) ]
+     @[ concat_pw_pw (homo^ @ (1 : f == f) @ homo) (concat_pw_pw (1 : h == h) homo^ @ s) ]
    _
-     @[ concat_pw_pw (idpath_pw' g) (concat_pw_pw (idpath_pw' h) homo^ @ s) ]
+     @[ concat_pw_pw (1 : g == g) (concat_pw_pw (1 : h == h) homo^ @ s) ]
    _
      (* g @> (h @> homo^) @ s *)
    ) .
