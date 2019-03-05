@@ -282,6 +282,12 @@ Module Notation .
     : pwpath_scope
     .
 
+  (** [concat_pw_pw] の記法。 *)
+  Notation "r @@ u" := (concat_pw_pw r u)
+    (at level 30)
+    : pwpath_scope
+    .
+
   (** 等式を鎖状につなげるための記法。
 
       <<

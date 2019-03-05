@@ -374,21 +374,21 @@ Proof.
  refine (
      (* (homo^ <@ h) @ r <@ g *)
    _
-     @[ concat_pw_pw (concat_pw_pw homo^ (1 : h == h) @ r) (1 : g == g) ]
+     @[ (homo^ @@ (1 : h == h)) @ (r @@ (1 : g == g)) ]
    _
-     @[ concat_pw_pw (concat_pw_pw homo^ (1 : h == h) @ r) (homo^ @ (1 : f == f) @ homo) ]
+     @[ (homo^ @@ (1 : h == h) @ r) @@ (homo^ @ (1 : f == f) @ homo) ]
    _
-     @[ concat_pw_pw (concat_pw_pw homo^ (1 : h == h)) homo^ @ concat_pw_pw (1 : f == f) r @ homo ]
+     @[ ((homo^ @@ (1 : h == h)) @@ homo^) @ ((1 : f == f) @@ r) @ homo ]
    _
-     @[ concat_pw_pw (concat_pw_pw homo^ (1 : h == h)) homo^ @ (f @> r) @ homo ]
+     @[ ((homo^ @@ (1 : h == h)) @@ homo^) @ (f @> r) @ homo ]
    _
-     @[ concat_pw_pw homo^ (concat_pw_pw (1 : h == h) homo^) @ (s <@ f) @ homo ]
+     @[ (homo^ @@ ((1 : h == h) @@ homo^)) @ (s <@ f) @ homo ]
    _
-     @[ concat_pw_pw homo^ (concat_pw_pw (1 : h == h) homo^) @ concat_pw_pw s (1 : f == f) @ homo ]
+     @[ (homo^ @@ ((1 : h == h) @@ homo^)) @ (s @@ (1 : f == f)) @ homo ]
    _
-     @[ concat_pw_pw (homo^ @ (1 : f == f) @ homo) (concat_pw_pw (1 : h == h) homo^ @ s) ]
+     @[ (homo^ @ (1 : f == f) @ homo) @@ (((1 : h == h) @@ homo^) @ s) ]
    _
-     @[ concat_pw_pw (1 : g == g) (concat_pw_pw (1 : h == h) homo^ @ s) ]
+     @[ (1 : g == g) @@ (((1 : h == h) @@ homo^) @ s) ]
    _
      (* g @> (h @> homo^) @ s *)
    ) .
