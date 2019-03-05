@@ -388,7 +388,7 @@ Proof.
    _
      @[ (homo^ @ (1 : f == f) @ homo) @@ (((1 : h == h) @@ homo^) @ s) ]
    _
-     @[ (1 : g == g) @@ (((1 : h == h) @@ homo^) @ s) ]
+     @[ (1 : g == g) @@ (((1 : h == h) @@ homo^) @ s : g @ h == idmap ) : g o h o g == g ]
    _
      (* g @> (h @> homo^) @ s *)
    ) .
