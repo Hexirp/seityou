@@ -361,6 +361,10 @@ Proof.
   exact s .
 Defined.
 
+Definition idpath_pw' := @idpath_pw .
+
+Arguments idpath_pw' [_ _] _ .
+
 Lemma is_adj_homotopic
   {A B : Type} {f : A -> B} {g : A -> B} {h : B -> A}
   (r : retraction f h) (s : section f h)
@@ -388,7 +392,7 @@ Proof.
    _
      @[ (homo^ @ (1 : f == f) @ homo) @@ (((1 : h == h) @@ homo^) @ s) ]
    _
-     @[ (1 : g == g) @@ (((1 : h == h) @@ homo^) @ s : g @ h == idmap ) : g o h o g == g ]
+     @[ (idpath_pw' (idpath_pw' g)) @@ (((idpath_pw' (idpath_pw' h)) @@ homo^) @ s) ]
    _
      (* g @> (h @> homo^) @ s *)
    ) .
