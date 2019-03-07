@@ -12,7 +12,8 @@ coqc -nois -verbose \
  theories/Homotopy.v \
  theories/Pwpath.v \
  theories/Contraction.v \
- theories/Equivalence.v \
  theories/Peano.v \
  theories/Decidability.v \
- theories/Relation.v
+ theories/Relation.v \
+ theories/WellFoundness.v \
+ theories/Equivalence.v

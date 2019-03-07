@@ -11,11 +11,6 @@ digraph deps {
   Basis -> Contraction;
   Path -> Contraction;
 
-  Basis -> Equivalence;
-  Path -> Equivalence;
-  Pwpath -> Equivalence;
-  Homotopy -> Equivalence;
-
   Basis -> Peano;
 
   Basis -> Decidability;
@@ -24,5 +19,13 @@ digraph deps {
   Contraction -> Decidability;
 
   Basis -> Relation;
+
+  Basis -> WellFoundness;
+  Relation -> WellFoundness;
+
+  Basis -> Equivalence;
+  Path -> Equivalence;
+  Pwpath -> Equivalence;
+  Homotopy -> Equivalence;
 
 }
