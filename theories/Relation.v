@@ -23,22 +23,51 @@ Definition rel_pre
   := forall x y : A, R x y -> S (f x) (f y) .
 
 (** 関数の結果を見た関係。 *)
-Definition rel_of {A : Type} {B : Type} (S : B -> B -> Type) (f : A -> B)
+Definition rel_on {A : Type} {B : Type} (S : B -> B -> Type) (f : A -> B)
   : A -> A -> Type
   := fun x y => S (f x) (f y) .
 
 (** [rel_of] は自明に関係を保つ関数を作る。 *)
-Definition rel_pre_of {A : Type} {B : Type} {S : B -> B -> Type} (f : A -> B)
-  : rel_pre (rel_of S f) S f .
+Definition rel_pre_on {A : Type} {B : Type} {S : B -> B -> Type} (f : A -> B)
+  : rel_pre (rel_on S f) S f .
 Proof.
  change (forall x y, S (f x) (f y) -> S (f x) (f y)) .
  exact (fun x y => idmap) .
 Defined.
 
 (** [dsum] の第一引数だけを見た関係。 *)
-Definition rel_dsum {A : Type} (R : A -> A -> Type) (P : A -> Type)
+Definition rel_dsum_on {A : Type} (R : A -> A -> Type) (P : A -> Type)
   : (sigma x, P x) -> (sigma x, P x) -> Type
-  := rel_of R dfst .
+  := rel_on R dfst .
+
+(** 逆関係。 *)
+Definition rel_inv {A : Type} (R : A -> A -> Type) : A -> A -> Type
+  := fun x y => R y x .
+
+(** 反射推移閉包。 *)
+Inductive retla {A : Type} (R : A -> A -> Type) : A -> A -> Type
+  :=
+  | retla_id : forall x, retla R x x
+  | retla_comp : forall x y z, R x y -> retla R y z -> retla R x z
+  .
+
+(** 関係の結び。 *)
+Inductive rel_sum {A : Type} (R S : A -> A -> Type) : A -> A -> Type
+  :=
+  | mk_rel_sum : forall x y, sum (R x y) (S x y) -> rel_sum R S x y
+  .
+
+(** 関係の交わり。 *)
+Inductive rel_prod {A : Type} (R S : A -> A -> Type) : A -> A -> Type
+  :=
+  | mk_rel_prod : forall x y, prod (R x y) (S x y) -> rel_prod R S x y
+  .
+
+(** 関係の合成。 *)
+Inductive rel_comp {A : Type} (R S : A -> A -> Type) : A -> A -> Type
+  :=
+  | mk_rel_comp : forall x y z, R y z -> S x y -> rel_comp R S x y
+  .
 
 
 (** ** Well-foundness *)
