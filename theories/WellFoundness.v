@@ -20,7 +20,7 @@ Import Basis.Notation .
 (** [rel_dsum] に [x] 以下の整礎性は遺伝する。 *)
 Definition acc_rel_dsum
   {A : Type} {R : A -> A -> Type} {P : A -> Type}
-  {x : A} (xH : acc R x) {xP : P x} : acc (rel_dsum R P) (dpair x xP) .
+  {x : A} (xH : acc R x) {xP : P x} : acc (rel_dsum_on R P) (dpair x xP) .
 Proof.
  revert x xH xP .
  refine (@acc_rec A R ?[ex_P] _) .
@@ -36,9 +36,9 @@ Defined.
 (** [rel_dsum] に整礎性は遺伝する。 *)
 Definition wf_rel_dsum
   {A : Type} {R : A -> A -> Type} {P : A -> Type}
-  (wf_R : well_founded R) : well_founded (rel_dsum R P) .
+  (wf_R : well_founded R) : well_founded (rel_dsum_on R P) .
 Proof.
- change (forall h, acc (rel_dsum R P) h) .
+ change (forall h, acc (rel_dsum_on R P) h) .
  refine (dsum_elim _) .
  refine (fun x xP => _) .
  refine (acc_rel_dsum _) .
@@ -51,7 +51,7 @@ Definition acc_rel_pre_fiber
   {B : Type} {S : B -> B -> Type}
   (f : A -> B) (f_rel_pre : rel_pre R S f)
   {h : sigma y x, f x = y}
-  (acc_h : acc (rel_dsum S (fun y => sigma x, f x = y)) h)
+  (acc_h : acc (rel_dsum_on S (fun y => sigma x, f x = y)) h)
   : acc R (dfst (dsnd h)) .
 Proof.
  revert h acc_h .
@@ -102,8 +102,8 @@ Defined.
 (** [rel_of] に整礎性は遺伝する。 *)
 Definition wf_rel_of
   {A : Type} {B : Type} (S : B -> B -> Type) (f : A -> B)
-  (wf_S : well_founded S) : well_founded (rel_of S f) .
+  (wf_S : well_founded S) : well_founded (rel_on S f) .
 Proof.
- refine (wf_rel_pre f (rel_pre_of f) _) .
+ refine (wf_rel_pre f (rel_pre_on f) _) .
  exact wf_S .
 Defined.
