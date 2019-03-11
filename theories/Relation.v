@@ -44,6 +44,10 @@ Inductive rel_comp {A B C : Type} (R : rel B C) (S : rel A B) : rel A C
   | mk_rel_comp : forall x y z, R y z -> S x y -> rel_comp R S x z
   .
 
+(** 関数を関係に変換する。 *)
+Definition rel_fun {A B : Type} (f : A -> B) : rel A B
+  := fun x y => f x = y .
+
 
 (** ** Well-foundness *)
 
