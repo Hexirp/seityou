@@ -13,6 +13,33 @@ Set Default Proof Mode "Classic" .
 Import Basis.Notation .
 
 
+
+(** 関係を保つ (relation-preserving) 関数である。 *)
+Definition rel_pre
+  {A : Type} (R : A -> A -> Type)
+  {B : Type} (S : B -> B -> Type)
+  (f : A -> B) : Type
+  := forall x y : A, R x y -> S (f x) (f y) .
+
+(** 関数の結果を見た関係。 *)
+Definition rel_on {A : Type} {B : Type} (S : B -> B -> Type) (f : A -> B)
+  : A -> A -> Type
+  := fun x y => S (f x) (f y) .
+
+(** [rel_of] は自明に関係を保つ関数を作る。 *)
+Definition rel_pre_on {A : Type} {B : Type} {S : B -> B -> Type} (f : A -> B)
+  : rel_pre (rel_on S f) S f .
+Proof.
+ change (forall x y, S (f x) (f y) -> S (f x) (f y)) .
+ exact (fun x y => idmap) .
+Defined.
+
+(** [dsum] の第一引数だけを見た関係。 *)
+Definition rel_dsum_on {A : Type} (R : A -> A -> Type) (P : A -> Type)
+  : (sigma x, P x) -> (sigma x, P x) -> Type
+  := rel_on R dfst .
+
+
 (** *** Propagation of well-foundness
 
     整礎性の伝播に関する定理について。 *)
