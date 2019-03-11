@@ -48,7 +48,7 @@ Definition rel_dsum_on {A : Type} (R : A -> A -> Type) (P : A -> Type)
 
 (** 部分関係に [x] 以下の整礎性は遺伝する。 *)
 Definition acc_rel_sub
-  {A : Type} {R S : A -> A -> Type} {R_S : rel_sub R S}
+  {A : Type} {R S : A -> A -> Type} (R_S : rel_sub R S)
   (x : A) (xH : acc S x) : acc R x .
 Proof.
  revert x xH .
@@ -60,6 +60,12 @@ Proof.
  refine (R_S xp x _) .
  exact xpR .
 Defined.
+
+(** 部分関係に整礎性は遺伝する。 *)
+Definition wf_rel_sub
+  {A : Type} {R S : A -> A -> Type} (R_S : rel_sub R S)
+  (wf_S : well_founded S) : well_founded R
+  := fun x => acc_rel_sub R_S x (wf_S x) .
 
 (** [rel_dsum] に [x] 以下の整礎性は遺伝する。 *)
 Definition acc_rel_dsum
