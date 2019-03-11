@@ -41,6 +41,10 @@ Inductive rel_comp {A B C : Type} (R : rel B C) (S : rel A B) : rel A C
 Definition rel_fun {A B : Type} (f : A -> B) : rel A B
   := fun x y => f x = y .
 
+(** [R] は [S] の部分関係である。 *)
+Definition rel_sub {A B : Type} (R S : rel A B) : Type
+  := forall x y, R x y -> S x y .
+
 
 (** ** Well-foundness *)
 
