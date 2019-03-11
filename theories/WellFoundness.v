@@ -149,11 +149,47 @@ Proof.
  exact (wf_S (f x)) .
 Defined.
 
+(** [rel_pre] である関数は、その維に関する [x] 以下の整礎性を後ろ側へ保つ。 *)
+Definition acc_rel_on_fiber
+  {A B : Type} {S : B -> B -> Type} (f : A -> B)
+  {h : sigma y x, f x = y}
+  (acc_h : acc (rel_dsum_on S (fun y => sigma x, f x = y)) h)
+  : acc (rel_on S f) (dfst (dsnd h)) .
+Proof.
+ revert h acc_h .
+ refine (@acc_rec ?[ex_A] ?[ex_R] ?[ex_P] _) .
+ refine (dsum_elim _) .
+ refine (fun y => _) .
+ refine (dsum_elim _) .
+ refine (fun x xH I => _) .
+ refine (mk_acc _) .
+ refine (fun xp xpR => _) .
+ pose (hp := dpair (f xp) (dpair xp idpath) : sigma y x, f x = y) .
+ change (acc (rel_on S f) (dfst (dsnd hp))) .
+ refine (I hp _) .
+ change (S (f xp) y) .
+ refine (transport xH _) .
+ change (S (f xp) (f x)) in xpR .
+ exact xpR .
+Defined.
+
+(** [rel_pre] である関数は [x] 以下の整礎性を後ろ側へ保つ。 *)
+Definition acc_rel_on
+  {A B : Type} {S : B -> B -> Type} (f : A -> B)
+  {x : A} (acc_x : acc S (f x)) : acc (rel_on S f) x .
+Proof.
+ pose (h := dpair (f x) (dpair x idpath) : sigma y x, f x = y) .
+ change (acc (rel_on S f) (dfst (dsnd h))) .
+ refine (acc_rel_on_fiber f _) .
+ refine (acc_rel_dsum _) .
+ exact acc_x .
+Defined.
+
 (** [rel_on] に整礎性は遺伝する。 *)
 Definition wf_rel_on
   {A : Type} {B : Type} (S : B -> B -> Type) (f : A -> B)
   (wf_S : well_founded S) : well_founded (rel_on S f)
-  := wf_rel_pre f (rel_pre_on f) wf_S .
+  := fun x => acc_rel_on f (wf_S (f x)) .
 
 
 (** 参考文献:
