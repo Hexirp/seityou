@@ -12,36 +12,36 @@ Set Default Proof Mode "Classic" .
 Import Basis.Notation .
 
 
-(** [A] 上の関係。 *)
-Definition rel (A : Type) : Type := A -> A -> Type .
+(** [A] と [B] の上の関係。 *)
+Definition rel (A B : Type) : Type := A -> B -> Type .
 
 (** 逆関係。 *)
-Definition rel_inv {A : Type} (R : A -> A -> Type) : A -> A -> Type
+Definition rel_inv {A B : Type} (R : rel A B) : rel B A
   := fun x y => R y x .
 
 (** 反射推移閉包。 *)
-Inductive retla {A : Type} (R : A -> A -> Type) : A -> A -> Type
+Inductive retla {A : Type} (R : rel A A) : rel A A
   :=
   | retla_id : forall x, retla R x x
   | retla_comp : forall x y z, R x y -> retla R y z -> retla R x z
   .
 
 (** 関係の結び。 *)
-Inductive rel_sum {A : Type} (R S : A -> A -> Type) : A -> A -> Type
+Inductive rel_sum {A B : Type} (R S : rel A B) : rel A B
   :=
   | mk_rel_sum : forall x y, sum (R x y) (S x y) -> rel_sum R S x y
   .
 
 (** 関係の交わり。 *)
-Inductive rel_prod {A : Type} (R S : A -> A -> Type) : A -> A -> Type
+Inductive rel_prod {A B : Type} (R S : rel A B) : rel A B
   :=
   | mk_rel_prod : forall x y, prod (R x y) (S x y) -> rel_prod R S x y
   .
 
 (** 関係の合成。 *)
-Inductive rel_comp {A : Type} (R S : A -> A -> Type) : A -> A -> Type
+Inductive rel_comp {A B C : Type} (R : rel B C) (S : rel A B) : rel A C
   :=
-  | mk_rel_comp : forall x y z, R y z -> S x y -> rel_comp R S x y
+  | mk_rel_comp : forall x y z, R y z -> S x y -> rel_comp R S x z
   .
 
 
