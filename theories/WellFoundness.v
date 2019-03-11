@@ -67,7 +67,13 @@ Definition acc_rel_on
   (x : A) (xfH : acc S (f x)) : acc (rel_on S f) x .
 Proof.
  revert x xfH .
- refine (fun x => @acc_rec B S (acc (rel_on S f)) _ (f x)) .
+ refine (fix go (x : A) (xfH : acc S (f x)) : acc (rel_on S f) x := _) .
+ refine (mk_acc _) .
+ refine (fun xp xpfS => _) .
+ refine (go xp _) .
+ refine (inv_acc xfH _) .
+ exact xpfS .
+Defined.
 
 (** [rel_on] に整礎性は遺伝する。 *)
 Definition wf_rel_of
