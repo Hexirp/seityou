@@ -125,7 +125,7 @@ Definition well_founded {A : Type} (R : A -> A -> Type) : Type
 
 
 
-(** Well-founded induction
+(** *** Well-founded induction
 
     「超限再帰的な定義」からの類推で、関数を整礎帰納法的に定義するともいえる。 *)
 
@@ -208,7 +208,7 @@ Defined.
 Notation infinite_descent := infinite_descent_3 .
 
 
-(** * Existence of infinite descending chains *)
+(** *** Existence of infinite descending sequence *)
 
 Section Chain .
 

@@ -46,10 +46,6 @@ Definition rel_dsum_on {A : Type} (R : A -> A -> Type) (P : A -> Type)
   := rel_on R dfst .
 
 
-(** *** Propagation of well-foundness
-
-    整礎性の伝播に関する定理について。 *)
-
 (** [rel_dsum] に [x] 以下の整礎性は遺伝する。 *)
 Definition acc_rel_dsum
   {A : Type} {R : A -> A -> Type} {P : A -> Type}
