@@ -136,3 +136,11 @@ Proof.
  refine (wf_rel_pre f (rel_pre_on f) _) .
  exact wf_S .
 Defined.
+
+
+(** 参考文献:
+
+    * https://github.com/coq/coq/blob/f4cf212efd98d01a6470ea7bfd1034d52e928906/theories/Init/Wf.v
+    * https://github.com/agda/agda-stdlib/blob/a0bfe7422d2aa0f0f49c9647659ce34e6e741375/src/Induction/WellFounded.agda
+
+    *)
