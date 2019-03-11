@@ -61,29 +61,6 @@ Proof.
  exact xpR .
 Defined.
 
-(** [rel_on] に [x] 以下の整礎性は遺伝する。 *)
-Definition acc_rel_on
-  {A : Type} {B : Type} (S : B -> B -> Type) (f : A -> B)
-  (x : A) (xfH : acc S (f x)) : acc (rel_on S f) x .
-Proof.
- revert x xfH .
- refine (fix go (x : A) (xfH : acc S (f x)) : acc (rel_on S f) x := _) .
- refine (mk_acc _) .
- refine (fun xp xpfS => _) .
- refine (go xp _) .
- refine (inv_acc xfH _) .
- exact xpfS .
-Defined.
-
-(** [rel_on] に整礎性は遺伝する。 *)
-Definition wf_rel_of
-  {A : Type} {B : Type} (S : B -> B -> Type) (f : A -> B)
-  (wf_S : well_founded S) : well_founded (rel_on S f) .
-Proof.
- refine (wf_rel_pre f (rel_pre_on f) _) .
- exact wf_S .
-Defined.
-
 (** 部分関係に整礎性は遺伝する。 *)
 Definition wf_rel_sub
   {A : Type} {R S : A -> A -> Type} (R_S : rel_sub R S)
@@ -171,6 +148,12 @@ Proof.
  refine (acc_rel_pre f f_rel_pre _) .
  exact (wf_S (f x)) .
 Defined.
+
+(** [rel_on] に整礎性は遺伝する。 *)
+Definition wf_rel_on
+  {A : Type} {B : Type} (S : B -> B -> Type) (f : A -> B)
+  (wf_S : well_founded S) : well_founded (rel_on S f)
+  := wf_rel_pre f (rel_pre_on f) wf_S .
 
 
 (** 参考文献:
