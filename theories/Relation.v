@@ -19,13 +19,6 @@ Definition rel (A B : Type) : Type := A -> B -> Type .
 Definition rel_inv {A B : Type} (R : rel A B) : rel B A
   := fun x y => R y x .
 
-(** 反射推移閉包。 *)
-Inductive retla {A : Type} (R : rel A A) : rel A A
-  :=
-  | retla_id : forall x, retla R x x
-  | retla_comp : forall x y z, R x y -> retla R y z -> retla R x z
-  .
-
 (** 関係の結び。 *)
 Inductive rel_sum {A B : Type} (R S : rel A B) : rel A B
   :=
@@ -252,27 +245,6 @@ Section Chain .
   Defined.
 
 End Chain.
-
-
-(** *** Others *)
-
-Section AccPath .
-
-  Variable A : Type .
-  Variable R : A -> A -> Type .
-
-  (** [acc] についての弱い道。
-
-      この場合は外延的な等しさ／点ごとの道になる。 *)
-  Inductive acc_path (x : A) : acc R x -> acc R x -> Type
-    :=
-    | mk_acc_path
-      : forall r s,
-                    (forall xp xpR, acc_path xp (r xp xpR) (s xp xpR)) ->
-                     acc_path x (mk_acc r) (mk_acc s)
-    .
-
-End AccPath .
 
 (** 参考文献:
 

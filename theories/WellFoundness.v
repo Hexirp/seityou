@@ -13,6 +13,12 @@ Set Default Proof Mode "Classic" .
 Import Basis.Notation .
 
 
+(** 反射推移閉包。 *)
+Inductive retla {A : Type} (R : rel A A) : rel A A
+  :=
+  | retla_id : forall x, retla R x x
+  | retla_comp : forall x y z, R x y -> retla R y z -> retla R x z
+  .
 
 (** 関係を保つ (relation-preserving) 関数である。 *)
 Definition rel_pre
