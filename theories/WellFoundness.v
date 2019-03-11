@@ -149,7 +149,7 @@ Proof.
  exact (wf_S (f x)) .
 Defined.
 
-(** [rel_pre] である関数は、その維に関する [x] 以下の整礎性を後ろ側へ保つ。 *)
+(** [rel_on] に、その維に関する [x] 以下の整礎性は遺伝する。 *)
 Definition acc_rel_on_fiber
   {A B : Type} {S : B -> B -> Type} (f : A -> B)
   {h : sigma y x, f x = y}
@@ -173,7 +173,7 @@ Proof.
  exact xpR .
 Defined.
 
-(** [rel_pre] である関数は [x] 以下の整礎性を後ろ側へ保つ。 *)
+(** [rel_on] に [x] 以下の整礎性は遺伝する。 *)
 Definition acc_rel_on
   {A B : Type} {S : B -> B -> Type} (f : A -> B)
   {x : A} (acc_x : acc S (f x)) : acc (rel_on S f) x .
