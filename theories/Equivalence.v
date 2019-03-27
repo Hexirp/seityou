@@ -392,7 +392,7 @@ Proof.
    _
      @[ (homo^ @ (1 : f == f) @ homo) @@ (((1 : h == h) @@ homo^) @ s) ]
    _
-     @[ (idpath_pw' (idpath_pw' g)) @@ (((idpath_pw' (idpath_pw' h)) @@ homo^) @ s) ]
+     @[ idpath_pw' (idpath_pw' g) @@ ((idpath_pw' homo^) @@ (idpath_pw' (idpath_pw' h)) @ s) ]
    _
      (* g @> (h @> homo^) @ s *)
    ) .
