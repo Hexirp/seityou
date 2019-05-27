@@ -192,6 +192,39 @@ Definition wf_rel_on
   := fun x => acc_rel_on f (wf_S (f x)) .
 
 
+(** [fix] を解禁したら単純に証明できる。 *)
+
+Module Prim .
+
+  (** [rel_on] に [x] 以下の整礎性は遺伝する。 *)
+  Definition acc_rel_on'
+    {A B : Type} {S : B -> B -> Type} (f : A -> B)
+    {x : A} (acc_x : acc S (f x)) : acc (rel_on S f) x .
+  Proof.
+   revert x acc_x .
+   refine (
+     fix go (x : A) (acc_x : acc S (f x)) {struct acc_x} : acc (rel_on S f) x := _
+     ) .
+   revert acc_x .
+   refine (acc_case_nodep _) .
+   refine (fun xH => _) .
+   refine (mk_acc _) .
+   refine (fun xp xpR => _) .
+   refine (go xp _) .
+   refine (xH (f xp) _) .
+   change (S (f xp) (f x)) in xpR .
+   exact xpR .
+  Defined.
+
+  (** [rel_on] に整礎性は遺伝する。 *)
+  Definition wf_rel_on'
+    {A : Type} {B : Type} (S : B -> B -> Type) (f : A -> B)
+    (wf_S : well_founded S) : well_founded (rel_on S f)
+    := fun x => acc_rel_on' f (wf_S (f x)) .
+
+End Prim .
+
+
 (** 参考文献:
 
     * https://github.com/coq/coq/blob/f4cf212efd98d01a6470ea7bfd1034d52e928906/theories/Init/Wf.v
