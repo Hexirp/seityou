@@ -192,9 +192,40 @@ Definition wf_rel_on
   := fun x => acc_rel_on f (wf_S (f x)) .
 
 
-(** [fix] を解禁したら単純に証明できる。 *)
+(** [fix] を解禁したら単純に証明できる命題群。 *)
 
 Module Prim .
+
+  (** [rel_pre] である関数は [x] 以下の整礎性を後ろ側へ保つ。 *)
+  Definition acc_rel_pre'
+    {A : Type} {R : A -> A -> Type}
+    {B : Type} {S : B -> B -> Type}
+    (f : A -> B) (f_rel_pre : rel_pre R S f)
+    {x : A} (acc_x : acc S (f x)) : acc R x .
+  Proof.
+   revert x acc_x .
+   refine (
+    fix go (x : A) (acc_x : acc S (f x)) {struct acc_x} : acc R x := _
+    ) .
+   revert acc_x .
+   refine (acc_case_nodep _) .
+   refine (fun xH => _) .
+   refine (mk_acc _) .
+   refine (fun xp xpR => _) .
+   refine (go xp _) .
+   refine (xH (f xp) _) .
+   change (forall x y, R x y -> S (f x) (f y)) in f_rel_pre .
+   refine (f_rel_pre xp x _) .
+   exact xpR .
+  Defined.
+
+  (** [rec_pre] である関数は整礎性を後ろへ保つ。 *)
+  Definition wf_rel_pre'
+    {A : Type} {R : A -> A -> Type}
+    {B : Type} {S : B -> B -> Type}
+    (f : A -> B) (f_rel_pre : rel_pre R S f)
+    (wf_S : well_founded S) : well_founded R
+    := fun x => acc_rel_pre' f f_rel_pre (wf_S (f x)) .
 
   (** [rel_on] に [x] 以下の整礎性は遺伝する。 *)
   Definition acc_rel_on'
