@@ -179,7 +179,7 @@ Proof.
  exact acc_x .
 Defined.
 
-(** [rec_pre] である関数は整礎性を後ろへ保つ。 *)
+(** [rel_pre] である関数は整礎性を後ろへ保つ。 *)
 Definition wf_rel_pre
   {A : Type} {R : A -> A -> Type}
   {B : Type} {S : B -> B -> Type}
@@ -190,6 +190,19 @@ Proof.
  refine (acc_rel_pre f f_rel_pre _) .
  exact (wf_S (f x)) .
 Defined.
+
+(** [retla] に [x] 以下の整礎性は遺伝する。 *)
+Definition acc_retla
+  {A : Type} {R : A -> A -> Type}
+  {x : A} (acc_x : acc R x) : acc (retla R) x .
+Proof.
+ revert x acc_x .
+ refine (@acc_rec ?[ex_A] ?[ex_R] ?[ex_P] _) .
+ refine (fun x I => _) .
+ refine (mk_acc _) .
+ refine (fun xp xpR => _) .
+ admit.
+Admitted.
 
 
 (** [fix] を解禁したら単純に証明できる命題群。 *)
