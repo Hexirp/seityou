@@ -13,11 +13,11 @@ Set Default Proof Mode "Classic" .
 Import Basis.Notation .
 
 
-(** 反射推移閉包。 *)
-Inductive retla {A : Type} (R : rel A A) : rel A A
+(** 推移閉包。 *)
+Inductive tracl {A : Type} (R : rel A A) : rel A A
   :=
-  | retla_id : forall x, retla R x x
-  | retla_comp : forall x y z, R x y -> retla R y z -> retla R x z
+  | tracl_base : forall x y, R x y -> tracl R x y
+  | tracl_comp : forall x y z, R x y -> tracl R y z -> tracl R x z
   .
 
 (** 関係を保つ (relation-preserving) 関数である。 *)
@@ -191,16 +191,17 @@ Proof.
  exact (wf_S (f x)) .
 Defined.
 
-(** [retla] に [x] 以下の整礎性は遺伝する。 *)
-Definition acc_retla
+(** [tracl] に [x] 以下の整礎性は遺伝する。 *)
+Definition acc_tracl
   {A : Type} {R : A -> A -> Type}
-  {x : A} (acc_x : acc R x) : acc (retla R) x .
+  {x : A} (acc_x : acc R x) : acc (tracl R) x .
 Proof.
  revert x acc_x .
  refine (@acc_rec ?[ex_A] ?[ex_R] ?[ex_P] _) .
  refine (fun x I => _) .
  refine (mk_acc _) .
  refine (fun xp xpR => _) .
+ refine (match xpR with tracl_base _ _ _ xpR' => _ | tracl_comp _ _ _ _ xpR' xpRs => _ end) .
  admit.
 Admitted.
 
