@@ -208,7 +208,11 @@ Proof.
  exact xpr .
 Defined.
 
-(** 無限降下法。 *)
+(** 無限降下法。
+
+    [infinite_descent_0 <-> infinite_descent_1 -> infinite_descent_2 <-> infinite_descent_3] 。
+
+    *)
 Notation infinite_descent := infinite_descent_3 .
 
 
